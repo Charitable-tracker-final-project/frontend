@@ -10,7 +10,6 @@ import {
 } from 'react-router-dom';
 // import axios from 'axios'
 import Landing from './components/Landing';
-import Home from './components/Home';
 
 function App() {
   console.log('Hello, World!');
@@ -18,7 +17,7 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Landing />} />
         </Routes>
       </Router>
     </>
