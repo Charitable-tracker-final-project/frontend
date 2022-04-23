@@ -13,15 +13,23 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 
 function App() {
-  console.log('Hello, World!');
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
+  const [storeUsername, setStoreUsername] = useLocalStorageState(
+    'CharitableTrackerUsername',
+    ''
+  );
   // const [status, setStatus] = useState(null);
+
+  const setAuth = (username, token) => {
+    setStoreUsername(username);
+    setToken(token);
+  };
 
   const handleLogOut = (event) => {
     console.log('Handle Log Out Called');
     event.preventDefault();
     // setStatus(null);
-    setToken('');
+    setAuth(null, null);
     // axios
     //   .post(
     //     'https://questionbox-rocket.herokuapp.com/auth/token/logout/',
@@ -52,7 +60,13 @@ function App() {
             <>
               <Route
                 path='/'
-                element={<Landing token={token} setToken={setToken} />}
+                element={
+                  <Landing
+                    token={token}
+                    setToken={setToken}
+                    setAuth={setAuth}
+                  />
+                }
               />
             </>
           ) : (

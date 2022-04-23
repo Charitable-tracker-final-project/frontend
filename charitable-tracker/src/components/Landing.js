@@ -1,24 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import useLocalStorageState from 'use-local-storage-state';
 import logo from '../images/logo512.png';
 import google from '../images/btn_google_signin_light_pressed_web@2x.png';
 import bulma from '../images/made-with-bulma--semiblack.png';
 
-export default function Landing({ token, setToken }) {
+export default function Landing({ token, setToken, setAuth }) {
   // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [storeUsername, setStoreUsername] = useLocalStorageState(
-    'CharitableTrackerUsername',
-    ''
-  );
   const [error, setError] = useState('');
-
-  const setAuth = (username, token) => {
-    setStoreUsername(username);
-    setToken(token);
-  };
 
   const handleLogin = (event) => {
     console.log('Hangle Login Called');
@@ -38,7 +28,7 @@ export default function Landing({ token, setToken }) {
   };
 
   const handleOAuth = (event) => {
-    console.log('Hangle OAuth Called');
+    console.log('Handle OAuth Called');
     event.preventDefault();
     setError('');
     //   axios
