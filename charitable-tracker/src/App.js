@@ -75,10 +75,22 @@ function App() {
         ) : (
           <>
             <Navbar handleLogOut={handleLogOut} />
-            <Profile />
-            <Routes>
-              <Route path='/' element={<Home handleLogOut={handleLogOut} />} />
-            </Routes>
+            <div className='columns is-mobile'>
+              <div className='column is-narrow'>
+                <Profile />
+              </div>
+              <div className='column'>
+                <br></br>
+                <main>
+                  <Routes>
+                    <Route
+                      path='/'
+                      element={<Home handleLogOut={handleLogOut} />}
+                    />
+                  </Routes>
+                </main>
+              </div>
+            </div>
           </>
         )}
       </Router>
