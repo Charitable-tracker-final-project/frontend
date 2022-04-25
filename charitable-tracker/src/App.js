@@ -1,5 +1,5 @@
 // import { useState } from 'react';
-import './App.css';
+import './App.scss';
 import useLocalStorageState from 'use-local-storage-state';
 import {
   BrowserRouter as Router,
@@ -11,6 +11,9 @@ import {
 // import axios from 'axios'
 import Landing from './components/Landing';
 import Home from './components/Home';
+import Navbar from './components/Nav/Navbar';
+import Profile from './components/Nav/Profile';
+import bulma from './images/made-with-bulma--semiblack.png';
 
 function App() {
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
@@ -55,8 +58,8 @@ function App() {
   return (
     <>
       <Router>
-        <Routes>
-          {!token ? (
+        {!token ? (
+          <Routes>
             <>
               <Route
                 path='/'
@@ -69,13 +72,22 @@ function App() {
                 }
               />
             </>
-          ) : (
-            <>
+          </Routes>
+        ) : (
+          <>
+            <Navbar handleLogOut={handleLogOut} />
+            <Profile />
+            <Routes>
               <Route path='/' element={<Home handleLogOut={handleLogOut} />} />
-            </>
-          )}
-        </Routes>
+            </Routes>
+          </>
+        )}
       </Router>
+      <footer className='footer'>
+        <div className='field is-grouped is-grouped-right'>
+          <img src={bulma} alt='made with bulma badge' width='195' />
+        </div>
+      </footer>
     </>
   );
 }

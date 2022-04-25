@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo512.png';
 import google from '../images/btn_google_signin_light_pressed_web@2x.png';
-import bulma from '../images/made-with-bulma--semiblack.png';
 
 export default function Landing({ token, setToken, setAuth }) {
   // const navigate = useNavigate();
@@ -110,11 +109,6 @@ export default function Landing({ token, setToken, setAuth }) {
           width='195'
         />
       </div>
-      <footer className='footer'>
-        <div className='field is-grouped is-grouped-right'>
-          <img src={bulma} alt='made with bulma badge' width='195' />
-        </div>
-      </footer>
     </>
   );
 }
