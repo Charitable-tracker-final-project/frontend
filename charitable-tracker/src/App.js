@@ -6,7 +6,6 @@ import {
   Route,
   Routes,
   // Link,
-  // useNavigate,
 } from 'react-router-dom';
 // import axios from 'axios'
 import Landing from './components/Landing';
@@ -17,7 +16,7 @@ import bulma from './images/made-with-bulma--semiblack.png';
 
 function App() {
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
-  const [storeUsername, setStoreUsername] = useLocalStorageState(
+  const [, setStoreUsername] = useLocalStorageState(
     'CharitableTrackerUsername',
     ''
   );

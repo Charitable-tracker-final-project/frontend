@@ -50,9 +50,9 @@ export default function Navbar({ handleLogOut }) {
             <Link className='navbar-item' to='/results'>
               Results
             </Link>
-            <a className='button is-warning mt-1' onClick={handleLogOut}>
-              Log Out
-            </a>
+            <div className='button is-warning mt-1' onClick={handleLogOut}>
+              <Link to='/'>Log Out</Link>
+            </div>
           </div>
         </div>
       </nav>
