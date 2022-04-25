@@ -130,7 +130,7 @@ export default function Profile() {
                 </div>
                 <div className='control'>
                   <div className='button is-waring is-small' type='reset'>
-                    Cancel
+                    Reset
                   </div>
                 </div>
               </div>
