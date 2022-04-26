@@ -239,7 +239,7 @@ export const EnterIncome = ({
                     id='reg-email'
                     required
                     placeholder='20000'
-                    pattern='[0-9+]'
+                    pattern='[0-9]+'
                     value={income}
                     onChange={(event) => setIncome(event.target.value)}
                   />
