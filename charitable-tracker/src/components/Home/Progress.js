@@ -5,6 +5,9 @@ export default function Progress() {
   const [income, setIncome] = useState('60000');
   const [cGoalProgress, setCGoalProgress] = useState('32');
   const [cGoal, setCGoal] = useState('50');
+  const [cGoalOrg, setCGoalOrg] = useState('');
+  const [cGoalCause, setCGoalCause] = useState('');
+  const [cGoalTime, setCGoalTime] = useState('');
   const [cGoalDonos, setCGoalDonos] = useState(true);
 
   const incomeMath = (donos, income) => {
@@ -14,11 +17,19 @@ export default function Progress() {
   };
 
   const dGoalMath = (donos, goal) => {
-    return `$${donos} donated towards your goal of $${goal}`;
+    return `$${donos} donated towards your goal of $${goal}${
+      cGoalTime ? ` this ${cGoalTime}` : ''
+    }${cGoalOrg ? ` to ${cGoalOrg}` : ''}${
+      cGoalCause ? `, benefitting ${cGoalCause}` : ''
+    }`;
   };
 
   const vGoalMath = (volunteering, goal) => {
-    return `${volunteering} hours towards your goal of ${goal} hours`;
+    return `${volunteering} hours towards your goal of ${goal} hours${
+      cGoalTime ? ` this ${cGoalTime}` : ''
+    }${cGoalOrg ? ` with ${cGoalOrg},` : ''} ${
+      cGoalCause ? ` benefitting ${cGoalCause}` : ''
+    }`;
   };
 
   return (
@@ -61,6 +72,36 @@ export default function Progress() {
                 >{`Change Goal to ${
                   cGoalDonos ? 'Volunteering' : 'Donation'
                 }`}</div>
+              </div>
+            </div>
+            <div className='field is-grouped is-grouped-centered'>
+              <div className='control is-size-7-mobile'>
+                <div
+                  className='button is-small'
+                  onClick={() => {
+                    cGoalTime ? setCGoalTime('') : setCGoalTime('Month');
+                  }}
+                >
+                  {`${!cGoalTime ? 'Add Timeframe' : 'Remove Timeframe'}`}
+                </div>
+                <div
+                  className='button is-small'
+                  onClick={() => {
+                    cGoalOrg ? setCGoalOrg('') : setCGoalOrg('She Should Run');
+                  }}
+                >
+                  {`${!cGoalOrg ? 'Add Org' : 'Remove Org'}`}
+                </div>
+                <div
+                  className='button is-small'
+                  onClick={() => {
+                    cGoalCause
+                      ? setCGoalCause('')
+                      : setCGoalCause('Womens Rights');
+                  }}
+                >
+                  {`${!cGoalCause ? 'Add Cause' : 'Remove Cause'}`}
+                </div>
               </div>
             </div>
           </div>
