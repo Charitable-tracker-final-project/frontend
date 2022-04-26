@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import Progress from './Home/Progress';
 import TimelineCT from './Home/Timeline';
 
-export default function Home() {
+export default function Home(income) {
   return (
     <>
-      <Progress />
+      <Progress income={income} />
       <TimelineCT />
     </>
   );

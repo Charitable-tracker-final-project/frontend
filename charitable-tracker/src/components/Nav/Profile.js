@@ -15,10 +15,11 @@ export default function Profile() {
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [income, setIncome] = useState('');
-  const username = 'Adam';
+  const [incomeInput, setIncomeInput] = useState('');
+  const [username, setUsername] = useState('Adam');
   const styles = {
     sideBarHeight: {
-      height: '100vh',
+      height: '100%',
     },
     menuIcon: {
       float: 'right',
@@ -115,11 +116,13 @@ export default function Profile() {
                 <div className='field'>
                   <div className='control'>
                     <input
-                      type='number'
+                      type='text'
                       className='input is-rounded'
                       id='income'
-                      value={income}
-                      onChange={(event) => setIncome(event.target.value)}
+                      placeholder='35000'
+                      value={incomeInput}
+                      onChange={(event) => setIncomeInput(event.target.value)}
+                      pattern='[0-9]+'
                     />
                   </div>
                 </div>
@@ -130,7 +133,11 @@ export default function Profile() {
                     </button>
                   </div>
                   <div className='control'>
-                    <div className='button is-waring is-small' type='reset'>
+                    <div
+                      className='button is-waring is-small'
+                      type='reset'
+                      onClick={() => setIncomeInput('')}
+                    >
                       Reset
                     </div>
                   </div>

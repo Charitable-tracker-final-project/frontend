@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 export default function Progress() {
-  const [donosToDate, setDonosToDate] = useState('23456');
   const [income, setIncome] = useState('60000');
+  const [donosToDate, setDonosToDate] = useState('23456');
   const [cGoalProgress, setCGoalProgress] = useState('32');
   const [cGoal, setCGoal] = useState('50');
   const [cGoalOrg, setCGoalOrg] = useState('');

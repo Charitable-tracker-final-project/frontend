@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import './App.scss';
 import useLocalStorageState from 'use-local-storage-state';
 import {
@@ -83,10 +82,7 @@ function App() {
                 <br></br>
                 <main>
                   <Routes>
-                    <Route
-                      path='/'
-                      element={<Home handleLogOut={handleLogOut} />}
-                    />
+                    <Route path='/' element={<Home />} />
                   </Routes>
                 </main>
               </div>
