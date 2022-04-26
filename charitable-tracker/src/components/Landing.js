@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../images/logo512.png';
 import google from '../images/btn_google_signin_light_pressed_web@2x.png';
 
-export default function Landing({ token, setToken, setAuth }) {
+export default function Landing({ token, setToken, setAuth, setNewUser }) {
   // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +14,7 @@ export default function Landing({ token, setToken, setAuth }) {
     event.preventDefault();
     setError('');
     setAuth(username, 'testoken');
+    setNewUser(false);
     // axios
     //   .post('https://questionbox-rocket.herokuapp.com/auth/token/login/', {
     //     username: username,
