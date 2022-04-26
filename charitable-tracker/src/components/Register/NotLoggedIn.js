@@ -87,7 +87,7 @@ export default function NotLoggedIn({
         <div className='field is-grouped is-grouped-centered'>
           <div className='control'>
             <div className='button is-danger' onClick={() => setStep(1)}>
-              reset
+              Start Over
             </div>
           </div>
           <div className='control'>
