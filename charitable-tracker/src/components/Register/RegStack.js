@@ -231,6 +231,9 @@ export const EnterIncome = ({
                     </i>
                   </div>
                 </label>
+                <div className='is-size-6 has-text-centered m-0'>
+                  <i>please enter amount without commas!</i>
+                </div>
                 <div className='is-inline-flex is-size-4'>
                   $
                   <input
@@ -262,9 +265,6 @@ export const EnterIncome = ({
                   Skip
                 </div>
               </div>
-            </div>
-            <div className='has-text-grey has-text-centered is-size-6'>
-              <i>but it's not as fun!</i>
             </div>
           </form>
         </div>
