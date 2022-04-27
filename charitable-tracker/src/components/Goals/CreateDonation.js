@@ -7,6 +7,7 @@ export default function CreateDonation() {
   const [reminded, setReminded] = useState(false);
   const [no, setNo] = useState(false);
   const [reminder, setReminder] = useState('');
+  const [email, setEmail] = useState('');
 
   // Possible way to add multiple forms:
   // function Clone() {
@@ -20,7 +21,7 @@ export default function CreateDonation() {
 
   const styles = {
     regPage: {
-      height: '100vh',
+      height: '100%',
       backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
     },
   };
@@ -80,7 +81,12 @@ export default function CreateDonation() {
                   <div className='control'>
                     <div
                       className='button is-success is-light pl-6 pr-6'
-                      onClick={() => setReminded(true)}
+                      onClick={() => [
+                        setReminded(true),
+                        setEmail(
+                          'Hi! This is a friendly reminder to log your recent donations. You are receiving this message because you signed up for reminders'
+                        ),
+                      ]}
                     >
                       Yes
                     </div>
@@ -127,6 +133,25 @@ export default function CreateDonation() {
                         <option>Month</option>
                         <option>Year</option>
                       </select>
+                    </div>
+                    <label
+                      className='label has-text-centered mt-6'
+                      htmlFor='don-email'
+                    >
+                      <div className='is-size-4'>
+                        What would you like your reminder say?
+                      </div>
+                    </label>
+                    <div className='column is-three-quarters'>
+                      <textarea
+                        type='text'
+                        className='textarea is-rounded'
+                        id='don-email'
+                        required
+                        placeholder='Hi! This is a friendly reminder to log your recent donations. You are receiving this message because you signed up for reminders'
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
