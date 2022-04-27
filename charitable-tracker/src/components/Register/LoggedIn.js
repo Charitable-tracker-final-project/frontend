@@ -42,6 +42,7 @@ export default function LoggedIn({
         {step === 2 && (
           <VolunteerOption
             newUser={newUser}
+            setNewUser={setNewUser}
             step={step}
             setStep={setStep}
             setSkipable={setSkipable}
@@ -73,7 +74,12 @@ export default function LoggedIn({
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
               <Link to='/'>
-                <div className='button is-danger'>Skip All</div>
+                <div
+                  className='button is-danger'
+                  onClick={() => setNewUser(false)}
+                >
+                  Skip All
+                </div>
               </Link>
             </div>
           </div>

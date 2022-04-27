@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-export default function GoalSet() {
+export default function GoalSet(newUser) {
   const styles = {
     regPage: {
       height: '100vh',
@@ -8,6 +8,7 @@ export default function GoalSet() {
     },
   };
 
+  console.log(newUser);
   return (
     <>
       <div className='columns is-centered' style={styles.regPage}>
@@ -17,7 +18,9 @@ export default function GoalSet() {
             <div className='columns is-centered'>
               <div className='column is-two-thirds'>
                 <div className='is-size-3 has-text-centered mb-6'>
-                  What kind of Goal would you like to set?
+                  {!newUser
+                    ? `What kind of Goal would you like to set?`
+                    : `Would you like to set a goal?`}
                 </div>
                 <div className='field is-grouped is-grouped-centered'>
                   <div className='control'>
@@ -37,6 +40,19 @@ export default function GoalSet() {
                     </Link>
                   </div>
                 </div>
+                {newUser && (
+                  <>
+                    <div className='field is-grouped is-grouped-centered mb-6'>
+                      <div className='control'>
+                        <Link to='/register'>
+                          <div className='button is-black pl-6 pr-6 mt-6'>
+                            Skip
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const EnterUsername = ({
   newUser,
@@ -122,6 +122,7 @@ export const EnterPassword = ({
   setSkipable,
   setStep,
 }) => {
+  const navigate = useNavigate();
   const [repassword, setRepassword] = useState('');
   const [error, setError] = useState('');
   const [noMatch, setNoMatch] = useState(null);
@@ -139,6 +140,7 @@ export const EnterPassword = ({
     if (password === repassword) {
       setToken('token');
       setNewUser(true);
+      navigate('/new/goal');
     } else {
       setNoMatch(true);
     }
@@ -273,7 +275,13 @@ export const EnterIncome = ({
   );
 };
 
-export const VolunteerOption = ({ newUser, step, setStep, setSkipable }) => {
+export const VolunteerOption = ({
+  newUser,
+  setNewUser,
+  step,
+  setStep,
+  setSkipable,
+}) => {
   useEffect(() => {
     setSkipable(true);
   });
@@ -287,7 +295,12 @@ export const VolunteerOption = ({ newUser, step, setStep, setSkipable }) => {
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
               <Link to='/'>
-                <div className='button is-success is-large pl-6 pr-6'>Yes</div>
+                <div
+                  className='button is-success is-large pl-6 pr-6'
+                  onClick={() => setNewUser(false)}
+                >
+                  Yes
+                </div>
               </Link>
             </div>
           </div>
@@ -327,7 +340,12 @@ export const DonateOption = ({
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
               <Link to='/'>
-                <div className='button is-success is-large pl-6 pr-6'>Yes</div>
+                <div
+                  className='button is-success is-large pl-6 pr-6'
+                  onClick={() => setNewUser(false)}
+                >
+                  Yes
+                </div>
               </Link>
             </div>
           </div>
@@ -335,7 +353,7 @@ export const DonateOption = ({
             <div className='control'>
               <div
                 className='button is-black is-large pl-6 pr-6'
-                onClick={() => setStep(step + 1)}
+                onClick={() => [setStep(step + 1), setNewUser(false)]}
               >
                 No
               </div>

@@ -93,11 +93,15 @@ function App() {
           </Routes>
         ) : (
           <>
-            <Navbar handleLogOut={handleLogOut} />
+            {!newUser && <Navbar handleLogOut={handleLogOut} />}
             <div className='columns is-mobile'>
-              <div className='column is-narrow'>
-                <Profile />
-              </div>
+              {!newUser && (
+                <>
+                  <div className='column is-narrow'>
+                    <Profile />
+                  </div>
+                </>
+              )}
               <div className='column'>
                 <br></br>
                 <main>
@@ -106,7 +110,10 @@ function App() {
                       path='/'
                       element={<Home handleLogOut={handleLogOut} />}
                     />
-                    <Route path='/new/goal' element={<GoalSet />} />
+                    <Route
+                      path='/new/goal'
+                      element={<GoalSet newUser={newUser} />}
+                    />
                     <Route
                       path='/new/goal/volunteering'
                       element={<CreateVolunteer />}
