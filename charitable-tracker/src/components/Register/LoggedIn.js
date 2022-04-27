@@ -21,7 +21,11 @@ export default function LoggedIn({
 
   return (
     <>
-      <h1 className={`title has-text-centered ${step > 1 && `is-invisible`}`}>
+      <h1
+        className={`title has-text-centered ${
+          step > 1 && `is-invisible is-hidden-touch`
+        }`}
+      >
         Let's Set Some Goals!
       </h1>
       <div className='box p-6'>
