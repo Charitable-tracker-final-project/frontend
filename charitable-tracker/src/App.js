@@ -9,12 +9,11 @@ import {
 // import axios from 'axios'
 import Landing from './components/Landing';
 import Home from './components/Home';
+import Navbar from './components/Nav/Navbar';
+import Profile from './components/Nav/Profile';
 import bulma from './images/made-with-bulma--semiblack.png';
-import Register from './components/Register';
-import { useState } from 'react';
 
 function App() {
-  const [newUser, setNewUser] = useState(null);
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
   const [, setStoreUsername] = useLocalStorageState(
     'CharitableTrackerUsername',
@@ -57,20 +56,6 @@ function App() {
   return (
     <>
       <Router>
-        <Routes>
-          <Route
-            path='/register'
-            element={
-              <Register
-                token={token}
-                setToken={setToken}
-                newUser={newUser}
-                setNewUser={setNewUser}
-                setAuth={setAuth}
-              />
-            }
-          />
-        </Routes>
         {!token ? (
           <Routes>
             <>
@@ -88,9 +73,20 @@ function App() {
           </Routes>
         ) : (
           <>
-            <Routes>
-              <Route path='/' element={<Home handleLogOut={handleLogOut} />} />
-            </Routes>
+            <Navbar handleLogOut={handleLogOut} />
+            <div className='columns is-mobile'>
+              <div className='column is-narrow'>
+                <Profile />
+              </div>
+              <div className='column'>
+                <br></br>
+                <main>
+                  <Routes>
+                    <Route path='/' element={<Home />} />
+                  </Routes>
+                </main>
+              </div>
+            </div>
           </>
         )}
       </Router>
