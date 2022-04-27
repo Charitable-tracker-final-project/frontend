@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   Timeline,
   Events,
+  UrlButton,
+  ImageEvent,
   TextEvent,
+  YouTubeEvent,
   createTheme,
   themes,
 } from '@merc/react-timeline';
