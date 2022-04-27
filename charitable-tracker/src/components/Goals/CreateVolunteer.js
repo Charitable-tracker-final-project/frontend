@@ -131,7 +131,7 @@ export default function CreateVolunteer() {
                   <div className='control'>
                     <div
                       className='button is-danger is-light pl-6 pr-6'
-                      onClick={() => setReminded(false)}
+                      onClick={() => [setReminded(false), setNo(true)]}
                     >
                       Nevermind, don't remind me
                     </div>
