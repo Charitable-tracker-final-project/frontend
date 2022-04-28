@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function CreateDonation() {
   const [money, setMoney] = useState(0);
@@ -21,10 +21,21 @@ export default function CreateDonation() {
 
   const styles = {
     regPage: {
+      minHeight: '100vh',
       height: '100%',
       backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
     },
   };
+
+  function useQuery() {
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+
+  let query = useQuery();
+  let params = query.get('newuser');
+
+  console.log(params);
 
   return (
     <>
@@ -169,14 +180,34 @@ export default function CreateDonation() {
             )}
             <div className='field is-grouped is-grouped-centered mt-6'>
               <div className='control'>
-                <Link to='/new/goal'>
-                  <div className='button is-success pl-6 pr-6'>Submit</div>
-                </Link>
+                {params === 'true' ? (
+                  <>
+                    <Link to='/new/goal?newuser=true'>
+                      <div className='button is-success pl-6 pr-6'>Submit</div>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to='/new/goal'>
+                      <div className='button is-success pl-6 pr-6'>Submit</div>
+                    </Link>
+                  </>
+                )}
               </div>
               <div className='control'>
-                <Link to='/new/goal'>
-                  <div className='button is-warning pl-6 pr-6'>Back</div>
-                </Link>
+                {params === 'true' ? (
+                  <>
+                    <Link to='/new/goal?newuser=true'>
+                      <div className='button is-warning pl-6 pr-6'>Back</div>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to='/new/goal'>
+                      <div className='button is-warning pl-6 pr-6'>Back</div>
+                    </Link>
+                  </>
+                )}
               </div>
               {/*<div className='control'>
                 <Link to={{ pathname: '/register', state: { step: 3 } }}>

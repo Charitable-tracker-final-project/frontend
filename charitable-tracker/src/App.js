@@ -19,7 +19,7 @@ import CreateVolunteer from './components/Goals/CreateVolunteer';
 import CreateDonation from './components/Goals/CreateDonation';
 
 function App() {
-  const [newUser, setNewUser] = useState(null);
+  const [newUser, setNewUser] = useState(false);
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
   const [, setStoreUsername] = useLocalStorageState(
     'CharitableTrackerUsername',
@@ -110,10 +110,7 @@ function App() {
                       path='/'
                       element={<Home handleLogOut={handleLogOut} />}
                     />
-                    <Route
-                      path='/new/goal'
-                      element={<GoalSet newUser={newUser} />}
-                    />
+                    <Route path='/new/goal' element={<GoalSet />} />
                     <Route
                       path='/new/goal/volunteering'
                       element={<CreateVolunteer />}

@@ -140,7 +140,7 @@ export const EnterPassword = ({
     if (password === repassword) {
       setToken('token');
       setNewUser(true);
-      navigate('/new/goal');
+      navigate('/new/goal?newuser=true');
     } else {
       setNoMatch(true);
     }
