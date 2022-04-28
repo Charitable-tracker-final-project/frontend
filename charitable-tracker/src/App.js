@@ -7,14 +7,19 @@ import {
   // Link,
 } from 'react-router-dom';
 // import axios from 'axios'
+import Navbar from './components/Nav/Navbar';
+import Profile from './components/Nav/Profile';
 import Landing from './components/Landing';
 import Home from './components/Home';
 import bulma from './images/made-with-bulma--semiblack.png';
 import Register from './components/Register';
 import { useState } from 'react';
+import GoalSet from './components/GoalSet';
+import CreateVolunteer from './components/Goals/CreateVolunteer';
+import CreateDonation from './components/Goals/CreateDonation';
 
 function App() {
-  const [newUser, setNewUser] = useState(null);
+  const [newUser, setNewUser] = useState(false);
   const [token, setToken] = useLocalStorageState('QuestionBoxToken', '');
   const [, setStoreUsername] = useLocalStorageState(
     'CharitableTrackerUsername',
@@ -88,9 +93,36 @@ function App() {
           </Routes>
         ) : (
           <>
-            <Routes>
-              <Route path='/' element={<Home handleLogOut={handleLogOut} />} />
-            </Routes>
+            {!newUser && <Navbar handleLogOut={handleLogOut} />}
+            <div className='columns is-mobile'>
+              {!newUser && (
+                <>
+                  <div className='column is-narrow'>
+                    <Profile />
+                  </div>
+                </>
+              )}
+              <div className='column'>
+                <br></br>
+                <main>
+                  <Routes>
+                    <Route
+                      path='/'
+                      element={<Home handleLogOut={handleLogOut} />}
+                    />
+                    <Route path='/new/goal' element={<GoalSet />} />
+                    <Route
+                      path='/new/goal/volunteering'
+                      element={<CreateVolunteer />}
+                    />
+                    <Route
+                      path='/new/goal/donation'
+                      element={<CreateDonation />}
+                    />
+                  </Routes>
+                </main>
+              </div>
+            </div>
           </>
         )}
       </Router>
