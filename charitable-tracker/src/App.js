@@ -17,6 +17,7 @@ import { useState } from 'react';
 import GoalSet from './components/GoalSet';
 import CreateVolunteer from './components/Goals/CreateVolunteer';
 import CreateDonation from './components/Goals/CreateDonation';
+import Volunteering from './components/Details/Volunteering';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -119,6 +120,7 @@ function App() {
                       path='/new/goal/donation'
                       element={<CreateDonation />}
                     />
+                    <Route path='/volunteering' element={<Volunteering />} />
                   </Routes>
                 </main>
               </div>
