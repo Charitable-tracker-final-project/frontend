@@ -353,7 +353,7 @@ export const DonateOption = ({
             <div className='control'>
               <div
                 className='button is-black is-large pl-6 pr-6'
-                onClick={() => [setStep(step + 1), setNewUser(false)]}
+                onClick={() => setStep(step + 1)}
               >
                 No
               </div>
@@ -365,7 +365,7 @@ export const DonateOption = ({
   );
 };
 
-export const Complete = () => {
+export const Complete = ({ newUser, setNewUser }) => {
   const styles = {
     rainbow: {
       backgroundImage:
@@ -385,6 +385,7 @@ export const Complete = () => {
                 <div
                   className='button has-text-white is-size-3 is-large pl-6 pr-6'
                   style={styles.rainbow}
+                  onClick={() => setNewUser(false)}
                 >
                   Go Home
                 </div>

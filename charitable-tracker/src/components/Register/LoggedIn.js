@@ -57,7 +57,7 @@ export default function LoggedIn({
             setStep={setStep}
           />
         )}
-        {step === 4 && <Complete />}
+        {step === 4 && <Complete newUser={newUser} setNewUser={setNewUser} />}
         <div className='field is-grouped is-grouped-centered'>
           {step > 1 && (
             <div className='control'>
