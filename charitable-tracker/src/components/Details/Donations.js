@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
+import placeholder from '../../images/logo512.png';
 
-export default function Volunteering() {
-  const [volunteerings, setVolunteerings] = useState(null);
+export default function Donations() {
+  const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(0);
@@ -23,11 +24,11 @@ export default function Volunteering() {
 
   useEffect(() => {
     axios
-      .get('https://charitable-tracker.herokuapp.com/api/Vrecords/')
+      .get('https://charitable-tracker.herokuapp.com/api/Drecords/')
       .then((res) => {
-        console.log('Get Volunteering Called');
+        console.log('Get Donations Called');
         console.log(res.data);
-        setVolunteerings(res.data);
+        setDonations(res.data);
       })
       .then(() => {
         setIsLoading(false);
@@ -40,7 +41,7 @@ export default function Volunteering() {
   return (
     <>
       <div style={styles.regPage}>
-        <h1 className='title'>My Volunteering</h1>
+        <h1 className='title'>My Donations</h1>
         {isLoading ? (
           <>
             <Loading />
@@ -54,27 +55,27 @@ export default function Volunteering() {
                     <h3>{error}</h3>
                   </div>
                 )}
-                {volunteerings.map((v, key) => {
-                  const V_id = v.pk;
+                {donations.map((d, key) => {
+                  const D_id = d.pk;
                   return (
                     <div className='box p-5 mb-5' key={key}>
                       <div className='columns'>
                         <div className='column is-10'>
                           <p className='is-size-7 has-text-grey'>{`${dateConvert(
-                            v.created_at
+                            d.created_at
                           )}`}</p>
-                          You volunteered <b>{`${v.hours} hours`}</b> with{' '}
-                          <b>{`${v.organization}`}</b>, benefiting{' '}
+                          You donated <b>{`$${d.amountdonated.toFixed(2)}`}</b>{' '}
+                          to <b>{`${d.organization}`}</b>, benefiting{' '}
                           <b>
-                            <i>{`${v.cause}`}</i>
+                            <i>{`${d.cause}`}</i>
                           </b>
                         </div>
                         <div className='column is-2'>
                           <div className='field is-grouped is-grouped-centered'>
                             <div className='control'>
-                              <Link to={`/volunteering/edit/${V_id}`}>
+                              <Link to={`/volunteering/edit/${D_id}`}>
                                 <div className='button is-link'>
-                                  Edit Volunteering
+                                  Edit Donation
                                 </div>
                               </Link>
                             </div>
@@ -84,23 +85,29 @@ export default function Volunteering() {
                               <div
                                 className='button is-info'
                                 onClick={
-                                  isActive === V_id
+                                  isActive === D_id
                                     ? () => setIsActive(null)
-                                    : () => setIsActive(V_id)
+                                    : () => setIsActive(D_id)
                                 }
                               >
-                                View Details
+                                View Receipt
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      {isActive === V_id && (
+                      {isActive === D_id && (
                         <>
                           <hr></hr>
                           <div className='columns is-centered'>
-                            <div className='column'>
-                              <p>{v.description}</p>
+                            <p className='is-size-7 has-text-grey'>{`<filename would go here>`}</p>
+                            <div className='column is-flex is-align-content-center is-justify-content-center'>
+                              <img
+                                src={placeholder}
+                                alt={`receipt from ${dateConvert(
+                                  d.created_at
+                                )} donation`}
+                              />
                             </div>
                           </div>
                         </>

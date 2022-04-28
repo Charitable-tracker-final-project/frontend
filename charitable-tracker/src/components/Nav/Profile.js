@@ -44,20 +44,23 @@ export default function Profile() {
         className='m-0'
       >
         <SidebarHeader>
-          <div style={styles.menuIcon} onClick={onClickMenuIcon}>
-            <a
-              onClick={() => {
-                setIsActive(!isActive);
-              }}
-              role='button'
-              className={`has-text-white ${isActive ? 'is-active' : ''}`}
-              aria-label='menu'
-              // eslint-disable-next-line jsx-a11y/aria-proptypes
-              aria-expanded={`${isActive ? 'true' : 'false'}`}
-              data-target='charitableNavbar'
-            >
-              {`${isActive ? `${username}'s Profile` : 'Profile'}`}
-            </a>
+          <div
+            onClick={() => {
+              setIsActive(!isActive);
+            }}
+          >
+            <div style={styles.menuIcon} onClick={onClickMenuIcon}>
+              <a
+                role='button'
+                className={`has-text-white ${isActive ? 'is-active' : ''}`}
+                aria-label='menu'
+                // eslint-disable-next-line jsx-a11y/aria-proptypes
+                aria-expanded={`${isActive ? 'true' : 'false'}`}
+                data-target='charitableNavbar'
+              >
+                {`${isActive ? `${username}'s Profile` : 'Profile'}`}
+              </a>
+            </div>
           </div>
         </SidebarHeader>
         <Menu iconShape='square' className='has-text-white'>
