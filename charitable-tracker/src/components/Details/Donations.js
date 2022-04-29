@@ -82,7 +82,7 @@ export default function Donations({ token }) {
                             <div className='column is-2 pr-5'>
                               <div className='field is-grouped is-grouped-centered'>
                                 <div className='control'>
-                                  <Link to={`/volunteering/edit/${D_id}`}>
+                                  <Link to={`/donations/edit/${D_id}`}>
                                     <div className='button is-link'>
                                       Edit Donation
                                     </div>

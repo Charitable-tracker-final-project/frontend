@@ -132,15 +132,30 @@ export default function LogVolunteering() {
                               What cause did this benefit?
                             </div>
                           </label>
-                          <input
-                            type='text'
-                            className='input is-rounded has-text-centered'
-                            id='vol-cause'
-                            required
-                            placeholder='Cause'
-                            value={cause}
-                            onChange={(event) => setCause(event.target.value)}
-                          />
+                          <div className='select'>
+                            <select
+                              className='input is-rounded has-text-centered'
+                              id='vol-cause'
+                              required
+                              value={cause}
+                              onChange={(event) => setCause(event.target.value)}
+                            >
+                              <option>Animals</option>
+                              <option>Arts Culture Humanities</option>
+                              <option>Asian Rights</option>
+                              <option>Black Rights</option>
+                              <option>Community Development</option>
+                              <option>Education</option>
+                              <option>Environmental</option>
+                              <option>Health</option>
+                              <option>Human and Civil Rights</option>
+                              <option>International</option>
+                              <option>Latino Rights</option>
+                              <option>Research and Public Policy</option>
+                              <option>Religion</option>
+                              <option>Women's Rights</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                       <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
