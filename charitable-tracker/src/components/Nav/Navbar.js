@@ -39,17 +39,20 @@ export default function Navbar({ handleLogOut }) {
           className={`navbar-menu ${isActive ? 'is-active' : ''}`}
         >
           <div className='navbar-start'>
+            <Link to='/' className='navbar-item'>
+              Dashboard
+            </Link>
             <Link to='/new/donation' className='navbar-item'>
               Enter Donations
             </Link>
             <Link to='/new/volunteer-hours' className='navbar-item'>
               Enter Volunteer Hours
             </Link>
+            <Link to='/new/goal' className='navbar-item'>
+              Create Goal
+            </Link>
           </div>
           <div className='navbar-end'>
-            <Link className='navbar-item' to='/results'>
-              Results
-            </Link>
             <div className='button is-warning mt-1' onClick={handleLogOut}>
               <Link to='/'>Log Out</Link>
             </div>

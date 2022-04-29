@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo512.png';
 import google from '../images/btn_google_signin_light_pressed_web@2x.png';
+import axios from 'axios';
 
 export default function Landing({ token, setToken, setAuth }) {
   // const navigate = useNavigate();
@@ -13,17 +14,24 @@ export default function Landing({ token, setToken, setAuth }) {
     console.log('Hangle Login Called');
     event.preventDefault();
     setError('');
-    setAuth(username, 'testoken');
-    // axios
-    //   .post('https://questionbox-rocket.herokuapp.com/auth/token/login/', {
-    //     username: username,
-    //     password: password,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setAuth(username, res.data.auth_token);
-    //   })
-    //   .catch((e) => setError(e.message));
+    axios
+      .post('https://charitable-tracker.herokuapp.com/auth/login/', {
+        username: username,
+        password: password,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAuth(username, res.data.key);
+      })
+      .catch((e) => [ErrorHandling(e.message)]);
+  };
+
+  const ErrorHandling = (errorMessage) => {
+    if (errorMessage.includes('400')) {
+      setError('Your username or password are inccorect! Please try again...');
+    } else {
+      setError('Something went wrong... Please try again later');
+    }
   };
 
   const handleOAuth = (event) => {
@@ -52,8 +60,8 @@ export default function Landing({ token, setToken, setAuth }) {
       <div className='columns is-centered'>
         <div className='column is-one-third'>
           {error ? (
-            <div className='box has-background-danger has-text-white'>
-              <h3>{`Login failed: ${error}`}</h3>
+            <div className='box has-background-danger has-text-white has-text-centered'>
+              <h3>{`${error}`}</h3>
             </div>
           ) : (
             <></>
