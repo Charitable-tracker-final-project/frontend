@@ -21,6 +21,8 @@ import Volunteering from './components/Details/Volunteering';
 import Donations from './components/Details/Donations';
 import LogDonation from './components/Log/LogDonation';
 import LogVolunteering from './components/Log/LogVolunteering';
+import EditVolunteering from './components/Edit/EditVolunteering';
+import EditDonation from './components/Edit/EditDonation';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -133,8 +135,16 @@ function App() {
                   element={<Volunteering token={token} />}
                 />
                 <Route
+                  path='/volunteering/edit/:V_id'
+                  element={<EditVolunteering token={token} />}
+                />
+                <Route
                   path='/donations'
                   element={<Donations token={token} />}
+                />
+                <Route
+                  path='/donations/edit/:D_id'
+                  element={<EditDonation token={token} />}
                 />
               </Routes>
             </div>
