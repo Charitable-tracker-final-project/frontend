@@ -1,9 +1,13 @@
 $sidebar-color: white;
-$sidebar-bg-color: hsl(204, 71%, 39%);
-$sidebar-collapsed-width: max(4rem);
+$sidebar-bg-color: hsl(188, 71%, 39%);
+$sidebar-collapsed-width: max(5rem);
 
 .Menu {
   color: white;
+}
+
+.SidebarHeadText {
+  font-size: small;
 }
 
 @import '~react-pro-sidebar/dist/scss/styles.scss';

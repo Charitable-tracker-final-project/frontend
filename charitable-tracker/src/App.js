@@ -19,6 +19,8 @@ import CreateVolunteer from './components/Goals/CreateVolunteer';
 import CreateDonation from './components/Goals/CreateDonation';
 import Volunteering from './components/Details/Volunteering';
 import Donations from './components/Details/Donations';
+import LogDonation from './components/Log/LogDonation';
+import LogVolunteering from './components/Log/LogVolunteering';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -104,28 +106,25 @@ function App() {
                   </div>
                 </>
               )}
-              <div className='column'>
-                <br></br>
-                <main>
-                  <Routes>
-                    <Route
-                      path='/'
-                      element={<Home handleLogOut={handleLogOut} />}
-                    />
-                    <Route path='/new/goal' element={<GoalSet />} />
-                    <Route
-                      path='/new/goal/volunteering'
-                      element={<CreateVolunteer />}
-                    />
-                    <Route
-                      path='/new/goal/donation'
-                      element={<CreateDonation />}
-                    />
-                    <Route path='/volunteering' element={<Volunteering />} />
-                    <Route path='/donations' element={<Donations />} />
-                  </Routes>
-                </main>
-              </div>
+              <Routes>
+                <Route
+                  path='/'
+                  element={<Home handleLogOut={handleLogOut} />}
+                />
+                <Route path='/new/donation' element={<LogDonation />} />
+                <Route
+                  path='/new/volunteer-hours'
+                  element={<LogVolunteering />}
+                />
+                <Route path='/new/goal' element={<GoalSet />} />
+                <Route
+                  path='/new/goal/volunteering'
+                  element={<CreateVolunteer />}
+                />
+                <Route path='/new/goal/donation' element={<CreateDonation />} />
+                <Route path='/volunteering' element={<Volunteering />} />
+                <Route path='/donations' element={<Donations />} />
+              </Routes>
             </div>
           </>
         )}

@@ -39,79 +39,84 @@ export default function Volunteering() {
 
   return (
     <>
-      <div style={styles.regPage}>
-        <h1 className='title'>My Volunteering</h1>
-        {isLoading ? (
-          <>
-            <Loading />
-          </>
-        ) : (
-          <>
-            <div className='columns is-centered'>
-              <div className='column is-11'>
-                {error && (
-                  <div className='box has-background-danger has-text-white'>
-                    <h3>{error}</h3>
-                  </div>
-                )}
-                {volunteerings.map((v, key) => {
-                  const V_id = v.pk;
-                  return (
-                    <div className='box p-5 mb-5' key={key}>
-                      <div className='columns'>
-                        <div className='column is-10'>
-                          <p className='is-size-7 has-text-grey'>{`${dateConvert(
-                            v.created_at
-                          )}`}</p>
-                          You volunteered <b>{`${v.hours} hours`}</b> with{' '}
-                          <b>{`${v.organization}`}</b>, benefiting{' '}
-                          <b>
-                            <i>{`${v.cause}`}</i>
-                          </b>
-                        </div>
-                        <div className='column is-2'>
-                          <div className='field is-grouped is-grouped-centered'>
-                            <div className='control'>
-                              <Link to={`/volunteering/edit/${V_id}`}>
-                                <div className='button is-link'>
-                                  Edit Volunteering
-                                </div>
-                              </Link>
+      <div className='column'>
+        <br></br>
+        <main>
+          <div style={styles.regPage}>
+            <h1 className='title'>My Volunteering</h1>
+            {isLoading ? (
+              <>
+                <Loading />
+              </>
+            ) : (
+              <>
+                <div className='columns is-centered'>
+                  <div className='column is-11'>
+                    {error && (
+                      <div className='box has-background-danger has-text-white'>
+                        <h3>{error}</h3>
+                      </div>
+                    )}
+                    {volunteerings.map((v, key) => {
+                      const V_id = v.pk;
+                      return (
+                        <div className='box p-5 mb-5' key={key}>
+                          <div className='columns'>
+                            <div className='column is-10'>
+                              <p className='is-size-7 has-text-grey'>{`${dateConvert(
+                                v.created_at
+                              )}`}</p>
+                              You volunteered <b>{`${v.hours} hours`}</b> with{' '}
+                              <b>{`${v.organization}`}</b>, benefiting{' '}
+                              <b>
+                                <i>{`${v.cause}`}</i>
+                              </b>
                             </div>
-                          </div>
-                          <div className='field is-grouped is-grouped-centered'>
-                            <div className='control'>
-                              <div
-                                className='button is-info'
-                                onClick={
-                                  isActive === V_id
-                                    ? () => setIsActive(null)
-                                    : () => setIsActive(V_id)
-                                }
-                              >
-                                View Details
+                            <div className='column is-2'>
+                              <div className='field is-grouped is-grouped-centered'>
+                                <div className='control'>
+                                  <Link to={`/volunteering/edit/${V_id}`}>
+                                    <div className='button is-link'>
+                                      Edit Volunteering
+                                    </div>
+                                  </Link>
+                                </div>
+                              </div>
+                              <div className='field is-grouped is-grouped-centered'>
+                                <div className='control'>
+                                  <div
+                                    className='button is-info'
+                                    onClick={
+                                      isActive === V_id
+                                        ? () => setIsActive(null)
+                                        : () => setIsActive(V_id)
+                                    }
+                                  >
+                                    View Details
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
+                          {isActive === V_id && (
+                            <>
+                              <hr></hr>
+                              <div className='columns is-centered'>
+                                <div className='column'>
+                                  <p>{v.description}</p>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </div>
-                      </div>
-                      {isActive === V_id && (
-                        <>
-                          <hr></hr>
-                          <div className='columns is-centered'>
-                            <div className='column'>
-                              <p>{v.description}</p>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
+                      );
+                    })}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </main>
       </div>
     </>
   );

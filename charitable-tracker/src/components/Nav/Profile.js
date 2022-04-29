@@ -50,20 +50,53 @@ export default function Profile() {
             }}
           >
             <div style={styles.menuIcon} onClick={onClickMenuIcon}>
-              <a
-                role='button'
-                className={`has-text-white ${isActive ? 'is-active' : ''}`}
-                aria-label='menu'
-                // eslint-disable-next-line jsx-a11y/aria-proptypes
-                aria-expanded={`${isActive ? 'true' : 'false'}`}
-                data-target='charitableNavbar'
-              >
-                {`${isActive ? `${username}'s Profile` : 'Profile'}`}
-              </a>
+              <div className='columns mt-0 mb-0 pt-0 pb-0'>
+                <div className='column mt-0 mb-0 pt-0 pb-0'>
+                  <a
+                    role='button'
+                    className={`has-text-white SidebarHeadText ${
+                      isActive ? 'is-active' : ''
+                    }`}
+                    aria-label='menu'
+                    // eslint-disable-next-line jsx-a11y/aria-proptypes
+                    aria-expanded={`${isActive ? 'true' : 'false'}`}
+                    data-target='charitableNavbar'
+                  >
+                    {`${isActive ? `${username}'s Dashboard` : 'Dashboard'}`}
+                  </a>
+                </div>
+              </div>{' '}
+              <div className='columns mt-0 mb-0 pt-0 pb-0'>
+                <div className='column mt-0 mb-0 pt-0 pb-0'>
+                  <a
+                    role='button'
+                    className={`has-text-white SidebarHeadText ${
+                      isActive ? 'is-active' : ''
+                    }`}
+                    aria-label='menu'
+                    // eslint-disable-next-line jsx-a11y/aria-proptypes
+                    aria-expanded={`${isActive ? 'true' : 'false'}`}
+                    data-target='charitableNavbar'
+                  >
+                    Settings
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </SidebarHeader>
         <Menu iconShape='square' className='has-text-white'>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <Link
+              to='/reports'
+              onClick={() => {
+                setIsActive(!isActive);
+                onClickMenuIcon();
+              }}
+            >
+              Reports
+            </Link>
+          </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
             <Link
               to='/goals'
@@ -98,17 +131,6 @@ export default function Profile() {
             </Link>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
-          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/new/goal'
-              onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
-              }}
-            >
-              Create Goal
-            </Link>
-          </MenuItem>
           <SubMenu
             title='Edit Yearly Income'
             className={`${isActive ? '' : 'is-invisible'}`}
