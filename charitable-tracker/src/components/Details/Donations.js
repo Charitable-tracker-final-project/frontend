@@ -4,7 +4,7 @@ import axios from 'axios';
 import Loading from '../Loading/Loading';
 import placeholder from '../../images/logo512.png';
 
-export default function Donations() {
+export default function Donations({ token }) {
   const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -24,11 +24,16 @@ export default function Donations() {
 
   useEffect(() => {
     axios
-      .get('https://charitable-tracker.herokuapp.com/api/Drecords/')
+      .get('https://charitable-tracker.herokuapp.com/api/Drecords/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(res.data);
-        setDonations(res.data);
+        console.log(token);
+        console.log(res.data.results);
+        setDonations(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -74,7 +79,7 @@ export default function Donations() {
                                 <i>{`${d.cause}`}</i>
                               </b>
                             </div>
-                            <div className='column is-2'>
+                            <div className='column is-2 pr-5'>
                               <div className='field is-grouped is-grouped-centered'>
                                 <div className='control'>
                                   <Link to={`/volunteering/edit/${D_id}`}>

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 
-export default function Volunteering() {
+export default function Volunteering({ token }) {
   const [volunteerings, setVolunteerings] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -23,11 +23,15 @@ export default function Volunteering() {
 
   useEffect(() => {
     axios
-      .get('https://charitable-tracker.herokuapp.com/api/Vrecords/')
+      .get('https://charitable-tracker.herokuapp.com/api/Vrecords/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
       .then((res) => {
         console.log('Get Volunteering Called');
         console.log(res.data);
-        setVolunteerings(res.data);
+        setVolunteerings(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -72,7 +76,7 @@ export default function Volunteering() {
                                 <i>{`${v.cause}`}</i>
                               </b>
                             </div>
-                            <div className='column is-2'>
+                            <div className='column is-2 pr-6'>
                               <div className='field is-grouped is-grouped-centered'>
                                 <div className='control'>
                                   <Link to={`/volunteering/edit/${V_id}`}>
