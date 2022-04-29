@@ -11,12 +11,13 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import '../Nav/custom.scss';
 import { Link } from 'react-router-dom';
 
-export default function Profile() {
+export default function Profile(storeUsername) {
+  console.log(storeUsername);
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [income, setIncome] = useState('');
   const [incomeInput, setIncomeInput] = useState('');
-  const [username, setUsername] = useState('Adam');
+  const [username, setUsername] = useState(storeUsername.storeuUsername);
   const styles = {
     sideBarHeight: {
       height: '100%',

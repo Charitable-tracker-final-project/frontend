@@ -10,6 +10,8 @@ export const EnterUsername = ({
   step,
   setStep,
 }) => {
+  const [error, setError] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
     setStep(step + 1);
@@ -138,9 +140,23 @@ export const EnterPassword = ({
     setError('');
     console.log(username, password, repassword);
     if (password === repassword) {
-      setToken('token');
-      setNewUser(true);
-      navigate('/new/goal?newuser=true');
+      axios
+        .post(`https://charitable-tracker.herokuapp.com/auth/registration/`, {
+          username: username,
+          password1: password,
+          password2: repassword,
+        })
+        .then((res) => {
+          console.log('Successfully Rgistered!');
+          console.log(res);
+          setToken('token');
+          setNewUser(true);
+          navigate('/new/goal?newuser=true');
+        })
+        .catch((e) => {
+          console.log(e);
+          setError(e.message);
+        });
     } else {
       setNoMatch(true);
     }
