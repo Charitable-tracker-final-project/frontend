@@ -27,7 +27,7 @@ import EditDonation from './components/Edit/EditDonation';
 function App() {
   const [newUser, setNewUser] = useState(false);
   const [token, setToken] = useLocalStorageState('CharitableToken', '');
-  const [, setStoreUsername] = useLocalStorageState(
+  const [storeUsername, setStoreUsername] = useLocalStorageState(
     'CharitableTrackerUsername',
     ''
   );
@@ -104,7 +104,7 @@ function App() {
               {!newUser && (
                 <>
                   <div className='column is-narrow'>
-                    <Profile />
+                    <Profile storeuUsername={storeUsername} />
                   </div>
                 </>
               )}

@@ -7,7 +7,7 @@ export default function Home({ handleLogOut }) {
   return (
     <>
       {/* <div className='column is-narrow'>
-        <Profile />
+        <Profile storeUsername={storeUsername}/>
       </div> */}
       <div className='column'>
         <br></br>
