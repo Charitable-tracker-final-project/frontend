@@ -31,9 +31,8 @@ export default function Donations({ token }) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(token);
-        console.log(res.data.results);
-        setDonations(res.data.results);
+        console.log(res.data);
+        setDonations(res.data);
       })
       .then(() => {
         setIsLoading(false);
