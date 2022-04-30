@@ -23,6 +23,7 @@ import LogDonation from './components/Log/LogDonation';
 import LogVolunteering from './components/Log/LogVolunteering';
 import EditVolunteering from './components/Edit/EditVolunteering';
 import EditDonation from './components/Edit/EditDonation';
+import Reports from './components/Reports';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -113,6 +114,7 @@ function App() {
                   path='/'
                   element={<Home handleLogOut={handleLogOut} token={token} />}
                 />
+                <Route path='/reports' element={<Reports token={token} />} />
                 <Route
                   path='/new/donation'
                   element={<LogDonation token={token} />}
