@@ -31,7 +31,7 @@ export default function Volunteering({ token }) {
       .then((res) => {
         console.log('Get Volunteering Called');
         console.log(res.data);
-        setVolunteerings(res.data.results);
+        setVolunteerings(res.data);
       })
       .then(() => {
         setIsLoading(false);
