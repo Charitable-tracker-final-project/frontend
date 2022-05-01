@@ -100,13 +100,24 @@ export default function Profile(storeUsername) {
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
             <Link
-              to='/goals'
+              to='/goals/donation'
               onClick={() => {
                 setIsActive(!isActive);
                 onClickMenuIcon();
               }}
             >
-              My Goals
+              My Donation Goals
+            </Link>
+          </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <Link
+              to='/goals/volunteer'
+              onClick={() => {
+                setIsActive(!isActive);
+                onClickMenuIcon();
+              }}
+            >
+              My Volunteer Goals
             </Link>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
@@ -117,7 +128,7 @@ export default function Profile(storeUsername) {
                 onClickMenuIcon();
               }}
             >
-              My Volunteering
+              My Volunteer Hours
             </Link>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
