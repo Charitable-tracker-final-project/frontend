@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { VictoryContainer, VictoryPie } from 'victory';
+import { VictoryContainer, VictoryPie, VictoryBar } from 'victory';
 
 export default function Graphs2() {
   const [totalHours, setTotalHours] = useState(`<hours>`);
@@ -25,10 +25,15 @@ export default function Graphs2() {
             innerRadius='80'
             colorScale={['#f9c316', '#b5d13f', '#f973bf', '#28c1e0', '#9f60e2']}
             padding={{ left: '250', right: '-150', top: '-70' }}
-            containerComponent={<VictoryContainer width='800' height='340' />}
+            containerComponent={<VictoryContainer width='800' height='360' />}
             animate={{ duration: 100, easing: 'exp' }}
             data={data}
           />
+        </div>
+      </div>
+      <div className='columns is-centered'>
+        <div className='column'>
+          <VictoryBar />
         </div>
       </div>
     </>
