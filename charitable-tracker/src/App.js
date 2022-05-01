@@ -26,6 +26,7 @@ import EditDonation from './components/Edit/EditDonation';
 import DonationGoals from './components/Details/DonationGoals';
 import VolunteerGoals from './components/Details/VolunteerGoals';
 import EditVolunteerGoal from './components/Edit/EditVolunteerGoal';
+import EditDonationGoal from './components/Edit/EditDonationGoal';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -154,7 +155,10 @@ function App() {
                   element={<DonationGoals token={token} />}
                 />
                 {/* <Route path='/goals/donation/:G_id' element/> */}
-                {/* <Route path='/goals/donation/edit/:G_id' element/> */}
+                <Route
+                  path='/goals/donation/edit/:G_id'
+                  element={<EditDonationGoal token={token} />}
+                />
                 <Route
                   path='/goals/volunteer'
                   element={<VolunteerGoals token={token} />}

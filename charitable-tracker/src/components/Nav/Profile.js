@@ -100,28 +100,6 @@ export default function Profile(storeUsername) {
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
             <Link
-              to='/goals/donation'
-              onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
-              }}
-            >
-              My Donation Goals
-            </Link>
-          </MenuItem>
-          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/goals/volunteer'
-              onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
-              }}
-            >
-              My Volunteer Goals
-            </Link>
-          </MenuItem>
-          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
               to='/volunteering'
               onClick={() => {
                 setIsActive(!isActive);
@@ -142,6 +120,31 @@ export default function Profile(storeUsername) {
               My Donations
             </Link>
           </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <Link
+              to='/goals/volunteer'
+              onClick={() => {
+                setIsActive(!isActive);
+                onClickMenuIcon();
+              }}
+            >
+              My Volunteer Goals
+            </Link>
+          </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <Link
+              to='/goals/donation'
+              onClick={() => {
+                setIsActive(!isActive);
+                onClickMenuIcon();
+              }}
+            >
+              My Donation Goals
+            </Link>
+          </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <SubMenu
             title='Edit Yearly Income'
