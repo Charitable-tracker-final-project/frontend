@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 import placeholder from '../../images/logo512.png';
 
-export default function Donations({ token }) {
+export default function SingleDonationGoal({ token }) {
+  const params = useParams();
+  const [title, setTitle] = useState('');
   const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -24,15 +26,19 @@ export default function Donations({ token }) {
 
   useEffect(() => {
     axios
-      .get('https://charitable-tracker.herokuapp.com/api/Drecords/', {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
+      .get(
+        `https://charitable-tracker.herokuapp.com/api/Dbreakdown/${params.G_id}/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
       .then((res) => {
         console.log('Get Donations Called');
         console.log(res.data);
-        setDonations(res.data);
+        setTitle(res.data.goaltitle);
+        setDonations(res.data.drecord);
       })
       .then(() => {
         setIsLoading(false);
@@ -40,7 +46,7 @@ export default function Donations({ token }) {
       .catch((e) => {
         setError(e.message);
       });
-  }, [token]);
+  }, [params.G_id, token]);
 
   return (
     <>
@@ -48,7 +54,20 @@ export default function Donations({ token }) {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title'>My Donations</h1>
+            <div className='columns'>
+              <div className='column is-9'>
+                <h1 className='title'>{`Donations towards ${title}`}</h1>
+              </div>
+              <div className='column is-3'>
+                <div className='field is-grouped is-grouped-centered'>
+                  <div className='control'>
+                    <Link to='/goals/donation'>
+                      <div className='button is-warning pl-6 pr-6'>Back</div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
             {isLoading ? (
               <>
                 <Loading />
@@ -68,7 +87,7 @@ export default function Donations({ token }) {
                           <div className='columns is-centered'>
                             <div className='column is-10 has-text-centered'>
                               <h1 className='is-size-3 has-text-black'>
-                                You haven't entered any donations yet...
+                                You haven't contributed to this goal yet...
                               </h1>
                               <div className='field is-grouped is-grouped-centered mt-5'>
                                 <div className='control'>

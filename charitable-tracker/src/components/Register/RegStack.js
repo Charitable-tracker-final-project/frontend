@@ -149,7 +149,7 @@ export const EnterPassword = ({
         .then((res) => {
           console.log('Successfully Rgistered!');
           console.log(res);
-          setToken('token');
+          setAuth(username, res.data.key);
           setNewUser(true);
           navigate('/new/goal?newuser=true');
         })
@@ -224,10 +224,33 @@ export const EnterIncome = ({
   setSkipable,
   step,
   setStep,
+  token,
 }) => {
+  const [error, setError] = useState('');
+
   const handleSubmit = (event) => {
+    console.log('Handle Income Called');
     event.preventDefault();
-    setStep(step + 1);
+    setError('');
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/annualincome/`,
+        {
+          annual_income: income,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully Set Income!');
+        console.log(res);
+        setStep(step + 1);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
   };
 
   useEffect(() => {
@@ -310,7 +333,7 @@ export const VolunteerOption = ({
           </div>
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
-              <Link to='/'>
+              <Link to='/new/volunteer-hours'>
                 <div
                   className='button is-success is-large pl-6 pr-6'
                   onClick={() => setNewUser(false)}
@@ -355,7 +378,7 @@ export const DonateOption = ({
           </div>
           <div className='field is-grouped is-grouped-centered'>
             <div className='control'>
-              <Link to='/'>
+              <Link to='/new/donation'>
                 <div
                   className='button is-success is-large pl-6 pr-6'
                   onClick={() => setNewUser(false)}
@@ -399,8 +422,7 @@ export const Complete = ({ newUser, setNewUser }) => {
             <div className='control'>
               <Link to='/'>
                 <div
-                  className='button has-text-white is-size-3 is-large pl-6 pr-6'
-                  style={styles.rainbow}
+                  className='button has-text-white is-size-3 is-success is-large pl-6 pr-6'
                   onClick={() => setNewUser(false)}
                 >
                   Go Home

@@ -41,7 +41,6 @@ export default function LogVolunteering() {
     setDate(today());
   }, []);
 
-  console.log(params);
   return (
     <>
       <div className='column'>

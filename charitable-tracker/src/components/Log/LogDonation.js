@@ -40,7 +40,6 @@ export default function LogDonation() {
     setDate(today());
   }, []);
 
-  console.log(params);
   return (
     <>
       <div className='column'>

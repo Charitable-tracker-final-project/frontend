@@ -118,7 +118,7 @@ export default function DonationGoals({ token }) {
                                   <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>
                                       <Link to={`/goals/donation/${G_id}`}>
-                                        <div className='button is-link'>
+                                        <div className='button is-info'>
                                           View Donations
                                         </div>
                                       </Link>
