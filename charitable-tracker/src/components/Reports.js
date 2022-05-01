@@ -21,7 +21,7 @@ export default function Reports() {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title'>My Donations</h1>
+            <h1 className='title'>My Reports</h1>
             {isLoading ? (
               <>
                 <Loading />
