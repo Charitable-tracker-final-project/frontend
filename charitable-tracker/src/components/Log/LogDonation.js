@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export default function LogDonation() {
+export default function LogDonation({ token }) {
+  const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [org, setOrg] = useState('');
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
+  const [error, setError] = useState('');
 
   const styles = {
     regPage: {
@@ -15,17 +18,42 @@ export default function LogDonation() {
     },
   };
 
+  const handleSubmit = (event) => {
+    console.log('Handle Edit Called');
+    event.preventDefault();
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/Drecords/`,
+        {
+          amountdonated: dono,
+          created_at: date,
+          organization: org,
+          cause: cause,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res);
+        params === true ? navigate('/new/goal/?newuser=true') : navigate(`/`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   const today = () => {
     let newDate = new Date();
     let day = newDate.getDate();
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
 
-    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${day}`;
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+      day > 9 ? day : `0${day}`
+    }`;
   };
 
   function useQuery() {
@@ -175,30 +203,14 @@ export default function LogDonation() {
                           </div>
                         </div>
                       </div>
-                    </form>
-                    <div className='field is-grouped is-grouped-centered'>
-                      <div className='control'>
-                        {params === 'true' ? (
-                          <>
-                            {' '}
-                            <Link to='/new/goal/donation?newuser=true'>
-                              <div className='button is-info is-size-3 is-large pl-6 pr-6 mt-4 mb-4'>
-                                Submit
-                              </div>
-                            </Link>
-                          </>
-                        ) : (
-                          <>
-                            {' '}
-                            <Link to='/'>
-                              <div className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>
-                                Submit
-                              </div>
-                            </Link>
-                          </>
-                        )}
+                      <div className='field is-grouped is-grouped-centered'>
+                        <div className='control'>
+                          <button className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>
+                            Submit
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                     {params === 'true' && (
                       <>
                         <div className='field is-grouped is-grouped-centered mb-6'>
