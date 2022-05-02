@@ -37,6 +37,7 @@ export default function LoggedIn({
             setSkipable={setSkipable}
             step={step}
             setStep={setStep}
+            token={token}
           />
         )}
         {step === 2 && (
