@@ -186,30 +186,8 @@ export default function CreateVolunteer({ token }) {
                     <>
                       <div className='field'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-5'>
-                          <div className='has-text-centered has-text-weight-bold has-text-dark is-size-4'>
-                            How often would you like to be reminded about this?
-                          </div>
                           <label
-                            className='label is-size-5 has-text-black mt-5'
-                            htmlFor='vol-reminder'
-                          >
-                            Every:
-                          </label>
-                          <div className='select is-rounded'>
-                            <select
-                              id='vol-reminder'
-                              onChange={(event) =>
-                                setReminder(event.target.value)
-                              }
-                            >
-                              <option>Day</option>
-                              <option>Week</option>
-                              <option>Month</option>
-                              <option>Year</option>
-                            </select>
-                          </div>
-                          <label
-                            className='label has-text-centered mt-6'
+                            className='label has-text-centered'
                             htmlFor='don-email'
                           >
                             <div className='is-size-4'>
@@ -226,6 +204,27 @@ export default function CreateVolunteer({ token }) {
                               value={email}
                               onChange={(event) => setEmail(event.target.value)}
                             />
+                          </div>
+                          <div className='has-text-centered has-text-weight-bold has-text-dark is-size-4 mt-6'>
+                            How often would you like to be reminded about this?
+                          </div>
+                          <label
+                            className='label is-size-5 has-text-black mt-5'
+                            htmlFor='vol-reminder'
+                          >
+                            Every:
+                          </label>
+                          <div className='select is-rounded'>
+                            <select
+                              id='vol-reminder'
+                              onChange={(event) =>
+                                setReminder(event.target.value)
+                              }
+                            >
+                              <option>Week</option>
+                              <option>Month</option>
+                              <option>Year</option>
+                            </select>
                           </div>
                         </div>
                       </div>

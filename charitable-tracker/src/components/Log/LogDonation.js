@@ -9,6 +9,10 @@ export default function LogDonation({ token }) {
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
+  const [goals, setGoals] = useState(null);
+  const [goal, setGoal] = useState('');
+  const [goalPk, setGoalPk] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const styles = {
     regPage: {
@@ -18,9 +22,39 @@ export default function LogDonation({ token }) {
     },
   };
 
+  const goalMath = (goals, goal) => {
+    const result = goals.filter((goals) => goals.goaltitle === goal);
+    for (let i of result) {
+      console.log(i.pk);
+    }
+  };
+
+  useEffect(() => {
+    setError('');
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/Dgoals/', {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Donations Called');
+        console.log(res.data);
+        setGoals(res.data);
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  }, [token]);
+
   const handleSubmit = (event) => {
-    console.log('Handle Edit Called');
+    console.log('Handle Donation Called');
     event.preventDefault();
+    goalMath(goals, goal);
+    console.log(goalPk);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Drecords/`,
@@ -29,6 +63,7 @@ export default function LogDonation({ token }) {
           created_at: date,
           organization: org,
           cause: cause,
+          // donationrecord: goalPk,
         },
         {
           headers: { Authorization: `Token ${token}` },
@@ -184,7 +219,39 @@ export default function LogDonation({ token }) {
                           </div>
                         </div>
                       </div>
-                      <div className='field is-grouped is-grouped-centered'>
+                      {/* <div className='field is-grouped is-grouped-centered'>
+                        <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
+                          <label
+                            className='label has-text-centered'
+                            htmlFor='dono-cause'
+                          >
+                            <div className='is-size-5 mb-1'>
+                              Is this associated with a goal?
+                            </div>
+                          </label>
+                          <div className='select'>
+                            <select
+                              className='input is-rounded has-text-centered'
+                              id='dono-cause'
+                              required
+                              value={goal}
+                              onChange={(event) => setGoal(event.target.value)}
+                            >
+                              <option>------</option>
+                              {isLoading ? (
+                                <></>
+                              ) : (
+                                <>
+                                  {goals.map((g, key) => {
+                                    return <option>{`${g.goaltitle}`}</option>;
+                                  })}
+                                </>
+                              )}
+                            </select>
+                          </div>
+                        </div>
+                      </div> */}
+                      {/* <div className='field is-grouped is-grouped-centered'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
                           <label
                             className='label has-text-centered'
@@ -202,7 +269,7 @@ export default function LogDonation({ token }) {
                             Upload Photo
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
                           <button className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>

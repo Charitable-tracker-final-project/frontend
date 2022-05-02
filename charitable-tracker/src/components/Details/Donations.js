@@ -111,7 +111,7 @@ export default function Donations({ token }) {
                                       </Link>
                                     </div>
                                   </div>
-                                  <div className='field is-grouped is-grouped-centered'>
+                                  {/* <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>
                                       <div
                                         className='button is-info'
@@ -124,10 +124,10 @@ export default function Donations({ token }) {
                                         View Receipt
                                       </div>
                                     </div>
-                                  </div>
+                                  </div> */}
                                 </div>
                               </div>
-                              {isActive === D_id && (
+                              {/* {isActive === D_id && (
                                 <>
                                   <hr></hr>
                                   <div className='columns'>
@@ -144,7 +144,7 @@ export default function Donations({ token }) {
                                     </div>
                                   </div>
                                 </>
-                              )}
+                              )} */}
                             </div>
                           );
                         })}

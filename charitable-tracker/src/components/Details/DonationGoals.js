@@ -38,7 +38,7 @@ export default function DonationGoals({ token }) {
       .catch((e) => {
         setError(e.message);
       });
-  }, []);
+  }, [token]);
 
   return (
     <>
