@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Menu,
   MenuItem,
@@ -10,14 +10,17 @@ import {
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../Nav/custom.scss';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-export default function Profile(storeUsername) {
-  console.log(storeUsername);
+export default function Profile(props) {
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
-  const [income, setIncome] = useState('');
   const [incomeInput, setIncomeInput] = useState('');
-  const [username, setUsername] = useState(storeUsername.storeuUsername);
+  const [oldIncome, setOldIncome] = useState('');
+  const [username, setUsername] = useState(props.storeuUsername);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
   const styles = {
     sideBarHeight: {
       height: '100%',
@@ -30,12 +33,63 @@ export default function Profile(storeUsername) {
 
   const handleIncome = (event) => {
     event.preventDefault();
-    return null;
+    axios
+      .put(
+        'https://charitable-tracker.herokuapp.com/api/annualincome/1/',
+        {
+          annual_income: incomeInput,
+        },
+        {
+          headers: { Authorization: `Token ${props.token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
   };
 
   const onClickMenuIcon = () => {
     setCollapsed(!collapsed);
   };
+
+  useEffect(() => {
+    setError('');
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/annualincome/', {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Donations Called');
+        console.log(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+        setIncomeInput(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+        setOldIncome(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  }, [props.token]);
 
   return (
     <>
@@ -160,7 +214,7 @@ export default function Profile(storeUsername) {
                       className='input is-rounded'
                       id='income'
                       placeholder='35000'
-                      value={incomeInput}
+                      value={isLoading ? <></> : incomeInput}
                       onChange={(event) => setIncomeInput(event.target.value)}
                       pattern='[0-9]+'
                     />
@@ -176,7 +230,7 @@ export default function Profile(storeUsername) {
                     <div
                       className='button is-waring is-small'
                       type='reset'
-                      onClick={() => setIncomeInput('')}
+                      onClick={() => setIncomeInput(oldIncome)}
                     >
                       Reset
                     </div>
