@@ -23,6 +23,12 @@ import LogDonation from './components/Log/LogDonation';
 import LogVolunteering from './components/Log/LogVolunteering';
 import EditVolunteering from './components/Edit/EditVolunteering';
 import EditDonation from './components/Edit/EditDonation';
+import DonationGoals from './components/Details/DonationGoals';
+import VolunteerGoals from './components/Details/VolunteerGoals';
+import EditVolunteerGoal from './components/Edit/EditVolunteerGoal';
+import EditDonationGoal from './components/Edit/EditDonationGoal';
+import SingleDonationGoal from './components/Details/SingleDonationGoal';
+import SingleVolunteerGoal from './components/Details/SingleVolunteerGoal';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -145,6 +151,30 @@ function App() {
                 <Route
                   path='/donations/edit/:D_id'
                   element={<EditDonation token={token} />}
+                />
+                <Route
+                  path='/goals/donation'
+                  element={<DonationGoals token={token} />}
+                />
+                <Route
+                  path='/goals/donation/:G_id'
+                  element={<SingleDonationGoal token={token} />}
+                />
+                <Route
+                  path='/goals/donation/edit/:G_id'
+                  element={<EditDonationGoal token={token} />}
+                />
+                <Route
+                  path='/goals/volunteer'
+                  element={<VolunteerGoals token={token} />}
+                />
+                <Route
+                  path='/goals/volunteer/:G_id'
+                  element={<SingleVolunteerGoal token={token} />}
+                />
+                <Route
+                  path='/goals/volunteer/edit/:G_id'
+                  element={<EditVolunteerGoal token={token} />}
                 />
               </Routes>
             </div>

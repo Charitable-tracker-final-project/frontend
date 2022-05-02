@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
-import placeholder from '../../images/logo512.png';
 
-export default function Donations({ token }) {
-  const [donations, setDonations] = useState(null);
+export default function VolunteerGoals({ token }) {
+  const [goals, setGoals] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [isActive, setIsActive] = useState(0);
 
   const styles = {
     regPage: {
@@ -24,7 +22,7 @@ export default function Donations({ token }) {
 
   useEffect(() => {
     axios
-      .get('https://charitable-tracker.herokuapp.com/api/Drecords/', {
+      .get('https://charitable-tracker.herokuapp.com/api/Vgoals/', {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -32,7 +30,7 @@ export default function Donations({ token }) {
       .then((res) => {
         console.log('Get Donations Called');
         console.log(res.data);
-        setDonations(res.data);
+        setGoals(res.data);
       })
       .then(() => {
         setIsLoading(false);
@@ -48,7 +46,7 @@ export default function Donations({ token }) {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title'>My Donations</h1>
+            <h1 className='title'>My Volunteer Goals</h1>
             {isLoading ? (
               <>
                 <Loading />
@@ -62,19 +60,19 @@ export default function Donations({ token }) {
                         <h3>{error}</h3>
                       </div>
                     )}
-                    {!donations.length > 0 ? (
+                    {!goals.length > 0 ? (
                       <>
                         <div className='box p-5 mb-5'>
                           <div className='columns is-centered'>
                             <div className='column is-10 has-text-centered'>
                               <h1 className='is-size-3 has-text-black'>
-                                You haven't entered any donations yet...
+                                You haven't entered any volunteer goals yet...
                               </h1>
                               <div className='field is-grouped is-grouped-centered mt-5'>
                                 <div className='control'>
-                                  <Link to={`/new/donation`}>
+                                  <Link to={`/new/goal/donationing`}>
                                     <div className='button is-large is-primary'>
-                                      Enter New Donation
+                                      Enter New Volunteer Goal
                                     </div>
                                   </Link>
                                 </div>
@@ -85,66 +83,51 @@ export default function Donations({ token }) {
                       </>
                     ) : (
                       <>
-                        {donations.map((d, key) => {
-                          const D_id = d.pk;
+                        {goals.map((g, key) => {
+                          const G_id = g.pk;
                           return (
                             <div className='box p-5 mb-5' key={key}>
                               <div className='columns'>
                                 <div className='column is-10'>
-                                  <p className='is-size-7 has-text-grey'>{`${dateConvert(
-                                    d.created_at
-                                  )}`}</p>
-                                  You donated{' '}
-                                  <b>{`$${d.amountdonated.toFixed(2)}`}</b> to{' '}
-                                  <b>{`${d.organization}`}</b>, benefiting{' '}
-                                  <b>
-                                    <i>{`${d.cause}`}</i>
-                                  </b>
+                                  <div className='columns is-centered'>
+                                    <p className='is-size-7 has-text-grey has-text-centered'>{`${dateConvert(
+                                      g.created_at
+                                    )}`}</p>
+                                  </div>
+                                  <div className='columns is-7 is-centered'>
+                                    <h1 className='is-size-4 has-text-centered'>
+                                      {g.goaltitle}
+                                    </h1>
+                                  </div>
+                                  <div className='has-text-centered'>
+                                    You'd like to volunteer{' '}
+                                    <b>{`${g.volunteergoal}`} hours</b> every{' '}
+                                    <b>{`${g.interval}`}</b>
+                                  </div>
                                 </div>
-                                <div className='column is-2 pr-5'>
+                                <div className='column is-2 pr-6'>
                                   <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>
-                                      <Link to={`/donations/edit/${D_id}`}>
+                                      <Link
+                                        to={`/goals/volunteer/edit/${G_id}`}
+                                      >
                                         <div className='button is-link'>
-                                          Edit Donation
+                                          Edit Goal
                                         </div>
                                       </Link>
                                     </div>
                                   </div>
-                                  {/* <div className='field is-grouped is-grouped-centered'>
+                                  <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>
-                                      <div
-                                        className='button is-info'
-                                        onClick={
-                                          isActive === D_id
-                                            ? () => setIsActive(null)
-                                            : () => setIsActive(D_id)
-                                        }
-                                      >
-                                        View Receipt
-                                      </div>
+                                      <Link to={`/goals/volunteer/${G_id}`}>
+                                        <div className='button is-info'>
+                                          View Volunteer Hours
+                                        </div>
+                                      </Link>
                                     </div>
-                                  </div> */}
+                                  </div>
                                 </div>
                               </div>
-                              {/* {isActive === D_id && (
-                                <>
-                                  <hr></hr>
-                                  <div className='columns'>
-                                    <p className='is-size-7 has-text-grey'>{`<filename would go here>`}</p>
-                                  </div>
-                                  <div className='columns is-centered'>
-                                    <div className='column is-flex is-align-content-center is-justify-content-center'>
-                                      <img
-                                        src={placeholder}
-                                        alt={`receipt from ${dateConvert(
-                                          d.created_at
-                                        )} donation`}
-                                      />
-                                    </div>
-                                  </div>
-                                </>
-                              )} */}
                             </div>
                           );
                         })}

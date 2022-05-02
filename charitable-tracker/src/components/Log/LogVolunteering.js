@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export default function LogVolunteering() {
+export default function LogVolunteering({ token }) {
+  const navigate = useNavigate();
   const [date, setDate] = useState('');
   const [org, setOrg] = useState('');
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
   const [details, setDetails] = useState('');
+  const [error, setError] = useState('');
 
   const styles = {
     regPage: {
@@ -22,11 +25,37 @@ export default function LogVolunteering() {
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
 
-    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${day}`;
+    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+      day > 9 ? day : `0${day}`
+    }`;
   };
 
   const handleSubmit = (event) => {
+    console.log('Handle Edit Called');
     event.preventDefault();
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/Vrecords/`,
+        {
+          hours: dono,
+          created_at: date,
+          organization: org,
+          description: details,
+          cause: cause,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res);
+        params === true ? navigate('/new/goal/?newuser=true') : navigate(`/`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
   };
 
   function useQuery() {
@@ -41,7 +70,6 @@ export default function LogVolunteering() {
     setDate(today());
   }, []);
 
-  console.log(params);
   return (
     <>
       <div className='column'>
@@ -114,7 +142,7 @@ export default function LogVolunteering() {
                               className='input is-rounded has-text-centered'
                               id='vol-hours'
                               required
-                              placeholder='$'
+                              placeholder='#'
                               value={dono}
                               onChange={(event) => setDono(event.target.value)}
                             />
@@ -163,44 +191,30 @@ export default function LogVolunteering() {
                           className='label has-text-centered'
                           htmlFor='vol-hours'
                         >
-                          <div className='is-size-5 mb-1'>
+                          <div className='columns is-centered is-size-5 mb-1'>
                             Give us some details!
+                          </div>
+                          <div className='columns is-size-6 mb-1 is-centered has-text-grey'>
+                            <i>{`(optional)`}</i>
                           </div>
                         </label>
                         <textarea
                           type='text'
                           className='textarea is-rounded'
                           id='don-email'
-                          required
                           placeholder='Details go here!'
                           value={details}
                           onChange={(event) => setDetails(event.target.value)}
                         />
                       </div>
-                    </form>
-                    <div className='field is-grouped is-grouped-centered'>
-                      <div className='control'>
-                        {params === 'true' ? (
-                          <>
-                            {' '}
-                            <Link to='/new/goal/donation?newuser=true'>
-                              <div className='button is-info is-size-3 is-large pl-6 pr-6 mt-4 mb-4'>
-                                Donation
-                              </div>
-                            </Link>
-                          </>
-                        ) : (
-                          <>
-                            {' '}
-                            <Link to='/'>
-                              <div className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>
-                                Submit
-                              </div>
-                            </Link>
-                          </>
-                        )}
+                      <div className='field is-grouped is-grouped-centered'>
+                        <div className='control'>
+                          <button className='button is-info is-size-3 is-large pl-6 pr-6 mt-4 mb-4'>
+                            Submit
+                          </button>
+                        </div>
                       </div>
-                    </div>
+                    </form>
                     {params === 'true' && (
                       <>
                         <div className='field is-grouped is-grouped-centered mb-6'>
