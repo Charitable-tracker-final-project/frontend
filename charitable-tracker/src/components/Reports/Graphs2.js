@@ -14,11 +14,11 @@ export default function Graphs2() {
 
   useEffect(() => {
     setData([
-      { x: 'She Should Run', y: 25 },
-      { x: 'Bellevue Presbyterian Church', y: 75 },
-      { x: 'Toys for Tots', y: 33 },
-      { x: 'Red Cross', y: 20 },
-      { x: 'Tims Place', y: 100 },
+      { x: 'She Should Run', y: 25, percentage: '10%' },
+      { x: 'Bellevue Presbyterian Church', y: 75, percentage: '30%' },
+      { x: 'Toys for Tots', y: 33, percentage: '13%' },
+      { x: 'Red Cross', y: 20, percentage: '8%' },
+      { x: 'Tims Place', y: 100, percentage: '39%' },
     ]);
   }, []);
 
@@ -37,7 +37,7 @@ export default function Graphs2() {
             data={data}
             labelComponent={
               <VictoryLabel
-                text={({ datum }) => [`${datum.x}`, `${datum.y} hours`]}
+                text={({ datum }) => [`${datum.x}`, `${datum.percentage}`]}
               />
             }
           />
@@ -57,13 +57,19 @@ export default function Graphs2() {
             <VictoryAxis
               dependentAxis
               orientation='left'
-              style={{ tickLabels: { fontSize: 15 } }}
+              style={{
+                axisLabel: { padding: 30 },
+                tickLabels: { fontSize: 15 },
+              }}
+              label='Hours'
             />
             <VictoryBar
               barWidth={60}
               data={data}
               animate={{ duration: 100, easing: 'exp' }}
               style={{ data: { fill: '#9f60e2' } }}
+              labels={({ datum }) => [`${datum.y}`]}
+              cornerRadius='4'
             />
           </VictoryChart>
         </div>
