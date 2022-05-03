@@ -21,6 +21,7 @@ export default function Profile(props) {
   const [username, setUsername] = useState(props.storeuUsername);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const styles = {
     sideBarHeight: {
@@ -34,6 +35,8 @@ export default function Profile(props) {
 
   const handleIncome = (event) => {
     event.preventDefault();
+    setError('');
+    setSuccess(false);
     axios
       .put(
         `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
@@ -47,6 +50,7 @@ export default function Profile(props) {
       .then((res) => {
         console.log('Successfully submitted Edit!');
         console.log(res);
+        setSuccess(true);
       })
       .catch((e) => {
         console.log(e);
@@ -214,6 +218,7 @@ export default function Profile(props) {
           <SubMenu
             title='Edit Yearly Income'
             className={`${isActive ? '' : 'is-invisible'}`}
+            onOpenChange={() => [setSuccess(false), setError('')]}
           >
             Yearly Income:
             <MenuItem>
@@ -247,9 +252,20 @@ export default function Profile(props) {
                     </div>
                   </div>
                 </div>
-                <div className='field is-grouped is-grouped-centered has-background-danger has-text-white'>
-                  {error}
-                </div>
+                {success && (
+                  <div className='box has-background-success has-text-white has-text-centered'>
+                    Successfully updated
+                    <br></br>
+                    annual income!
+                  </div>
+                )}
+                {error && (
+                  <div className='box has-background-danger has-text-white has-text-centered'>
+                    Request Failed
+                    <br></br>
+                    Please try again later
+                  </div>
+                )}
               </form>
             </MenuItem>
           </SubMenu>
