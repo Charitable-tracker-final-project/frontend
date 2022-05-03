@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Menu,
   MenuItem,
@@ -10,14 +10,19 @@ import {
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../Nav/custom.scss';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-export default function Profile(storeUsername) {
-  console.log(storeUsername);
+export default function Profile(props) {
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
-  const [income, setIncome] = useState('');
   const [incomeInput, setIncomeInput] = useState('');
-  const [username, setUsername] = useState(storeUsername.storeuUsername);
+  const [oldIncome, setOldIncome] = useState('');
+  const [pk, setPk] = useState(0);
+  const [username, setUsername] = useState(props.storeuUsername);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
   const styles = {
     sideBarHeight: {
       height: '100%',
@@ -30,12 +35,77 @@ export default function Profile(storeUsername) {
 
   const handleIncome = (event) => {
     event.preventDefault();
-    return null;
+    setError('');
+    setSuccess(false);
+    axios
+      .put(
+        `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
+        {
+          annual_income: incomeInput,
+        },
+        {
+          headers: { Authorization: `Token ${props.token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res);
+        setSuccess(true);
+        setOldIncome(incomeInput);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
   };
 
   const onClickMenuIcon = () => {
     setCollapsed(!collapsed);
   };
+
+  useEffect(() => {
+    setError('');
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/annualincome/', {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Donations Called');
+        console.log(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+        console.log(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).pk
+        );
+        setIncomeInput(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+        setOldIncome(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).annual_income
+        );
+        setPk(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).pk
+        );
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  }, [props.token]);
 
   return (
     <>
@@ -149,21 +219,25 @@ export default function Profile(storeUsername) {
           <SubMenu
             title='Edit Yearly Income'
             className={`${isActive ? '' : 'is-invisible'}`}
+            onOpenChange={() => [setSuccess(false), setError('')]}
           >
             Yearly Income:
             <MenuItem>
               <form onSubmit={handleIncome}>
                 <div className='field'>
                   <div className='control'>
-                    <input
-                      type='text'
-                      className='input is-rounded'
-                      id='income'
-                      placeholder='35000'
-                      value={incomeInput}
-                      onChange={(event) => setIncomeInput(event.target.value)}
-                      pattern='[0-9]+'
-                    />
+                    <div className='is-inline-flex is-size-4'>
+                      $
+                      <input
+                        type='text'
+                        className='input is-rounded'
+                        id='income'
+                        placeholder='35000'
+                        value={isLoading ? <></> : incomeInput}
+                        onChange={(event) => setIncomeInput(event.target.value)}
+                        pattern='[0-9]+'
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className='field is-grouped is-grouped-centered'>
@@ -176,12 +250,26 @@ export default function Profile(storeUsername) {
                     <div
                       className='button is-waring is-small'
                       type='reset'
-                      onClick={() => setIncomeInput('')}
+                      onClick={() => setIncomeInput(oldIncome)}
                     >
                       Reset
                     </div>
                   </div>
                 </div>
+                {success && (
+                  <div className='box has-background-success has-text-white has-text-centered'>
+                    Successfully updated
+                    <br></br>
+                    annual income!
+                  </div>
+                )}
+                {error && (
+                  <div className='box has-background-danger has-text-white has-text-centered'>
+                    Request Failed
+                    <br></br>
+                    Please try again later
+                  </div>
+                )}
               </form>
             </MenuItem>
           </SubMenu>

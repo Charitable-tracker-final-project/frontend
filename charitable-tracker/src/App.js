@@ -111,7 +111,7 @@ function App() {
               {!newUser && (
                 <>
                   <div className='column is-narrow'>
-                    <Profile storeuUsername={storeUsername} />
+                    <Profile storeuUsername={storeUsername} token={token} />
                   </div>
                 </>
               )}
