@@ -2,6 +2,7 @@ import './App.scss';
 import useLocalStorageState from 'use-local-storage-state';
 import {
   BrowserRouter as Router,
+  HashRouter,
   Route,
   Routes,
   // Link,
@@ -74,7 +75,7 @@ function App() {
 
   return (
     <>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route
             path='/register'
@@ -182,7 +183,7 @@ function App() {
             </div>
           </>
         )}
-      </Router>
+      </HashRouter>
       <footer className='footer has-background-white p-1 m-0'>
         <div className='field is-grouped is-grouped-right p-0 m-0'>
           <img src={bulma} alt='made with bulma badge' width='195' />
