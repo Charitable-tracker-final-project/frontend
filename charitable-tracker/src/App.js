@@ -23,6 +23,7 @@ import LogDonation from './components/Log/LogDonation';
 import LogVolunteering from './components/Log/LogVolunteering';
 import EditVolunteering from './components/Edit/EditVolunteering';
 import EditDonation from './components/Edit/EditDonation';
+import Reports from './components/Reports';
 import DonationGoals from './components/Details/DonationGoals';
 import VolunteerGoals from './components/Details/VolunteerGoals';
 import EditVolunteerGoal from './components/Edit/EditVolunteerGoal';
@@ -119,6 +120,7 @@ function App() {
                   path='/'
                   element={<Home handleLogOut={handleLogOut} token={token} />}
                 />
+                <Route path='/reports' element={<Reports token={token} />} />
                 <Route
                   path='/new/donation'
                   element={<LogDonation token={token} />}
