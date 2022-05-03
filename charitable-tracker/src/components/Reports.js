@@ -5,7 +5,7 @@ import Graphs6 from './Reports/Graphs6';
 import axios from 'axios';
 import Loading from './Loading/Loading';
 
-export default function Reports() {
+export default function Reports({ token }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const styles = {
@@ -21,7 +21,7 @@ export default function Reports() {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title'>My Reports</h1>
+            <h1 className='title is-size-4-mobile'>My Reports</h1>
             {isLoading ? (
               <>
                 <Loading />
@@ -35,15 +35,9 @@ export default function Reports() {
                         <h3>{error}</h3>
                       </div>
                     )}
-                    <div className='box p-5 mb-5'>
-                      <div className='columns'>
-                        <div className='column'>
-                          <Graphs2 />
-                          <Graphs4 />
-                          <Graphs6 />
-                        </div>
-                      </div>
-                    </div>
+                    <Graphs2 token={token} />
+                    <Graphs4 token={token} />
+                    <Graphs6 token={token} />
                   </div>
                 </div>
               </>
