@@ -89,7 +89,6 @@ export default function Graphs6({ token }) {
 
   useEffect(() => {
     setPercentage((progress / goalMax) * 100);
-    console.log(percentage);
   }, [goalMax, percentage, progress]);
 
   return (
