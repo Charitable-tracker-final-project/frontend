@@ -17,6 +17,7 @@ export default function Profile(props) {
   const [collapsed, setCollapsed] = useState(true);
   const [incomeInput, setIncomeInput] = useState('');
   const [oldIncome, setOldIncome] = useState('');
+  const [pk, setPk] = useState(0);
   const [username, setUsername] = useState(props.storeuUsername);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -35,7 +36,7 @@ export default function Profile(props) {
     event.preventDefault();
     axios
       .put(
-        'https://charitable-tracker.herokuapp.com/api/annualincome/1/',
+        `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
         {
           annual_income: incomeInput,
         },
@@ -72,6 +73,11 @@ export default function Profile(props) {
             return e.annual_income;
           }).annual_income
         );
+        console.log(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).pk
+        );
         setIncomeInput(
           res.data.find((e) => {
             return e.annual_income;
@@ -81,6 +87,11 @@ export default function Profile(props) {
           res.data.find((e) => {
             return e.annual_income;
           }).annual_income
+        );
+        setPk(
+          res.data.find((e) => {
+            return e.annual_income;
+          }).pk
         );
       })
       .then(() => {
@@ -235,6 +246,9 @@ export default function Profile(props) {
                       Reset
                     </div>
                   </div>
+                </div>
+                <div className='field is-grouped is-grouped-centered has-background-danger has-text-white'>
+                  {error}
                 </div>
               </form>
             </MenuItem>
