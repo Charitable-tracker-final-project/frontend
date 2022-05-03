@@ -51,6 +51,7 @@ export default function Profile(props) {
         console.log('Successfully submitted Edit!');
         console.log(res);
         setSuccess(true);
+        setOldIncome(incomeInput);
       })
       .catch((e) => {
         console.log(e);
@@ -225,15 +226,18 @@ export default function Profile(props) {
               <form onSubmit={handleIncome}>
                 <div className='field'>
                   <div className='control'>
-                    <input
-                      type='text'
-                      className='input is-rounded'
-                      id='income'
-                      placeholder='35000'
-                      value={isLoading ? <></> : incomeInput}
-                      onChange={(event) => setIncomeInput(event.target.value)}
-                      pattern='[0-9]+'
-                    />
+                    <div className='is-inline-flex is-size-4'>
+                      $
+                      <input
+                        type='text'
+                        className='input is-rounded'
+                        id='income'
+                        placeholder='35000'
+                        value={isLoading ? <></> : incomeInput}
+                        onChange={(event) => setIncomeInput(event.target.value)}
+                        pattern='[0-9]+'
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className='field is-grouped is-grouped-centered'>
