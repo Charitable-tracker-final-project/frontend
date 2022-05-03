@@ -61,6 +61,27 @@ export default function EditVolunteerGoal({ token }) {
       });
   };
 
+  const handleDelete = (event) => {
+    console.log('Handle Delete Called');
+    event.preventDefault();
+    axios
+      .delete(
+        `https://charitable-tracker.herokuapp.com/api/Vgoal/${params.G_id}/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully deleted volunteer goal!');
+        console.log(res);
+        navigate(`/goals/volunteer`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -276,6 +297,18 @@ export default function EditVolunteerGoal({ token }) {
                             Edit
                           </button>
                         </div>
+                        <div className='control'>
+                          <div
+                            className='button is-danger pl-6 pr-6'
+                            onClick={(event) => {
+                              handleDelete(event);
+                            }}
+                          >
+                            Delete
+                          </div>
+                        </div>
+                      </div>
+                      <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
                           <Link to='/goals/volunteer'>
                             <div className='button is-warning pl-6 pr-6'>

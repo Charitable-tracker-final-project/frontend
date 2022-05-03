@@ -22,6 +22,7 @@ export default function Profile(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [deleteIncome, setDeleteIncome] = useState(false);
 
   const styles = {
     sideBarHeight: {
@@ -59,6 +60,26 @@ export default function Profile(props) {
       });
   };
 
+  const handleDelete = (event) => {
+    console.log('Handle Delete Called');
+    event.preventDefault();
+    axios
+      .delete(
+        `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
+        {
+          headers: { Authorization: `Token ${props.token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully deleted income!');
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   const onClickMenuIcon = () => {
     setCollapsed(!collapsed);
   };
@@ -73,16 +94,6 @@ export default function Profile(props) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(
-          res.data.find((e) => {
-            return e.annual_income;
-          }).annual_income
-        );
-        console.log(
-          res.data.find((e) => {
-            return e.annual_income;
-          }).pk
-        );
         setIncomeInput(
           res.data.find((e) => {
             return e.annual_income;
@@ -256,9 +267,27 @@ export default function Profile(props) {
                     </div>
                   </div>
                 </div>
+                <div className='field is-grouped is-grouped-centered'>
+                  <div className='control'>
+                    <div
+                      className='button is-danger is-small'
+                      type='reset'
+                      onClick={(event) => handleDelete(event)}
+                    >
+                      Delete
+                    </div>
+                  </div>
+                </div>
                 {success && (
                   <div className='box has-background-success has-text-white has-text-centered'>
                     Successfully updated
+                    <br></br>
+                    annual income!
+                  </div>
+                )}
+                {deleteIncome && (
+                  <div className='box has-background-warning has-text-white has-text-centered'>
+                    Successfully deleted
                     <br></br>
                     annual income!
                   </div>

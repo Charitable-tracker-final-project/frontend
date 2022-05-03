@@ -57,6 +57,27 @@ export default function EditDonation({ token }) {
       });
   };
 
+  const handleDelete = (event) => {
+    console.log('Handle Delete Called');
+    event.preventDefault();
+    axios
+      .delete(
+        `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully deleted donation record!');
+        console.log(res);
+        navigate(`/donations`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -233,10 +254,22 @@ export default function EditDonation({ token }) {
                             <div className='control'>
                               <button
                                 type='submit'
-                                className='button is-success is-large pl-6 pr-6 mt-4 mb-4'
+                                className='button is-success is-large pl-6 pr-6'
                               >
                                 Edit
                               </button>
+                            </div>
+                          </div>
+                          <div className='field is-grouped is-grouped-centered'>
+                            <div className='control'>
+                              <div
+                                className='button is-size-5 is-danger pl-6 pr-6 mt-2 mb-4'
+                                onClick={(event) => {
+                                  handleDelete(event);
+                                }}
+                              >
+                                Delete
+                              </div>
                             </div>
                           </div>
                         </form>

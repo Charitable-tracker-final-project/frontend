@@ -59,6 +59,27 @@ export default function EditVolunteering({ token }) {
       });
   };
 
+  const handleDelete = (event) => {
+    console.log('Handle Delete Called');
+    event.preventDefault();
+    axios
+      .delete(
+        `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully deleted volunteer record!');
+        console.log(res);
+        navigate(`/volunteering`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -246,11 +267,23 @@ export default function EditVolunteering({ token }) {
                               </button>
                             </div>
                           </div>
+                          <div className='field is-grouped is-grouped-centered'>
+                            <div className='control'>
+                              <div
+                                className='button is-size-5 is-danger pl-6 pr-6'
+                                onClick={(event) => {
+                                  handleDelete(event);
+                                }}
+                              >
+                                Delete
+                              </div>
+                            </div>
+                          </div>
                         </form>
                         <div className='field is-grouped is-grouped-centered'>
                           <div className='control'>
                             <Link to='/volunteering'>
-                              <div className='button is-warning pl-6 pr-6 mt-4 mb-4'>
+                              <div className='button is-warning pl-6 pr-6 mt-2 mb-4'>
                                 Back
                               </div>
                             </Link>
