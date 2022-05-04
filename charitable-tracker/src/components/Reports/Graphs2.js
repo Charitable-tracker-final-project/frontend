@@ -8,11 +8,14 @@ import {
   VictoryLabel,
   VictoryLine,
 } from 'victory';
+import Loading from '../Loading/Loading';
 
 export default function Graphs2({ token }) {
   const [totalHours, setTotalHours] = useState(`253`);
   const [pieData, setPieData] = useState([{ x: 'loading', y: 0 }]);
   const [barData, setBarData] = useState([{ x: 'loading', y: 0 }]);
+  const [pieSpinner, setPieSpinner] = useState(false);
+  const [barSpinner, setBarSpinner] = useState(false);
 
   useEffect(() => {
     setPieData([
@@ -85,6 +88,7 @@ export default function Graphs2({ token }) {
             <h1 className='has-text-black has-text-info title is-size-5-mobile'>{`Volunteer Time:`}</h1>
             <h1 className='has-text-centered title is-size-5-mobile'>{`You Volunteered ${totalHours} hours at these Organizations`}</h1>
             <div className='columns is-centered'>
+              {pieSpinner && <Loading />}
               <div className='column'>
                 <VictoryPie
                   style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
@@ -121,6 +125,7 @@ export default function Graphs2({ token }) {
             <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>
             <div className='columns is-centered'>
               <div className='column pt-2'>
+                {barSpinner && <Loading />}
                 <VictoryChart domainPadding='40' width={800}>
                   <VictoryAxis
                     style={{

@@ -16,6 +16,7 @@ export default function EditVolunteerGoal({ token }) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [volSpinner, setVolSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -37,6 +38,7 @@ export default function EditVolunteerGoal({ token }) {
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
+    setVolSpinner(true);
     axios
       .patch(
         `https://charitable-tracker.herokuapp.com/api/Vgoal/${params.G_id}/`,
@@ -52,7 +54,7 @@ export default function EditVolunteerGoal({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
+        setVolSpinner(false);
         navigate(`/goals/volunteer`);
       })
       .catch((e) => {
@@ -64,6 +66,7 @@ export default function EditVolunteerGoal({ token }) {
   const handleDelete = (event) => {
     console.log('Handle Delete Called');
     event.preventDefault();
+    setVolSpinner(true);
     axios
       .delete(
         `https://charitable-tracker.herokuapp.com/api/Vgoal/${params.G_id}/`,
@@ -73,7 +76,7 @@ export default function EditVolunteerGoal({ token }) {
       )
       .then((res) => {
         console.log('Successfully deleted volunteer goal!');
-        console.log(res);
+        setVolSpinner(false);
         navigate(`/goals/volunteer`);
       })
       .catch((e) => {
@@ -93,7 +96,6 @@ export default function EditVolunteerGoal({ token }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setDate(res.data.created_at);
         setTitle(res.data.goaltitle);
         setHours(res.data.volunteergoal);
@@ -113,6 +115,7 @@ export default function EditVolunteerGoal({ token }) {
           <div className='columns is-centered' style={styles.regPage}>
             <div className='column mt-4 pt-4 is-three-quarters'>
               <h1 className='title has-text-centered'>Update Your Goal!</h1>
+              {volSpinner && <Loading />}
               <div className='box pt-4 px-4 pb-6'>
                 <h1 className='is-size-3 has-text-centered mb-6'>
                   Edit Your Volunteer Goal

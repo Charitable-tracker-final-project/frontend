@@ -126,7 +126,7 @@ export default function Profile(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donations Called');
+        console.log('Get Income Called');
         setIsIncome(res.data);
         setIncomeInput(
           res.data.find((e) => {

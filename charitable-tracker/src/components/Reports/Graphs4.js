@@ -8,12 +8,17 @@ import {
   VictoryLabel,
   VictoryLine,
 } from 'victory';
+import Loading from '../Loading/Loading';
 
 export default function Graphs4() {
   const [cause, setCause] = useState("Women's Rights");
   const [totalHours, setTotalHours] = useState(`253`);
   const [pieData, setPieData] = useState([{ x: 'loading', y: 0 }]);
   const [barData, setBarData] = useState([{ x: 'loading', y: 0 }]);
+  const [pieSpinner1, setPieSpinner1] = useState(false);
+  const [barSpinner1, setBarSpinner1] = useState(false);
+  const [pieSpinner2, setPieSpinner2] = useState(false);
+  const [barSpinner2, setBarSpinner2] = useState(false);
 
   useEffect(() => {
     setPieData([
@@ -90,6 +95,7 @@ export default function Graphs4() {
                 <h2 className='has-text-centered is-size-4 is-underlined is-size-7-mobile pb-2'>
                   Donations
                 </h2>
+                {pieSpinner1 && <Loading />}
                 <VictoryPie
                   style={{
                     data: { stroke: 'grey', strokeWidth: '0.2' },
@@ -128,6 +134,7 @@ export default function Graphs4() {
                 <h2 className='has-text-centered is-size-4 is-underlined is-size-7-mobile pb-2'>
                   Volunteering
                 </h2>
+                {pieSpinner2 && <Loading />}
                 <VictoryPie
                   style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
                   innerRadius='70'
@@ -166,6 +173,7 @@ export default function Graphs4() {
                 <h2 className='has-text-centered is-size-4 is-underlined is-size-7-mobile'>
                   Donations
                 </h2>
+                {barSpinner1 && <Loading />}
                 <VictoryChart domainPadding='40' width={800}>
                   <VictoryAxis
                     style={{
@@ -204,6 +212,7 @@ export default function Graphs4() {
                 <h2 className='has-text-centered is-size-4 is-underlined is-size-7-mobile'>
                   Volunteering
                 </h2>
+                {barSpinner2 && <Loading />}
                 <VictoryChart domainPadding='40' width={800}>
                   <VictoryAxis
                     style={{

@@ -12,6 +12,7 @@ export default function EditDonation({ token }) {
   const [cause, setCause] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [donoSpinner, setDonoSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -33,6 +34,7 @@ export default function EditDonation({ token }) {
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
+    setDonoSpinner(true);
     axios
       .patch(
         `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
@@ -48,7 +50,7 @@ export default function EditDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
+        setDonoSpinner(false);
         navigate(`/donations`);
       })
       .catch((e) => {
@@ -60,6 +62,7 @@ export default function EditDonation({ token }) {
   const handleDelete = (event) => {
     console.log('Handle Delete Called');
     event.preventDefault();
+    setDonoSpinner(true);
     axios
       .delete(
         `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
@@ -69,7 +72,7 @@ export default function EditDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully deleted donation record!');
-        console.log(res);
+        setDonoSpinner(false);
         navigate(`/donations`);
       })
       .catch((e) => {
@@ -89,7 +92,6 @@ export default function EditDonation({ token }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setDate(res.data.created_at);
         setOrg(res.data.organization);
         setCause(res.data.cause);
@@ -113,6 +115,7 @@ export default function EditDonation({ token }) {
           <div className='columns is-centered' style={styles.regPage}>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>Edit your donation!</h1>
+              {donoSpinner && <Loading />}
               <div className='box p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>

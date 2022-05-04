@@ -8,6 +8,7 @@ import {
   VictoryLabel,
   VictoryLine,
 } from 'victory';
+import Loading from '../Loading/Loading';
 
 export default function Graphs6({ token }) {
   const [percentage, setPercentage] = useState(0);
@@ -17,6 +18,9 @@ export default function Graphs6({ token }) {
   const [totalHours, setTotalHours] = useState(`253`);
   const [pieData, setPieData] = useState([{ x: 'loading', y: 0 }]);
   const [barData, setBarData] = useState([{ x: 'loading', y: 0 }]);
+  const [incomeSpinner, setIncomeSpinner] = useState(false);
+  const [pieSpinner, setPieSpinner] = useState(false);
+  const [barSpinner, setBarSpinner] = useState(false);
 
   const goalMath = (donos, income) => {
     let percentage = (donos / income) * 100;
@@ -99,6 +103,7 @@ export default function Graphs6({ token }) {
             <h1 className='has-text-black has-text-info title is-size-6-mobile'>{`Progress towards ${goal}:`}</h1>
             <div className='columns is-centered'>
               <div className='column is-9'>
+                {incomeSpinner && <Loading />}
                 <progress
                   className={`progress m-0 ${
                     percentage < 25
@@ -121,6 +126,7 @@ export default function Graphs6({ token }) {
             <h1 className='has-text-centered title is-size-5-mobile'>{`You Volunteered ${totalHours} hours at these Organizations`}</h1>
             <div className='columns is-centered'>
               <div className='column'>
+                {pieSpinner && <Loading />}
                 <VictoryPie
                   style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
                   innerRadius='70'
@@ -156,6 +162,7 @@ export default function Graphs6({ token }) {
             <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>
             <div className='columns is-centered'>
               <div className='column pt-2'>
+                {barSpinner && <Loading />}
                 <VictoryChart domainPadding='40' width={800}>
                   <VictoryAxis
                     style={{

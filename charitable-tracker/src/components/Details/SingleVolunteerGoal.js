@@ -35,7 +35,6 @@ export default function SingleVolunteerGoal({ token }) {
       )
       .then((res) => {
         console.log('Get Volunteering Called');
-        console.log(res.data);
         setTitle(res.data.goaltitle);
         setVolunteerings(res.data.vrecord);
       })

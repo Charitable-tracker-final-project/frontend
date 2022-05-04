@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../Loading/Loading';
 
 export default function CreateDonation({ token }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function CreateDonation({ token }) {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [error, setError] = useState('');
+  const [donoSpinner, setDonoSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -27,13 +29,13 @@ export default function CreateDonation({ token }) {
     let day = newDate.getDate();
     let month = newDate.getMonth() + 1;
     let year = newDate.getFullYear();
-
     return setDate(`${year}-${month < 10 ? `0${month}` : `${month}`}-${day}`);
   }, []);
 
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
+    setDonoSpinner(true);
     setError('');
     axios
       .post(
@@ -50,7 +52,7 @@ export default function CreateDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Goal!');
-        console.log(res);
+        setDonoSpinner(false);
         params === 'true'
           ? navigate(`/new/goal?newuser=true`)
           : navigate(`/new/goal`);
@@ -79,6 +81,12 @@ export default function CreateDonation({ token }) {
               <h1 className='title has-text-centered'>
                 Time to set some Goals!
               </h1>
+              {donoSpinner && <Loading />}
+              {error && (
+                <div className='box has-background-danger has-text-white'>
+                  <h3>{error}</h3>
+                </div>
+              )}
               <div className='box pt-4 px-4 pb-6'>
                 <form onSubmit={handleSubmit}>
                   <h1 className='is-size-3 has-text-centered mb-6'>
