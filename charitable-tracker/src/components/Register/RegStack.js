@@ -361,7 +361,7 @@ export const VolunteerOption = ({
           <div className='field is-grouped is-grouped-centered mb-6'>
             <div className='control'>
               <div
-                className='button is-warning is-large pl-6 pr-6'
+                className='button is-info is-large pl-6 pr-6'
                 onClick={() => setStep(step + 1)}
               >
                 No
@@ -406,7 +406,7 @@ export const DonateOption = ({
           <div className='field is-grouped is-grouped-centered mb-6'>
             <div className='control'>
               <div
-                className='button is-warning is-large pl-6 pr-6'
+                className='button is-info is-large pl-6 pr-6'
                 onClick={() => setStep(step + 1)}
               >
                 No
