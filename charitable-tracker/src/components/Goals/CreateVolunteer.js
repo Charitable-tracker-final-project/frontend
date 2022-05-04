@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../Loading/Loading';
 
 export default function CreateVolunteer({ token }) {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function CreateVolunteer({ token }) {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [error, setError] = useState('');
+  const [volSpinner, setVolSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -35,6 +37,7 @@ export default function CreateVolunteer({ token }) {
     console.log('Handle Edit Called');
     event.preventDefault();
     setError('');
+    setVolSpinner(true);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Vgoals/`,
@@ -50,7 +53,7 @@ export default function CreateVolunteer({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Goal!');
-        console.log(res);
+        setVolSpinner(false);
         params === 'true'
           ? navigate(`/new/goal?newuser=true`)
           : navigate(`/new/goal`);
@@ -84,6 +87,7 @@ export default function CreateVolunteer({ token }) {
                   <h1 className='is-size-3 has-text-centered mb-6'>
                     Set a Volunteer Goal
                   </h1>
+                  {volSpinner && <Loading />}
                   <div className='field' id='clonable'>
                     <label
                       className='label has-text-centered'

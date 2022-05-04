@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 
 export const EnterUsername = ({
   newUser,
@@ -10,8 +11,6 @@ export const EnterUsername = ({
   step,
   setStep,
 }) => {
-  const [error, setError] = useState('');
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setStep(step + 1);
@@ -128,6 +127,7 @@ export const EnterPassword = ({
   const [repassword, setRepassword] = useState('');
   const [error, setError] = useState('');
   const [noMatch, setNoMatch] = useState(null);
+  const [pwSpinner, setPWSpinner] = useState(false);
 
   useEffect(() => {
     setSkipable(false);
@@ -138,6 +138,7 @@ export const EnterPassword = ({
     event.preventDefault();
     setNoMatch(null);
     setError('');
+    setPWSpinner(true);
     console.log(username, password, repassword);
     if (password === repassword) {
       axios
@@ -148,7 +149,7 @@ export const EnterPassword = ({
         })
         .then((res) => {
           console.log('Successfully Rgistered!');
-          console.log(res);
+          setPWSpinner(false);
           setAuth(username, res.data.key);
           setNewUser(true);
           navigate('/new/goal?newuser=true');
@@ -169,6 +170,12 @@ export const EnterPassword = ({
           <form onSubmit={handleReg}>
             <div className='field'>
               <div className='control is-flex is-flex-direction-column is-align-items-center mb-5'>
+                {pwSpinner && <Loading />}
+                {error && (
+                  <div className='box has-background-danger has-text-white'>
+                    <h3>{error}</h3>
+                  </div>
+                )}
                 {noMatch && (
                   <>
                     <div className='box has-background-danger is-size-5 has-text-white has-text-centered'>
@@ -227,11 +234,13 @@ export const EnterIncome = ({
   token,
 }) => {
   const [error, setError] = useState('');
+  const [incomeSpinner, setIncomeSpinner] = useState(false);
 
   const handleSubmit = (event) => {
     console.log('Handle Income Called');
     event.preventDefault();
     setError('');
+    setIncomeSpinner(true);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/annualincome/`,
@@ -244,7 +253,7 @@ export const EnterIncome = ({
       )
       .then((res) => {
         console.log('Successfully Set Income!');
-        console.log(res);
+        setIncomeSpinner(false);
         setStep(step + 1);
       })
       .catch((e) => {
@@ -259,6 +268,12 @@ export const EnterIncome = ({
   return (
     <>
       <div className='columns is-centered'>
+        {incomeSpinner && <Loading />}
+        {error && (
+          <div className='box has-background-danger has-text-white'>
+            <h3>{error}</h3>
+          </div>
+        )}
         <div className='column is-half'>
           <form onSubmit={handleSubmit}>
             <div className='field'>
@@ -405,12 +420,6 @@ export const DonateOption = ({
 };
 
 export const Complete = ({ newUser, setNewUser }) => {
-  const styles = {
-    rainbow: {
-      backgroundImage:
-        'linear-gradient(to top right, red,orange,yellow,green,blue,indigo,violet)',
-    },
-  };
   return (
     <>
       <div className='columns is-centered'>

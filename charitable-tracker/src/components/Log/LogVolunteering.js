@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 import axios from 'axios';
 
 export default function LogVolunteering({ token }) {
@@ -10,6 +11,7 @@ export default function LogVolunteering({ token }) {
   const [cause, setCause] = useState('');
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
+  const [volSpinner, setVolSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -33,6 +35,7 @@ export default function LogVolunteering({ token }) {
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
+    setVolSpinner(true);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Vrecords/`,
@@ -49,7 +52,7 @@ export default function LogVolunteering({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
+        setVolSpinner(false);
         params === true ? navigate('/new/goal/?newuser=true') : navigate(`/`);
       })
       .catch((e) => {
@@ -80,6 +83,7 @@ export default function LogVolunteering({ token }) {
               <h1 className='title has-text-centered'>
                 Tell us about your volunteering!
               </h1>
+              {volSpinner && <Loading />}
               <div className='box p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>

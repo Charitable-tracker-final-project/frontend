@@ -36,7 +36,6 @@ export default function SingleDonationGoal({ token }) {
       )
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(res.data);
         setTitle(res.data.goaltitle);
         setDonations(res.data.drecord);
       })

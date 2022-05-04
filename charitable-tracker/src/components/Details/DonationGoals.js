@@ -29,7 +29,6 @@ export default function DonationGoals({ token }) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(res.data);
         setGoals(res.data);
       })
       .then(() => {

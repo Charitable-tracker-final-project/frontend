@@ -2,13 +2,11 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
-import placeholder from '../../images/logo512.png';
 
 export default function Donations({ token }) {
   const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [isActive, setIsActive] = useState(0);
 
   const styles = {
     regPage: {
@@ -31,7 +29,6 @@ export default function Donations({ token }) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        console.log(res.data);
         setDonations(res.data);
       })
       .then(() => {

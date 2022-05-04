@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 import axios from 'axios';
 
 export default function LogDonation({ token }) {
@@ -9,10 +10,7 @@ export default function LogDonation({ token }) {
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
-  const [goals, setGoals] = useState(null);
-  const [goal, setGoal] = useState('');
-  const [goalPk, setGoalPk] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [donoSpinner, setDonoSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -22,39 +20,10 @@ export default function LogDonation({ token }) {
     },
   };
 
-  const goalMath = (goals, goal) => {
-    const result = goals.filter((goals) => goals.goaltitle === goal);
-    for (let i of result) {
-      console.log(i.pk);
-    }
-  };
-
-  useEffect(() => {
-    setError('');
-    axios
-      .get('https://charitable-tracker.herokuapp.com/api/Dgoals/', {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log('Get Donations Called');
-        console.log(res.data);
-        setGoals(res.data);
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setError(e.message);
-      });
-  }, [token]);
-
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
     event.preventDefault();
-    goalMath(goals, goal);
-    console.log(goalPk);
+    setDonoSpinner(true);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Drecords/`,
@@ -63,7 +32,6 @@ export default function LogDonation({ token }) {
           created_at: date,
           organization: org,
           cause: cause,
-          // donationrecord: goalPk,
         },
         {
           headers: { Authorization: `Token ${token}` },
@@ -71,7 +39,7 @@ export default function LogDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
+        setDonoSpinner(false);
         params === true ? navigate('/new/goal/?newuser=true') : navigate(`/`);
       })
       .catch((e) => {
@@ -113,6 +81,12 @@ export default function LogDonation({ token }) {
               <h1 className='title has-text-centered'>
                 Tell us about your donation!
               </h1>
+              {donoSpinner && <Loading />}
+              {error && (
+                <div className='box has-background-danger has-text-white'>
+                  <h3>{error}</h3>
+                </div>
+              )}
               <div className='box p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>

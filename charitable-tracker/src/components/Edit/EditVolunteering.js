@@ -13,6 +13,7 @@ export default function EditVolunteering({ token }) {
   const [details, setDetails] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [volSpinner, setVolSpinner] = useState(false);
 
   const styles = {
     regPage: {
@@ -34,6 +35,7 @@ export default function EditVolunteering({ token }) {
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
+    setVolSpinner(true);
     axios
       .patch(
         `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
@@ -50,7 +52,7 @@ export default function EditVolunteering({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
+        setVolSpinner(false);
         navigate(`/volunteering`);
       })
       .catch((e) => {
@@ -62,6 +64,7 @@ export default function EditVolunteering({ token }) {
   const handleDelete = (event) => {
     console.log('Handle Delete Called');
     event.preventDefault();
+    setVolSpinner(true);
     axios
       .delete(
         `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
@@ -71,7 +74,7 @@ export default function EditVolunteering({ token }) {
       )
       .then((res) => {
         console.log('Successfully deleted volunteer record!');
-        console.log(res);
+        setVolSpinner(false);
         navigate(`/volunteering`);
       })
       .catch((e) => {
@@ -91,7 +94,6 @@ export default function EditVolunteering({ token }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setDate(res.data.created_at);
         setOrg(res.data.organization);
         setDetails(res.data.description);
@@ -118,6 +120,7 @@ export default function EditVolunteering({ token }) {
               <h1 className='title has-text-centered'>
                 Edit your volunteering!
               </h1>
+              {volSpinner && <Loading />}
               <div className='box p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
