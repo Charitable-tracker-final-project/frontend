@@ -62,6 +62,27 @@ export default function EditDonationGoal({ token }) {
       });
   };
 
+  const handleDelete = (event) => {
+    console.log('Handle Delete Called');
+    event.preventDefault();
+    axios
+      .delete(
+        `https://charitable-tracker.herokuapp.com/api/Dgoal/${params.G_id}/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully deleted donation goal!');
+        console.log(res);
+        navigate(`/goals/donation`);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+      });
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -281,6 +302,18 @@ export default function EditDonationGoal({ token }) {
                             Edit
                           </button>
                         </div>
+                        <div className='control'>
+                          <div
+                            className='button is-danger pl-6 pr-6'
+                            onClick={(event) => {
+                              handleDelete(event);
+                            }}
+                          >
+                            Delete
+                          </div>
+                        </div>
+                      </div>
+                      <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
                           <Link to='/goals/donation'>
                             <div className='button is-warning pl-6 pr-6'>
