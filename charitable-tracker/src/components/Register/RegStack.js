@@ -315,7 +315,7 @@ export const EnterIncome = ({
             <div className='field is-grouped is-grouped-centered'>
               <div className='control'>
                 <div
-                  className='button is-black'
+                  className='button is-info'
                   onClick={() => setStep(step + 1)}
                 >
                   Skip
@@ -361,7 +361,7 @@ export const VolunteerOption = ({
           <div className='field is-grouped is-grouped-centered mb-6'>
             <div className='control'>
               <div
-                className='button is-black is-large pl-6 pr-6'
+                className='button is-warning is-large pl-6 pr-6'
                 onClick={() => setStep(step + 1)}
               >
                 No
@@ -406,7 +406,7 @@ export const DonateOption = ({
           <div className='field is-grouped is-grouped-centered mb-6'>
             <div className='control'>
               <div
-                className='button is-black is-large pl-6 pr-6'
+                className='button is-warning is-large pl-6 pr-6'
                 onClick={() => setStep(step + 1)}
               >
                 No
@@ -441,7 +441,7 @@ export const Complete = ({ newUser, setNewUser }) => {
           </div>
           <div className='field is-grouped is-grouped-centered mb-6'>
             <div className='control'>
-              <div className='button is-black is-large pl-6 pr-6 is-invisible'>
+              <div className='button is-warning is-large pl-6 pr-6 is-invisible'>
                 No
               </div>
             </div>
