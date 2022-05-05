@@ -19,7 +19,7 @@ export default function Profile(props) {
   const [incomeInput, setIncomeInput] = useState('');
   const [oldIncome, setOldIncome] = useState('');
   const [pk, setPk] = useState(0);
-  const [username, setUsername] = useState(props.storeuUsername);
+  const [username, setUsername] = useState(props.storeUsername);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -152,6 +152,7 @@ export default function Profile(props) {
       });
   }, [props.token, oldIncome]);
 
+  console.log(username, props.token);
   return (
     <>
       <ProSidebar
@@ -178,7 +179,7 @@ export default function Profile(props) {
                     aria-expanded={`${isActive ? 'true' : 'false'}`}
                     data-target='charitableNavbar'
                   >
-                    {`${isActive ? `${username}'s Dashboard` : 'Dashboard'}`}
+                    {`${isActive ? `${username}'s Dashboard` : ''}`}
                   </a>
                 </div>
               </div>{' '}

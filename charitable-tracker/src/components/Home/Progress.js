@@ -38,7 +38,7 @@ export default function Progress() {
     <>
       <div className='columns is-centered'>
         <div className='column is-11'>
-          <h1 className='is-size-7-mobile'>Progress Update:</h1>
+          <h1 className='title'>Progress Update:</h1>
           {isLoading ? (
             <>
               <Loading />

@@ -35,7 +35,7 @@ export default function TimelineCT() {
     <>
       <div className='columns is-centered'>
         <div className='column is-11'>
-          <h1 className='is-size-7-mobile'>Contribution Timeline:</h1>
+          <h1 className='title'>Contribution Timeline:</h1>
           {isLoading ? (
             <>
               <Loading />
