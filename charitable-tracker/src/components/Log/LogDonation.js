@@ -257,7 +257,7 @@ export default function LogDonation({ token }) {
                         <div className='field is-grouped is-grouped-centered mb-6'>
                           <div className='control'>
                             <Link to='/register'>
-                              <div className='button is-black pl-6 pr-6 mt-6'>
+                              <div className='button is-info pl-6 pr-6 mt-6'>
                                 Skip
                               </div>
                             </Link>
