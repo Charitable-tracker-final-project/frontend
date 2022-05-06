@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 // import axios from 'axios'
 import Navbar from './components/Nav/Navbar';
-import Profile from './components/Nav/Profile';
 import Landing from './components/Landing';
 import Home from './components/Home';
 import bulma from './images/made-with-bulma--semiblack.png';

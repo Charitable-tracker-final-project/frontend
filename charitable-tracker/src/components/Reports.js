@@ -21,7 +21,7 @@ export default function Reports({ token }) {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title is-size-4-mobile'>My Reports</h1>
+            <h1 className='title is-size-4-mobile'>My Impact</h1>
             {isLoading ? (
               <>
                 <Loading />

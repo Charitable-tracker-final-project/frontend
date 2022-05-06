@@ -12,13 +12,6 @@ export default function SingleDonationGoal({ token }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(0);
 
-  const styles = {
-    regPage: {
-      minHeight: '78vh',
-      height: '100%',
-    },
-  };
-
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
@@ -52,7 +45,7 @@ export default function SingleDonationGoal({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div style={styles.regPage}>
+          <div>
             <div className='columns'>
               <div className='column is-9'>
                 <h1 className='title'>{`Donations towards ${title}`}</h1>

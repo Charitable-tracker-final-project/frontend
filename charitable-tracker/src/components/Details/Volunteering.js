@@ -9,13 +9,6 @@ export default function Volunteering({ token }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(0);
 
-  const styles = {
-    regPage: {
-      minHeight: '78vh',
-      height: '100%',
-    },
-  };
-
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
@@ -45,7 +38,7 @@ export default function Volunteering({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div style={styles.regPage}>
+          <div>
             <h1 className='title'>My Volunteering</h1>
             {isLoading ? (
               <>
@@ -88,7 +81,7 @@ export default function Volunteering({ token }) {
                           return (
                             <div className='box p-5 mb-5' key={key}>
                               <div className='columns'>
-                                <div className='column is-10'>
+                                <div className='column is-9'>
                                   <p className='is-size-7 has-text-grey'>{`${dateConvert(
                                     v.created_at
                                   )}`}</p>
@@ -98,6 +91,7 @@ export default function Volunteering({ token }) {
                                     <i>{`${v.cause}`}</i>
                                   </b>
                                 </div>
+                                <div className='column is-1' />
                                 <div className='column is-2 pr-6'>
                                   <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>

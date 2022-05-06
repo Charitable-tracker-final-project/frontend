@@ -8,13 +8,6 @@ export default function Donations({ token }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const styles = {
-    regPage: {
-      minHeight: '78vh',
-      height: '100%',
-    },
-  };
-
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
@@ -44,7 +37,7 @@ export default function Donations({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div style={styles.regPage}>
+          <div>
             <h1 className='title'>My Donations</h1>
             {isLoading ? (
               <>
@@ -87,7 +80,7 @@ export default function Donations({ token }) {
                           return (
                             <div className='box p-5 mb-5' key={key}>
                               <div className='columns'>
-                                <div className='column is-10'>
+                                <div className='column is-9'>
                                   <p className='is-size-7 has-text-grey'>{`${dateConvert(
                                     d.created_at
                                   )}`}</p>
@@ -98,6 +91,7 @@ export default function Donations({ token }) {
                                     <i>{`${d.cause}`}</i>
                                   </b>
                                 </div>
+                                <div className='column is-1' />
                                 <div className='column is-2 pr-5'>
                                   <div className='field is-grouped is-grouped-centered'>
                                     <div className='control'>

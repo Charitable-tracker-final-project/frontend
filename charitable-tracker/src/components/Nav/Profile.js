@@ -19,15 +19,15 @@ export default function Profile(props) {
   const [incomeInput, setIncomeInput] = useState('');
   const [oldIncome, setOldIncome] = useState('');
   const [pk, setPk] = useState(0);
-  const [username, setUsername] = useState(props.storeUsername);
+  const [username] = useState(props.storeUsername);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
-  const [deleteIncome, setDeleteIncome] = useState(false);
 
   const styles = {
     sideBarHeight: {
-      height: '100%',
+      position: 'fixed',
+      top: 0,
     },
     menuIcon: {
       float: 'right',
@@ -61,35 +61,10 @@ export default function Profile(props) {
       });
   };
 
-  const handleDelete = (event) => {
-    console.log('Handle Delete Called');
-    event.preventDefault();
-    setError('');
-    axios
-      .delete(
-        `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully deleted income!');
-        console.log(res);
-        setOldIncome('');
-        setIncomeInput('');
-        setDeleteIncome(true);
-      })
-      .catch((e) => {
-        console.log(e);
-        setError(e.message);
-      });
-  };
-
   const handlePost = (event) => {
     event.preventDefault();
     setError('');
     setSuccess(false);
-    setDeleteIncome(false);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/annualincome/`,
@@ -105,7 +80,6 @@ export default function Profile(props) {
         console.log(res);
         setSuccess(true);
         setOldIncome(incomeInput);
-        setDeleteIncome(false);
       })
       .catch((e) => {
         console.log(e);
@@ -152,13 +126,12 @@ export default function Profile(props) {
       });
   }, [props.token, oldIncome]);
 
-  console.log(username, props.token);
   return (
     <>
       <ProSidebar
         style={styles.sideBarHeight}
         collapsed={collapsed}
-        className='m-0'
+        className='m-0 sidenav'
       >
         <SidebarHeader>
           <div
@@ -172,19 +145,19 @@ export default function Profile(props) {
                   <a
                     role='button'
                     className={`has-text-white SidebarHeadText ${
-                      isActive ? 'is-active' : ''
+                      isActive ? 'is-active' : 'is-active is-invisible'
                     }`}
                     aria-label='menu'
                     // eslint-disable-next-line jsx-a11y/aria-proptypes
                     aria-expanded={`${isActive ? 'true' : 'false'}`}
                     data-target='charitableNavbar'
                   >
-                    {`${isActive ? `${username}'s Dashboard` : ''}`}
+                    {`${isActive ? `${username}'s Dashboard` : `Settings`}`}
                   </a>
                 </div>
               </div>{' '}
               <div className='columns mt-0 mb-0 pt-0 pb-0'>
-                <div className='column mt-0 mb-0 pt-0 pb-0'>
+                <div className='column mt-0 mb-1 pt-0 pb-0'>
                   <a
                     role='button'
                     className={`has-text-white SidebarHeadText ${
@@ -204,62 +177,60 @@ export default function Profile(props) {
         </SidebarHeader>
         <Menu iconShape='square' className='has-text-white'>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/reports'
+            <p
               onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
+                props.setProgress(!props.progress);
               }}
             >
-              Reports
-            </Link>
+              My Progress
+            </p>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/volunteering'
+            <p
               onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
+                props.setTimeline(!props.timeline);
+              }}
+            >
+              My Timeline
+            </p>
+          </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <p
+              onClick={() => {
+                props.setReports(!props.reports);
+              }}
+            >
+              My Impact
+            </p>
+          </MenuItem>
+          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+            <p
+              onClick={() => {
+                props.setVol(!props.vol);
               }}
             >
               My Volunteer Hours
-            </Link>
+            </p>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/donations'
+            <p
               onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
+                props.setDono(!props.dono);
               }}
             >
               My Donations
-            </Link>
+            </p>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
-          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/goals/volunteer'
-              onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
-              }}
-            >
-              My Volunteer Goals
-            </Link>
-          </MenuItem>
-          <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <Link
-              to='/goals/donation'
-              onClick={() => {
-                setIsActive(!isActive);
-                onClickMenuIcon();
-              }}
-            >
-              My Donation Goals
-            </Link>
-          </MenuItem>
+          <SubMenu
+            title='Edit My Volunteer Goal'
+            className={`${isActive ? '' : 'is-invisible'}`}
+          ></SubMenu>
+          <SubMenu
+            title='Edit My Donation Goal'
+            className={`${isActive ? '' : 'is-invisible'}`}
+          ></SubMenu>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <SubMenu
@@ -311,27 +282,9 @@ export default function Profile(props) {
                         </div>
                       </div>
                     </div>
-                    <div className='field is-grouped is-grouped-centered'>
-                      <div className='control'>
-                        <div
-                          className='button is-danger is-small'
-                          type='reset'
-                          onClick={(event) => handleDelete(event)}
-                        >
-                          Delete
-                        </div>
-                      </div>
-                    </div>
                     {success && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully updated
-                        <br></br>
-                        annual income!
-                      </div>
-                    )}
-                    {deleteIncome && (
-                      <div className='box has-background-warning has-text-white has-text-centered'>
-                        Successfully deleted
                         <br></br>
                         annual income!
                       </div>
@@ -385,13 +338,6 @@ export default function Profile(props) {
                         </div>
                       </div>
                     </div>
-                    {deleteIncome && (
-                      <div className='box has-background-warning has-text-black has-text-centered'>
-                        Successfully deleted
-                        <br></br>
-                        annual income!
-                      </div>
-                    )}
                     {error && !error.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
