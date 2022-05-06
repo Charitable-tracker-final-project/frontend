@@ -21,15 +21,15 @@ export default function Reports({ token }) {
         <br></br>
         <main>
           <div style={styles.regPage}>
-            <h1 className='title is-size-4-mobile'>My Impact</h1>
-            {isLoading ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                <div className='columns is-centered'>
-                  <div className='column is-11'>
+            <div className='columns is-centered'>
+              <div className='column is-11'>
+                <h1 className='title is-size-4-mobile'>My Impact:</h1>
+                {isLoading ? (
+                  <>
+                    <Loading />
+                  </>
+                ) : (
+                  <>
                     {error && (
                       <div className='box has-background-danger has-text-white'>
                         <h3>{error}</h3>
@@ -38,10 +38,10 @@ export default function Reports({ token }) {
                     <Graphs2 token={token} />
                     <Graphs4 token={token} />
                     <Graphs6 token={token} />
-                  </div>
-                </div>
-              </>
-            )}
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </main>
       </div>

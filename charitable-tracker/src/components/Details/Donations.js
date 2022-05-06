@@ -38,15 +38,15 @@ export default function Donations({ token }) {
         <br></br>
         <main>
           <div>
-            <h1 className='title'>My Donations</h1>
-            {isLoading ? (
-              <>
-                <Loading />
-              </>
-            ) : (
-              <>
-                <div className='columns is-centered'>
-                  <div className='column is-11'>
+            <div className='columns is-centered'>
+              <div className='column is-11'>
+                <h1 className='title'>My Donations:</h1>
+                {isLoading ? (
+                  <>
+                    <Loading />
+                  </>
+                ) : (
+                  <>
                     {error && (
                       <div className='box has-background-danger has-text-white'>
                         <h3>{error}</h3>
@@ -141,10 +141,10 @@ export default function Donations({ token }) {
                         })}
                       </>
                     )}
-                  </div>
-                </div>
-              </>
-            )}
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </main>
       </div>

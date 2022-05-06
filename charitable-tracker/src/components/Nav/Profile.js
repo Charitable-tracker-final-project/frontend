@@ -11,6 +11,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import '../Nav/custom.scss';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Switch from 'react-switch';
 
 export default function Profile(props) {
   const [isActive, setIsActive] = useState(false);
@@ -177,134 +178,164 @@ export default function Profile(props) {
         </SidebarHeader>
         <Menu iconShape='square' className='has-text-white'>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <p
-              onClick={() => {
-                props.setProgress(!props.progress);
-                props.setCookie(
-                  'settings',
-                  {
-                    progress: !props.progress,
-                    timeline: props.timeline,
-                    reports: props.reports,
-                    vol: props.vol,
-                    dono: props.dono,
-                  },
-                  {
-                    path: '/',
-                    maxAge: 2147483647,
-                    secure: 'true',
-                    sameSite: 'none',
-                    domain: '.netlify.app',
-                  }
-                );
-              }}
+            <label
+              htmlFor='progress-switch'
+              className='is-flex is-justify-content-space-between'
             >
-              My Progress
-            </p>
+              <p className='pr-1'>My Progress</p>
+              <Switch
+                onChange={() => {
+                  props.setProgress(!props.progress);
+                  props.setCookie(
+                    'settings',
+                    {
+                      progress: !props.progress,
+                      timeline: props.timeline,
+                      reports: props.reports,
+                      vol: props.vol,
+                      dono: props.dono,
+                    },
+                    {
+                      path: '/',
+                      maxAge: 2147483647,
+                    }
+                  );
+                }}
+                checked={props.progress}
+                className='progress-switch'
+                height={20}
+                width={50}
+                onColor={'#b5d13f'}
+              />
+            </label>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <p
-              onClick={() => {
-                props.setTimeline(!props.timeline);
-                props.setCookie(
-                  'settings',
-                  {
-                    progress: props.progress,
-                    timeline: !props.timeline,
-                    reports: props.reports,
-                    vol: props.vol,
-                    dono: props.dono,
-                  },
-                  {
-                    path: '/',
-                    maxAge: 2147483647,
-                    secure: 'true',
-                    sameSite: 'none',
-                    domain: '.netlify.app',
-                  }
-                );
-              }}
+            <label
+              htmlFor='timeline-switch'
+              className='is-flex is-justify-content-space-between'
             >
-              My Timeline
-            </p>
+              <p className='pr-1'>My Timeline</p>
+              <Switch
+                onChange={() => {
+                  props.setTimeline(!props.timeline);
+                  props.setCookie(
+                    'settings',
+                    {
+                      progress: props.progress,
+                      timeline: !props.timeline,
+                      reports: props.reports,
+                      vol: props.vol,
+                      dono: props.dono,
+                    },
+                    {
+                      path: '/',
+                      maxAge: 2147483647,
+                    }
+                  );
+                }}
+                checked={props.timeline}
+                className='progress-switch'
+                height={20}
+                width={50}
+                onColor={'#b5d13f'}
+              />
+            </label>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <p
-              onClick={() => {
-                props.setReports(!props.reports);
-                props.setCookie(
-                  'settings',
-                  {
-                    progress: props.progress,
-                    timeline: props.timeline,
-                    reports: !props.reports,
-                    vol: props.vol,
-                    dono: props.dono,
-                  },
-                  {
-                    path: '/',
-                    maxAge: 2147483647,
-                    secure: 'true',
-                    sameSite: 'none',
-                    domain: '.netlify.app',
-                  }
-                );
-              }}
+            <label
+              htmlFor='impact-switch'
+              className='is-flex is-justify-content-space-between'
             >
-              My Impact
-            </p>
+              <p className='pr-1'>My Impact</p>
+              <Switch
+                onChange={() => {
+                  props.setReports(!props.reports);
+                  props.setCookie(
+                    'settings',
+                    {
+                      progress: props.progress,
+                      timeline: props.timeline,
+                      reports: !props.reports,
+                      vol: props.vol,
+                      dono: props.dono,
+                    },
+                    {
+                      path: '/',
+                      maxAge: 2147483647,
+                    }
+                  );
+                }}
+                checked={props.reports}
+                className='progress-switch'
+                height={20}
+                width={50}
+                onColor={'#b5d13f'}
+              />
+            </label>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <p
-              onClick={() => {
-                props.setVol(!props.vol);
-                props.setCookie(
-                  'settings',
-                  {
-                    progress: props.progress,
-                    timeline: props.timeline,
-                    reports: props.reports,
-                    vol: !props.vol,
-                    dono: props.dono,
-                  },
-                  {
-                    path: '/',
-                    maxAge: 2147483647,
-                    secure: 'true',
-                    sameSite: 'none',
-                    domain: '.netlify.app',
-                  }
-                );
-              }}
+            <label
+              htmlFor='progress-switch'
+              className='is-flex is-justify-content-space-between'
             >
-              My Volunteer Hours
-            </p>
+              <p className='pr-1'>My Volunteering</p>
+              <Switch
+                onChange={() => {
+                  props.setVol(!props.vol);
+                  props.setCookie(
+                    'settings',
+                    {
+                      progress: props.progress,
+                      timeline: props.timeline,
+                      reports: props.reports,
+                      vol: !props.vol,
+                      dono: props.dono,
+                    },
+                    {
+                      path: '/',
+                      maxAge: 2147483647,
+                    }
+                  );
+                }}
+                checked={props.vol}
+                className='progress-switch'
+                height={20}
+                width={50}
+                onColor={'#b5d13f'}
+              />
+            </label>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-            <p
-              onClick={() => {
-                props.setDono(!props.dono);
-                props.setCookie(
-                  'settings',
-                  {
-                    progress: props.progress,
-                    timeline: props.timeline,
-                    reports: props.reports,
-                    vol: props.vol,
-                    dono: !props.dono,
-                  },
-                  {
-                    path: '/',
-                    maxAge: 2147483647,
-                    secure: 'true',
-                    sameSite: 'none',
-                    domain: '.netlify.app',
-                  }
-                );
-              }}
+            <label
+              htmlFor='progress-switch'
+              className='is-flex is-justify-content-space-between'
             >
-              My Donations
-            </p>
+              <p className='pr-1'>My Donations</p>
+              <Switch
+                onChange={() => {
+                  props.setDono(!props.dono);
+                  props.setCookie(
+                    'settings',
+                    {
+                      progress: props.progress,
+                      timeline: props.timeline,
+                      reports: props.reports,
+                      vol: props.vol,
+                      dono: !props.dono,
+                    },
+                    {
+                      path: '/',
+                      maxAge: 2147483647,
+                    }
+                  );
+                }}
+                checked={props.dono}
+                className='progress-switch'
+                height={20}
+                width={50}
+                onColor={'#b5d13f'}
+              />
+            </label>
           </MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>

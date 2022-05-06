@@ -48,9 +48,12 @@ export default function Home(props) {
           setDono={setDono}
         />
       </div>
-      <div className='column pl-6'>
+      <div className='column ml-6 pl-4'>
         <br></br>
-        <main>
+        <main className='ml-3'>
+          {!progress && !timeline && !reports && !vol && !dono && (
+            <h1>hello world!</h1>
+          )}
           {progress && <Progress token={props.token} />}
           {timeline && <TimelineCT token={props.token} />}
           {reports && <Reports token={props.token} />}

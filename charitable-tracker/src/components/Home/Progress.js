@@ -70,52 +70,6 @@ export default function Progress() {
                     ? dGoalMath(cGoalProgress, cGoal)
                     : vGoalMath(cGoalProgress, cGoal)}
                 </div>
-                <br></br>
-                <div className='field is-grouped is-grouped-centered'>
-                  <div className='control is-size-7-mobile'>
-                    {`(dev only):`}
-                    <div
-                      className='button is-small'
-                      onClick={() => {
-                        setCGoalDonos(!cGoalDonos);
-                      }}
-                    >{`Change Goal to ${
-                      cGoalDonos ? 'Volunteering' : 'Donation'
-                    }`}</div>
-                  </div>
-                </div>
-                <div className='field is-grouped is-grouped-centered'>
-                  <div className='control is-size-7-mobile'>
-                    <div
-                      className='button is-small'
-                      onClick={() => {
-                        cGoalTime ? setCGoalTime('') : setCGoalTime('Month');
-                      }}
-                    >
-                      {`${!cGoalTime ? 'Add Timeframe' : 'Remove Timeframe'}`}
-                    </div>
-                    <div
-                      className='button is-small'
-                      onClick={() => {
-                        cGoalOrg
-                          ? setCGoalOrg('')
-                          : setCGoalOrg('She Should Run');
-                      }}
-                    >
-                      {`${!cGoalOrg ? 'Add Org' : 'Remove Org'}`}
-                    </div>
-                    <div
-                      className='button is-small'
-                      onClick={() => {
-                        cGoalCause
-                          ? setCGoalCause('')
-                          : setCGoalCause('Womens Rights');
-                      }}
-                    >
-                      {`${!cGoalCause ? 'Add Cause' : 'Remove Cause'}`}
-                    </div>
-                  </div>
-                </div>
               </div>
             </>
           )}

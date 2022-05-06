@@ -11,7 +11,7 @@ export default function Navbar({ handleLogOut }) {
     <>
       <nav
         className={`navbar is-spaced has-shadow has-background-link-light ${
-          location.pathname === '/' && 'ml-3 pl-6'
+          location.pathname === '/' && 'ml-5 pl-6'
         }`}
         role='navigation'
         aria-label='main navigation'
