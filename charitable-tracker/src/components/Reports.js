@@ -17,33 +17,24 @@ export default function Reports({ token }) {
 
   return (
     <>
-      <div className='column'>
-        <br></br>
-        <main>
-          <div style={styles.regPage}>
-            <div className='columns is-centered'>
-              <div className='column is-11'>
-                <h1 className='title is-size-4-mobile'>My Impact:</h1>
-                {isLoading ? (
-                  <>
-                    <Loading />
-                  </>
-                ) : (
-                  <>
-                    {error && (
-                      <div className='box has-background-danger has-text-white'>
-                        <h3>{error}</h3>
-                      </div>
-                    )}
-                    <Graphs2 token={token} />
-                    <Graphs4 token={token} />
-                    <Graphs6 token={token} />
-                  </>
-                )}
+      <div className='column is-11 is-6-widescreen'>
+        <h1 className='title is-size-4-mobile'>My Impact:</h1>
+        {isLoading ? (
+          <>
+            <Loading />
+          </>
+        ) : (
+          <>
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
               </div>
-            </div>
-          </div>
-        </main>
+            )}
+            <Graphs2 token={token} />
+            <Graphs4 token={token} />
+            <Graphs6 token={token} />
+          </>
+        )}
       </div>
     </>
   );

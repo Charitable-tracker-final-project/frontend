@@ -36,44 +36,42 @@ export default function Progress() {
 
   return (
     <>
-      <div className='columns is-centered'>
-        <div className='column is-11'>
-          <h1 className='title'>Progress Update:</h1>
-          {isLoading ? (
-            <>
-              <Loading />
-            </>
-          ) : (
-            <>
-              <div className='box'>
-                <h1 className='is-size-7-mobile'>Donations this year:</h1>
-                <progress
-                  className='progress m-0 is-info'
-                  value={donosToDate}
-                  max={income}
-                ></progress>
-                <div className='is-size-7-mobile'>
-                  {incomeMath(donosToDate, income)}
-                </div>
-                <br></br>
-                <br></br>
-                <h1 className='is-size-7-mobile'>
-                  Progress Towards Nearest Goal:
-                </h1>
-                <progress
-                  className='progress m-0 is-success'
-                  value={cGoalProgress}
-                  max={cGoal}
-                ></progress>
-                <div className='is-size-7-mobile'>
-                  {cGoalDonos
-                    ? dGoalMath(cGoalProgress, cGoal)
-                    : vGoalMath(cGoalProgress, cGoal)}
-                </div>
+      <div className='column is-11 is-6-widescreen'>
+        <h1 className='title'>Progress Update:</h1>
+        {isLoading ? (
+          <>
+            <Loading />
+          </>
+        ) : (
+          <>
+            <div className='box'>
+              <h1 className='is-size-7-mobile'>Donations this year:</h1>
+              <progress
+                className='progress m-0 is-info'
+                value={donosToDate}
+                max={income}
+              ></progress>
+              <div className='is-size-7-mobile'>
+                {incomeMath(donosToDate, income)}
               </div>
-            </>
-          )}
-        </div>
+              <br></br>
+              <br></br>
+              <h1 className='is-size-7-mobile'>
+                Progress Towards Nearest Goal:
+              </h1>
+              <progress
+                className='progress m-0 is-success'
+                value={cGoalProgress}
+                max={cGoal}
+              ></progress>
+              <div className='is-size-7-mobile'>
+                {cGoalDonos
+                  ? dGoalMath(cGoalProgress, cGoal)
+                  : vGoalMath(cGoalProgress, cGoal)}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

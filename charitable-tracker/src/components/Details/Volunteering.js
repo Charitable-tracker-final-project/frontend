@@ -35,110 +35,101 @@ export default function Volunteering({ token }) {
 
   return (
     <>
-      <div className='column'>
-        <br></br>
-        <main>
-          <div>
-            <div className='columns is-centered'>
-              <div className='column is-11'>
-                <h1 className='title'>My Volunteering:</h1>
-                {isLoading ? (
-                  <>
-                    <Loading />
-                  </>
-                ) : (
-                  <>
-                    {error && (
-                      <div className='box has-background-danger has-text-white'>
-                        <h3>{error}</h3>
+      <div className='column is-11 is-6-widescreen'>
+        <h1 className='title'>My Volunteering:</h1>
+        {isLoading ? (
+          <>
+            <Loading />
+          </>
+        ) : (
+          <>
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
+              </div>
+            )}
+            {!volunteerings.length > 0 ? (
+              <>
+                <div className='box p-5 mb-5'>
+                  <div className='columns is-centered'>
+                    <div className='column is-10 has-text-centered'>
+                      <h1 className='is-size-3 has-text-black'>
+                        You haven't entered any volunteer hours yet...
+                      </h1>
+                      <div className='field is-grouped is-grouped-centered mt-5'>
+                        <div className='control'>
+                          <Link to={`/new/volunteer-hours`}>
+                            <div className='button is-large is-primary'>
+                              Enter New Volunteer Hours
+                            </div>
+                          </Link>
+                        </div>
                       </div>
-                    )}
-                    {!volunteerings.length > 0 ? (
-                      <>
-                        <div className='box p-5 mb-5'>
-                          <div className='columns is-centered'>
-                            <div className='column is-10 has-text-centered'>
-                              <h1 className='is-size-3 has-text-black'>
-                                You haven't entered any volunteer hours yet...
-                              </h1>
-                              <div className='field is-grouped is-grouped-centered mt-5'>
-                                <div className='control'>
-                                  <Link to={`/new/volunteer-hours`}>
-                                    <div className='button is-large is-primary'>
-                                      Enter New Volunteer Hours
-                                    </div>
-                                  </Link>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {volunteerings.map((v, key) => {
+                  const V_id = v.pk;
+                  return (
+                    <div className='box p-5 mb-5' key={key}>
+                      <div className='columns'>
+                        <div className='column is-9'>
+                          <p className='is-size-7 has-text-grey'>{`${dateConvert(
+                            v.created_at
+                          )}`}</p>
+                          You volunteered <b>{`${v.hours} hours`}</b> with{' '}
+                          <b>{`${v.organization}`}</b>, benefiting{' '}
+                          <b>
+                            <i>{`${v.cause}`}</i>
+                          </b>
+                        </div>
+                        <div className='column is-1' />
+                        <div className='column is-2 pr-6'>
+                          <div className='field is-grouped is-grouped-centered'>
+                            <div className='control'>
+                              <Link to={`/volunteering/edit/${V_id}`}>
+                                <div className='button is-link'>
+                                  Edit Volunteering
                                 </div>
+                              </Link>
+                            </div>
+                          </div>
+                          <div className='field is-grouped is-grouped-centered'>
+                            <div className='control'>
+                              <div
+                                className='button is-info'
+                                onClick={
+                                  isActive === V_id
+                                    ? () => setIsActive(null)
+                                    : () => setIsActive(V_id)
+                                }
+                              >
+                                View Details
                               </div>
                             </div>
                           </div>
                         </div>
-                      </>
-                    ) : (
-                      <>
-                        {volunteerings.map((v, key) => {
-                          const V_id = v.pk;
-                          return (
-                            <div className='box p-5 mb-5' key={key}>
-                              <div className='columns'>
-                                <div className='column is-9'>
-                                  <p className='is-size-7 has-text-grey'>{`${dateConvert(
-                                    v.created_at
-                                  )}`}</p>
-                                  You volunteered <b>{`${v.hours} hours`}</b>{' '}
-                                  with <b>{`${v.organization}`}</b>, benefiting{' '}
-                                  <b>
-                                    <i>{`${v.cause}`}</i>
-                                  </b>
-                                </div>
-                                <div className='column is-1' />
-                                <div className='column is-2 pr-6'>
-                                  <div className='field is-grouped is-grouped-centered'>
-                                    <div className='control'>
-                                      <Link to={`/volunteering/edit/${V_id}`}>
-                                        <div className='button is-link'>
-                                          Edit Volunteering
-                                        </div>
-                                      </Link>
-                                    </div>
-                                  </div>
-                                  <div className='field is-grouped is-grouped-centered'>
-                                    <div className='control'>
-                                      <div
-                                        className='button is-info'
-                                        onClick={
-                                          isActive === V_id
-                                            ? () => setIsActive(null)
-                                            : () => setIsActive(V_id)
-                                        }
-                                      >
-                                        View Details
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {isActive === V_id && (
-                                <>
-                                  <hr></hr>
-                                  <div className='columns is-centered'>
-                                    <div className='column'>
-                                      <p>{v.description}</p>
-                                    </div>
-                                  </div>
-                                </>
-                              )}
+                      </div>
+                      {isActive === V_id && (
+                        <>
+                          <hr></hr>
+                          <div className='columns is-centered'>
+                            <div className='column'>
+                              <p>{v.description}</p>
                             </div>
-                          );
-                        })}
-                      </>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          </div>
-        </main>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
+            )}
+          </>
+        )}
       </div>
     </>
   );
