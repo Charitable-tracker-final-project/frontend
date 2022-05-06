@@ -189,7 +189,12 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/', maxAge: 2147483647 }
+                  {
+                    path: '/',
+                    maxAge: 2147483647,
+                    secure: true,
+                    domain: '.netlify.app',
+                  }
                 );
               }}
             >
@@ -209,7 +214,12 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/', maxAge: 2147483647 }
+                  {
+                    path: '/',
+                    maxAge: 2147483647,
+                    secure: true,
+                    domain: '.netlify.app',
+                  }
                 );
               }}
             >
@@ -229,7 +239,12 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/', maxAge: 2147483647 }
+                  {
+                    path: '/',
+                    maxAge: 2147483647,
+                    secure: true,
+                    domain: '.netlify.app',
+                  }
                 );
               }}
             >
@@ -249,7 +264,12 @@ export default function Profile(props) {
                     vol: !props.vol,
                     dono: props.dono,
                   },
-                  { path: '/', maxAge: 2147483647 }
+                  {
+                    path: '/',
+                    maxAge: 2147483647,
+                    secure: true,
+                    domain: '.netlify.app',
+                  }
                 );
               }}
             >
@@ -269,7 +289,12 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: !props.dono,
                   },
-                  { path: '/', maxAge: 2147483647 }
+                  {
+                    path: '/',
+                    maxAge: 2147483647,
+                    secure: true,
+                    domain: '.netlify.app',
+                  }
                 );
               }}
             >
