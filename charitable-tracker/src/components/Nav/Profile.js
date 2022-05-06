@@ -189,7 +189,7 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/' }
+                  { path: '/', maxAge: 2147483647 }
                 );
               }}
             >
@@ -209,7 +209,7 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/' }
+                  { path: '/', maxAge: 2147483647 }
                 );
               }}
             >
@@ -229,7 +229,7 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: props.dono,
                   },
-                  { path: '/' }
+                  { path: '/', maxAge: 2147483647 }
                 );
               }}
             >
@@ -249,7 +249,7 @@ export default function Profile(props) {
                     vol: !props.vol,
                     dono: props.dono,
                   },
-                  { path: '/' }
+                  { path: '/', maxAge: 2147483647 }
                 );
               }}
             >
@@ -269,7 +269,7 @@ export default function Profile(props) {
                     vol: props.vol,
                     dono: !props.dono,
                   },
-                  { path: '/' }
+                  { path: '/', maxAge: 2147483647 }
                 );
               }}
             >
