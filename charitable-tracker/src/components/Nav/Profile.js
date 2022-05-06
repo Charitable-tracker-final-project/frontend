@@ -193,7 +193,7 @@ export default function Profile(props) {
                     path: '/',
                     maxAge: 2147483647,
                     secure: 'true',
-                    sameSite: 'None',
+                    sameSite: 'none',
                     domain: '.netlify.app',
                   }
                 );
@@ -219,7 +219,7 @@ export default function Profile(props) {
                     path: '/',
                     maxAge: 2147483647,
                     secure: 'true',
-                    sameSite: 'None',
+                    sameSite: 'none',
                     domain: '.netlify.app',
                   }
                 );
@@ -245,7 +245,7 @@ export default function Profile(props) {
                     path: '/',
                     maxAge: 2147483647,
                     secure: 'true',
-                    sameSite: 'None',
+                    sameSite: 'none',
                     domain: '.netlify.app',
                   }
                 );
@@ -271,7 +271,7 @@ export default function Profile(props) {
                     path: '/',
                     maxAge: 2147483647,
                     secure: 'true',
-                    sameSite: 'None',
+                    sameSite: 'none',
                     domain: '.netlify.app',
                   }
                 );
@@ -297,7 +297,7 @@ export default function Profile(props) {
                     path: '/',
                     maxAge: 2147483647,
                     secure: 'true',
-                    sameSite: 'None',
+                    sameSite: 'none',
                     domain: '.netlify.app',
                   }
                 );
