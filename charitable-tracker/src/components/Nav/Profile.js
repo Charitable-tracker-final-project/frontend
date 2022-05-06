@@ -180,6 +180,17 @@ export default function Profile(props) {
             <p
               onClick={() => {
                 props.setProgress(!props.progress);
+                props.setCookie(
+                  'settings',
+                  {
+                    progress: !props.progress,
+                    timeline: props.timeline,
+                    reports: props.reports,
+                    vol: props.vol,
+                    dono: props.dono,
+                  },
+                  { path: '/' }
+                );
               }}
             >
               My Progress
@@ -189,6 +200,17 @@ export default function Profile(props) {
             <p
               onClick={() => {
                 props.setTimeline(!props.timeline);
+                props.setCookie(
+                  'settings',
+                  {
+                    progress: props.progress,
+                    timeline: !props.timeline,
+                    reports: props.reports,
+                    vol: props.vol,
+                    dono: props.dono,
+                  },
+                  { path: '/' }
+                );
               }}
             >
               My Timeline
@@ -198,6 +220,17 @@ export default function Profile(props) {
             <p
               onClick={() => {
                 props.setReports(!props.reports);
+                props.setCookie(
+                  'settings',
+                  {
+                    progress: props.progress,
+                    timeline: props.timeline,
+                    reports: !props.reports,
+                    vol: props.vol,
+                    dono: props.dono,
+                  },
+                  { path: '/' }
+                );
               }}
             >
               My Impact
@@ -207,6 +240,17 @@ export default function Profile(props) {
             <p
               onClick={() => {
                 props.setVol(!props.vol);
+                props.setCookie(
+                  'settings',
+                  {
+                    progress: props.progress,
+                    timeline: props.timeline,
+                    reports: props.reports,
+                    vol: !props.vol,
+                    dono: props.dono,
+                  },
+                  { path: '/' }
+                );
               }}
             >
               My Volunteer Hours
@@ -216,6 +260,17 @@ export default function Profile(props) {
             <p
               onClick={() => {
                 props.setDono(!props.dono);
+                props.setCookie(
+                  'settings',
+                  {
+                    progress: props.progress,
+                    timeline: props.timeline,
+                    reports: props.reports,
+                    vol: props.vol,
+                    dono: !props.dono,
+                  },
+                  { path: '/' }
+                );
               }}
             >
               My Donations

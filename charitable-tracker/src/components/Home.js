@@ -6,14 +6,27 @@ import Profile from './Nav/Profile';
 import Reports from './Reports';
 import Volunteering from './Details/Volunteering';
 import Donations from './Details/Donations';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 export default function Home(props) {
+  const [cookies, setCookie] = useCookies(['settings']);
   const [progress, setProgress] = useState(true);
   const [timeline, setTimeline] = useState(true);
-  const [reports, setReports] = useState(true);
-  const [vol, setVol] = useState(true);
-  const [dono, setDono] = useState(true);
+  const [reports, setReports] = useState(false);
+  const [vol, setVol] = useState(false);
+  const [dono, setDono] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const settings = cookies.settings;
+    console.log(settings);
+    settings && setProgress(settings.progress);
+    settings && setTimeline(settings.timeline);
+    settings && setReports(settings.reports);
+    settings && setVol(settings.vol);
+    settings && setDono(settings.dono);
+  }, []);
 
   return (
     <>
@@ -21,6 +34,8 @@ export default function Home(props) {
         <Profile
           storeUsername={props.storeuUsername}
           token={props.token}
+          cookies={cookies}
+          setCookie={setCookie}
           progress={progress}
           setProgress={setProgress}
           timeline={timeline}
