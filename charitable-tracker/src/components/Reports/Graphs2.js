@@ -85,99 +85,93 @@ export default function Graphs2({ token }) {
     <>
       <div className='column is-11 is-6-widescreen'>
         <div className='box p-5 mb-5'>
+          <h1 className='has-text-black has-text-info title is-size-5-mobile'>{`Volunteer Time:`}</h1>
+          <h1 className='has-text-centered title is-size-5-mobile'>{`You Volunteered ${totalHours} hours at these Organizations`}</h1>
           <div className='columns is-centered'>
+            {pieSpinner && <Loading />}
             <div className='column'>
-              <h1 className='has-text-black has-text-info title is-size-5-mobile'>{`Volunteer Time:`}</h1>
-              <h1 className='has-text-centered title is-size-5-mobile'>{`You Volunteered ${totalHours} hours at these Organizations`}</h1>
-              <div className='columns is-centered'>
-                {pieSpinner && <Loading />}
-                <div className='column'>
-                  <svg width={800} height={360}>
-                    <VictoryLegend
-                      standalone={false}
-                      colorScale={[
-                        '#f9c316',
-                        '#b5d13f',
-                        '#f973bf',
-                        '#28c1e0',
-                        '#9f60e2',
-                      ]}
-                      x={525}
-                      y={0}
-                      orientation='vertical'
-                      gutter={20}
-                      style={{ border: { stroke: 'light grey' } }}
-                      data={pieData.map((d, key) => {
-                        return { name: d.x };
-                      })}
-                    />
-                    <VictoryPie
-                      standalone={false}
-                      style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
-                      innerRadius='70'
-                      colorScale={[
-                        '#f9c316',
-                        '#b5d13f',
-                        '#f973bf',
-                        '#28c1e0',
-                        '#9f60e2',
-                      ]}
-                      padding={{
-                        left: '0',
-                        right: '-100',
-                        top: '30',
-                        bottom: '80',
-                      }}
-                      animate={{ duration: 400, easing: 'exp' }}
-                      data={pieData}
-                      labelComponent={
-                        <VictoryLabel
-                          text={({ datum }) => [`${datum.y} hours`]}
-                        />
-                      }
-                    />
-                  </svg>
-                </div>
-              </div>
-              <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>
-              <div className='columns is-centered'>
-                <div className='column pt-2'>
-                  {barSpinner && <Loading />}
-                  <VictoryChart domainPadding='40' width={800}>
-                    <VictoryAxis
-                      style={{
-                        tickLabels: {
-                          fontSize: 15,
-                          angle: -12,
-                        },
-                      }}
-                    />
-                    <VictoryAxis
-                      dependentAxis
-                      orientation='left'
-                      style={{
-                        axisLabel: { padding: 30 },
-                        tickLabels: { fontSize: 15 },
-                      }}
-                      label='Hours'
-                    />
-                    <VictoryBar
-                      barWidth={50}
-                      data={barData}
-                      animate={{ duration: 500, easing: 'exp' }}
-                      style={{ data: { fill: '#b5d13f' } }}
-                      labels={({ datum }) => [`${datum.y}`]}
-                      cornerRadius='4'
-                    />
-                    <VictoryLine
-                      data={barData}
-                      interpolation='monotoneX'
-                      animate={{ duration: 1300, easing: 'exp' }}
-                      style={{ data: { stroke: '#f973bf' } }}
-                    />
-                  </VictoryChart>
-                </div>
-              </div>
+              <svg width={800} height={360}>
+                <VictoryLegend
+                  standalone={false}
+                  colorScale={[
+                    '#f9c316',
+                    '#b5d13f',
+                    '#f973bf',
+                    '#28c1e0',
+                    '#9f60e2',
+                  ]}
+                  x={525}
+                  y={0}
+                  orientation='vertical'
+                  gutter={20}
+                  style={{ border: { stroke: 'light grey' } }}
+                  data={pieData.map((d, key) => {
+                    return { name: d.x };
+                  })}
+                />
+                <VictoryPie
+                  standalone={false}
+                  style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
+                  innerRadius='70'
+                  colorScale={[
+                    '#f9c316',
+                    '#b5d13f',
+                    '#f973bf',
+                    '#28c1e0',
+                    '#9f60e2',
+                  ]}
+                  padding={{
+                    left: '0',
+                    right: '-100',
+                    top: '30',
+                    bottom: '80',
+                  }}
+                  animate={{ duration: 400, easing: 'exp' }}
+                  data={pieData}
+                  labelComponent={
+                    <VictoryLabel text={({ datum }) => [`${datum.y} hours`]} />
+                  }
+                />
+              </svg>
+            </div>
+          </div>
+          <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>
+          <div className='columns is-centered'>
+            <div className='column pt-2'>
+              {barSpinner && <Loading />}
+              <VictoryChart domainPadding='40' width={800}>
+                <VictoryAxis
+                  style={{
+                    tickLabels: {
+                      fontSize: 15,
+                      angle: -12,
+                    },
+                  }}
+                />
+                <VictoryAxis
+                  dependentAxis
+                  orientation='left'
+                  style={{
+                    axisLabel: { padding: 30 },
+                    tickLabels: { fontSize: 15 },
+                  }}
+                  label='Hours'
+                />
+                <VictoryBar
+                  barWidth={50}
+                  data={barData}
+                  animate={{ duration: 500, easing: 'exp' }}
+                  style={{ data: { fill: '#b5d13f' } }}
+                  labels={({ datum }) => [`${datum.y}`]}
+                  cornerRadius='4'
+                />
+                <VictoryLine
+                  data={barData}
+                  interpolation='monotoneX'
+                  animate={{ duration: 1300, easing: 'exp' }}
+                  style={{ data: { stroke: '#f973bf' } }}
+                />
+              </VictoryChart>
             </div>
           </div>
         </div>
