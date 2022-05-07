@@ -80,7 +80,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
         setIncomeSuccess(true);
         setOldIncome(incomeInput);
       })
@@ -106,7 +105,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
         setDGoalSuccess(true);
         setDGoalLoad(dGoalAmount);
       })
@@ -132,7 +130,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Edit!');
-        console.log(res);
         setVGoalSuccess(true);
         setVGoalLoad(vGoalAmount);
       })
@@ -159,7 +156,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Post!');
-        console.log(res);
         setIncomeSuccess(true);
         setOldIncome(incomeInput);
       })
@@ -187,7 +183,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Post!');
-        console.log(res);
         setDGoalSuccess(true);
         setDGoalLoad(vGoalAmount);
       })
@@ -214,7 +209,6 @@ export default function Profile(props) {
       )
       .then((res) => {
         console.log('Successfully submitted Post!');
-        console.log(res);
         setVGoalSuccess(true);
         setVGoalLoad(vGoalAmount);
       })
@@ -242,7 +236,6 @@ export default function Profile(props) {
       .then((res) => {
         console.log('Get Income Called');
         setIsIncome(res.data);
-        console.log(res.data);
         setIncomeInput(
           res.data.find((e) => {
             return e.annual_income;
@@ -271,7 +264,6 @@ export default function Profile(props) {
       })
       .then((res) => {
         console.log('Get Donation Goals Called');
-        console.log(res.data);
         setDonoGoal(res.data);
         setDGoalAmount(
           res.data.find((e) => {
@@ -297,7 +289,6 @@ export default function Profile(props) {
       .then((res) => {
         console.log('Get Volunteer Goals Called');
         setVolGoal(res.data);
-        console.log(res.data);
         setVGoalAmount(
           res.data.find((e) => {
             return e.hours;

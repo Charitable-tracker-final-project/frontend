@@ -7,6 +7,7 @@ import {
   VictoryAxis,
   VictoryLabel,
   VictoryLine,
+  VictoryLegend,
 } from 'victory';
 import Loading from '../Loading/Loading';
 
@@ -84,43 +85,58 @@ export default function Graphs2({ token }) {
     <>
       <div className='column is-11 is-6-widescreen'>
         <div className='box p-5 mb-5'>
-          <div className='columns'>
+          <div className='columns is-centered'>
             <div className='column'>
               <h1 className='has-text-black has-text-info title is-size-5-mobile'>{`Volunteer Time:`}</h1>
               <h1 className='has-text-centered title is-size-5-mobile'>{`You Volunteered ${totalHours} hours at these Organizations`}</h1>
               <div className='columns is-centered'>
                 {pieSpinner && <Loading />}
                 <div className='column'>
-                  <VictoryPie
-                    style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
-                    innerRadius='70'
-                    colorScale={[
-                      '#f9c316',
-                      '#b5d13f',
-                      '#f973bf',
-                      '#28c1e0',
-                      '#9f60e2',
-                    ]}
-                    padding={{
-                      left: '250',
-                      right: '-150',
-                      top: '40',
-                      bottom: '90',
-                    }}
-                    containerComponent={
-                      <VictoryContainer width='800' height='360' />
-                    }
-                    animate={{ duration: 400, easing: 'exp' }}
-                    data={pieData}
-                    labelComponent={
-                      <VictoryLabel
-                        text={({ datum }) => [
-                          `${datum.x}`,
-                          `${datum.percentage}`,
-                        ]}
-                      />
-                    }
-                  />
+                  <svg width={800} height={360}>
+                    <VictoryLegend
+                      standalone={false}
+                      colorScale={[
+                        '#f9c316',
+                        '#b5d13f',
+                        '#f973bf',
+                        '#28c1e0',
+                        '#9f60e2',
+                      ]}
+                      x={525}
+                      y={0}
+                      orientation='vertical'
+                      gutter={20}
+                      style={{ border: { stroke: 'light grey' } }}
+                      data={pieData.map((d, key) => {
+                        return { name: d.x };
+                      })}
+                    />
+                    <VictoryPie
+                      standalone={false}
+                      style={{ data: { stroke: 'grey', strokeWidth: '0.2' } }}
+                      innerRadius='70'
+                      colorScale={[
+                        '#f9c316',
+                        '#b5d13f',
+                        '#f973bf',
+                        '#28c1e0',
+                        '#9f60e2',
+                      ]}
+                      padding={{
+                        left: '0',
+                        right: '-100',
+                        top: '30',
+                        bottom: '80',
+                      }}
+                      animate={{ duration: 400, easing: 'exp' }}
+                      data={pieData}
+                      labelComponent={
+                        <VictoryLabel
+                          text={({ datum }) => [`${datum.y} hours`]}
+                        />
+                      }
+                    />
+                  </svg>
                 </div>
               </div>
               <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>

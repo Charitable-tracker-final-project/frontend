@@ -25,7 +25,6 @@ export default function Home(props) {
 
   useEffect(() => {
     const settings = cookies.settings;
-    console.log(settings);
     settings && setProgress(settings.progress);
     settings && setTimeline(settings.timeline);
     settings && setGraphs2(settings.graphs2);
