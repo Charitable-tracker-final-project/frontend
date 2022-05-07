@@ -14,6 +14,7 @@ import axios from 'axios';
 import Switch from 'react-switch';
 
 export default function Profile(props) {
+  const [date, setDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [isIncome, setIsIncome] = useState([]);
@@ -47,6 +48,21 @@ export default function Profile(props) {
       margin: '10px',
     },
   };
+
+  const today = () => {
+    let newDate = new Date();
+    let day = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+
+    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${
+      day > 9 ? day : `0${day}`
+    }`;
+  };
+
+  useEffect(() => {
+    setDate(today());
+  }, []);
 
   const handleIncome = (event) => {
     event.preventDefault();
@@ -82,7 +98,7 @@ export default function Profile(props) {
       .put(
         `https://charitable-tracker.herokuapp.com/api/Dgoal/${donoPK}/`,
         {
-          Dollars: dGoalAmount,
+          dollars: dGoalAmount,
         },
         {
           headers: { Authorization: `Token ${props.token}` },
@@ -108,7 +124,7 @@ export default function Profile(props) {
       .put(
         `https://charitable-tracker.herokuapp.com/api/Vgoal/${volPK}/`,
         {
-          Hours: vGoalAmount,
+          hours: vGoalAmount,
         },
         {
           headers: { Authorization: `Token ${props.token}` },
@@ -142,7 +158,7 @@ export default function Profile(props) {
         }
       )
       .then((res) => {
-        console.log('Successfully submitted Edit!');
+        console.log('Successfully submitted Post!');
         console.log(res);
         setIncomeSuccess(true);
         setOldIncome(incomeInput);
@@ -161,8 +177,9 @@ export default function Profile(props) {
       .post(
         `https://charitable-tracker.herokuapp.com/api/Dgoals/`,
         {
-          Dgoaltitle: `${username}'s Donation Goal`,
-          Dollars: dGoalAmount,
+          dgoaltitle: `${username}'s Donation Goal`,
+          dollars: dGoalAmount,
+          created_at: date,
         },
         {
           headers: { Authorization: `Token ${props.token}` },
@@ -172,25 +189,24 @@ export default function Profile(props) {
         console.log('Successfully submitted Post!');
         console.log(res);
         setDGoalSuccess(true);
-        setIsLoading(true);
+        setDGoalLoad(vGoalAmount);
       })
       .catch((e) => {
         console.log(e);
         setDGoalError(e.message);
-        setIsLoading(true);
       });
   };
 
   const handleVGoalPost = (event) => {
     event.preventDefault();
     setVGoalError('');
-    setVGoalSuccess(false);
     axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Vgoals/`,
         {
-          Vgoaltitle: `${username}'s Volunteer Goal`,
-          Hours: vGoalAmount,
+          vgoaltitle: `${username}'s Volunteer Goal`,
+          hours: vGoalAmount,
+          created_at: date,
         },
         {
           headers: { Authorization: `Token ${props.token}` },
@@ -200,12 +216,11 @@ export default function Profile(props) {
         console.log('Successfully submitted Post!');
         console.log(res);
         setVGoalSuccess(true);
-        setIsLoading(true);
+        setVGoalLoad(vGoalAmount);
       })
       .catch((e) => {
         console.log(e);
         setVGoalError(e.message);
-        setIsLoading(true);
       });
   };
 
@@ -227,6 +242,7 @@ export default function Profile(props) {
       .then((res) => {
         console.log('Get Income Called');
         setIsIncome(res.data);
+        console.log(res.data);
         setIncomeInput(
           res.data.find((e) => {
             return e.annual_income;
@@ -255,15 +271,16 @@ export default function Profile(props) {
       })
       .then((res) => {
         console.log('Get Donation Goals Called');
+        console.log(res.data);
         setDonoGoal(res.data);
         setDGoalAmount(
           res.data.find((e) => {
-            return e.donationgoal;
-          }).donationgoal
+            return e.dollars;
+          }).dollars
         );
         setDonoPK(
           res.data.find((e) => {
-            return e.donationgoal;
+            return e.dollars;
           }).pk
         );
       })
@@ -280,14 +297,15 @@ export default function Profile(props) {
       .then((res) => {
         console.log('Get Volunteer Goals Called');
         setVolGoal(res.data);
+        console.log(res.data);
         setVGoalAmount(
           res.data.find((e) => {
-            return e.volunteergoal;
-          }).volunteergoal
+            return e.hours;
+          }).hours
         );
         setVolPK(
           res.data.find((e) => {
-            return e.volunteergoal;
+            return e.hours;
           }).pk
         );
       })
@@ -671,6 +689,13 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
+                    {dGoalSuccess && (
+                      <div className='box has-background-success has-text-white has-text-centered'>
+                        Successfully Added
+                        <br></br>
+                        Donation Goal!
+                      </div>
+                    )}
                     {dGoalError && !dGoalError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
@@ -769,6 +794,13 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
+                    {vGoalSuccess && (
+                      <div className='box has-background-success has-text-white has-text-centered'>
+                        Successfully Added
+                        <br></br>
+                        Volunteer Goal!
+                      </div>
+                    )}
                     {vGoalError && !vGoalError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
@@ -888,6 +920,13 @@ export default function Profile(props) {
                         </div>
                       </div>
                     </div>
+                    {incomeSuccess && (
+                      <div className='box has-background-success has-text-white has-text-centered'>
+                        Successfully added
+                        <br></br>
+                        annual income!
+                      </div>
+                    )}
                     {incomeError && !incomeError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
