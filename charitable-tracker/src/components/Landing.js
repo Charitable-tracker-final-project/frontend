@@ -26,7 +26,7 @@ export default function Landing({ token, setToken, setAuth }) {
         setAuth(username, res.data.key);
         setLoginSpinner(false);
       })
-      .catch((e) => [ErrorHandling(e.message)]);
+      .catch((e) => [ErrorHandling(e.message), setLoginSpinner(false)]);
   };
 
   const ErrorHandling = (errorMessage) => {

@@ -8,13 +8,6 @@ export default function VolunteerGoals({ token }) {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const styles = {
-    regPage: {
-      minHeight: '78vh',
-      height: '100%',
-    },
-  };
-
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
@@ -44,7 +37,7 @@ export default function VolunteerGoals({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div style={styles.regPage}>
+          <div>
             <h1 className='title'>My Volunteer Goals</h1>
             {isLoading ? (
               <>

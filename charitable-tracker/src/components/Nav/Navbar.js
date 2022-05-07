@@ -1,14 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import logo from '../../images/logo192.png';
 
 export default function Navbar({ handleLogOut }) {
+  const location = useLocation();
   const [isActive, setIsActive] = useState(false);
+
   return (
     <>
       <nav
-        className='navbar is-spaced has-shadow has-background-link-light'
+        className={`navbar is-spaced has-shadow has-background-link-light ${
+          location.pathname === '/' && 'ml-5 pl-6'
+        }`}
         role='navigation'
         aria-label='main navigation'
       >
@@ -47,9 +51,6 @@ export default function Navbar({ handleLogOut }) {
             </Link>
             <Link to='/new/volunteer-hours' className='navbar-item'>
               Enter Volunteer Hours
-            </Link>
-            <Link to='/new/goal' className='navbar-item'>
-              Create Goal
             </Link>
           </div>
           <div className='navbar-end'>

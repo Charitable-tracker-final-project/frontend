@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 // import axios from 'axios'
 import Navbar from './components/Nav/Navbar';
-import Profile from './components/Nav/Profile';
 import Landing from './components/Landing';
 import Home from './components/Home';
 import bulma from './images/made-with-bulma--semiblack.png';
@@ -93,7 +92,7 @@ function App() {
           <Routes>
             <>
               <Route
-                path='/*'
+                path='/'
                 element={
                   <Landing
                     token={token}
@@ -108,17 +107,19 @@ function App() {
           <>
             {!newUser && <Navbar handleLogOut={handleLogOut} token={token} />}
             <div className='columns is-mobile'>
-              {!newUser && (
+              {/* {!newUser && (
                 <>
                   <div className='column is-narrow'>
                     <Profile storeuUsername={storeUsername} token={token} />
                   </div>
                 </>
-              )}
+              )} */}
               <Routes>
                 <Route
                   path='/'
-                  element={<Home handleLogOut={handleLogOut} token={token} />}
+                  element={
+                    <Home storeuUsername={storeUsername} token={token} />
+                  }
                 />
                 <Route path='/reports' element={<Reports token={token} />} />
                 <Route
