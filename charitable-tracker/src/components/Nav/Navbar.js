@@ -52,9 +52,6 @@ export default function Navbar({ handleLogOut }) {
             <Link to='/new/volunteer-hours' className='navbar-item'>
               Enter Volunteer Hours
             </Link>
-            <Link to='/new/goal' className='navbar-item'>
-              Create Goal
-            </Link>
           </div>
           <div className='navbar-end'>
             <div className='button is-warning mt-1' onClick={handleLogOut}>
