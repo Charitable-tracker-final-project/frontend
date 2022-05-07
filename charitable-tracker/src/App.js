@@ -92,7 +92,7 @@ function App() {
           <Routes>
             <>
               <Route
-                path='/*'
+                path='/'
                 element={
                   <Landing
                     token={token}
