@@ -10,6 +10,8 @@ export default function LogDonation({ token }) {
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
+  const [image, setImage] = useState(null);
+  const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
 
   const handleSubmit = (event) => {
@@ -182,39 +184,7 @@ export default function LogDonation({ token }) {
                           </div>
                         </div>
                       </div>
-                      {/* <div className='field is-grouped is-grouped-centered'>
-                        <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
-                          <label
-                            className='label has-text-centered'
-                            htmlFor='dono-cause'
-                          >
-                            <div className='is-size-5 mb-1'>
-                              Is this associated with a goal?
-                            </div>
-                          </label>
-                          <div className='select'>
-                            <select
-                              className='input is-rounded has-text-centered'
-                              id='dono-cause'
-                              required
-                              value={goal}
-                              onChange={(event) => setGoal(event.target.value)}
-                            >
-                              <option>------</option>
-                              {isLoading ? (
-                                <></>
-                              ) : (
-                                <>
-                                  {goals.map((g, key) => {
-                                    return <option>{`${g.goaltitle}`}</option>;
-                                  })}
-                                </>
-                              )}
-                            </select>
-                          </div>
-                        </div>
-                      </div> */}
-                      {/* <div className='field is-grouped is-grouped-centered'>
+                      <div className='field is-grouped is-grouped-centered'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
                           <label
                             className='label has-text-centered'
@@ -228,11 +198,49 @@ export default function LogDonation({ token }) {
                               <i>{`(optional)`}</i>
                             </div>
                           </label>
-                          <div className='button is-info is-large is-rounded mb-6'>
-                            Upload Photo
+                          <div className='file has-name is-boxed'>
+                            <label className='file-label'>
+                              <input
+                                className='file-input'
+                                type='file'
+                                name='receipt'
+                                accept='image/*'
+                                onChange={(event) => {
+                                  console.log(event.target.files[0]);
+                                  setImage(event.target.files[0]);
+                                  setFilename(event.target.files[0].name);
+                                }}
+                              />
+                              <div className='button is-info is-large is-rounded'>
+                                Choose a file…
+                              </div>
+                              <span className='file-name'>{filename}</span>
+                            </label>
                           </div>
+                          {image && (
+                            <div>
+                              <div className='columns is-centered mt-4'>
+                                <div
+                                  className='button is-danger'
+                                  onClick={() => {
+                                    setImage(null);
+                                    setFilename('No file uploaded...');
+                                  }}
+                                >
+                                  Remove
+                                </div>
+                              </div>
+                              <div className='columns is-centered'>
+                                <img
+                                  alt='not found'
+                                  width={'250px'}
+                                  src={URL.createObjectURL(image)}
+                                />
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div> */}
+                      </div>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
                           <button className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>

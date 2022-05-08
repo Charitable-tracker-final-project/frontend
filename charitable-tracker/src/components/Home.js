@@ -387,7 +387,7 @@ export default function Home(props) {
             !dono && (
               <>
                 <h1 className='title has-text-centered is-size-6-mobile'>
-                  You've turned off all your dahsboard objects...
+                  You've turned off all your dashboard objects...
                 </h1>
                 <br></br>
                 <h1 className='title has-text-centered is-size-6-mobile'>
