@@ -28,7 +28,7 @@ export default function LoggedIn({
       >
         Let's Set Some Goals!
       </h1>
-      <div className='box p-6'>
+      <div className='p-6'>
         {step === 1 && (
           <EnterIncome
             newUser={newUser}

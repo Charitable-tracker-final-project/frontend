@@ -13,14 +13,6 @@ export default function LogVolunteering({ token }) {
   const [error, setError] = useState('');
   const [volSpinner, setVolSpinner] = useState(false);
 
-  const styles = {
-    regPage: {
-      minHeight: '100vh',
-      height: '100%',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
-    },
-  };
-
   const today = () => {
     let newDate = new Date();
     let day = newDate.getDate();
@@ -78,13 +70,13 @@ export default function LogVolunteering({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div className='columns is-centered' style={styles.regPage}>
+          <div className='columns is-centered'>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>
                 Tell us about your volunteering!
               </h1>
               {volSpinner && <Loading />}
-              <div className='box p-4'>
+              <div className='p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
                     <form onSubmit={handleSubmit}>
@@ -100,7 +92,7 @@ export default function LogVolunteering({ token }) {
                           </label>
                           <input
                             type='date'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='vol-date'
                             required
                             placeholder='When did you donate?'
@@ -121,7 +113,7 @@ export default function LogVolunteering({ token }) {
                           </label>
                           <input
                             type='text'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='vol-org'
                             required
                             placeholder='Organization Name'
@@ -143,7 +135,7 @@ export default function LogVolunteering({ token }) {
                           <div className='is-inline-flex is-size-4'>
                             <input
                               type='number'
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='vol-hours'
                               required
                               placeholder='#'
@@ -166,7 +158,7 @@ export default function LogVolunteering({ token }) {
                           </label>
                           <div className='select'>
                             <select
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='vol-cause'
                               required
                               value={cause}

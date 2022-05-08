@@ -17,16 +17,9 @@ export default function Register({
   const [password, setPassword] = useState('');
   const [income, setIncome] = useState('');
 
-  const styles = {
-    regPage: {
-      height: '100vh',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
-    },
-  };
-
   return (
     <>
-      <div className='columns is-centered' style={styles.regPage}>
+      <div className='columns is-centered'>
         <div className='column mt-6 pt-6 is-three-quarters'>
           {!token ? (
             <>

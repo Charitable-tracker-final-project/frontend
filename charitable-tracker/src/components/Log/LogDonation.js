@@ -12,14 +12,6 @@ export default function LogDonation({ token }) {
   const [error, setError] = useState('');
   const [donoSpinner, setDonoSpinner] = useState(false);
 
-  const styles = {
-    regPage: {
-      minHeight: '100vh',
-      height: '100%',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
-    },
-  };
-
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
     event.preventDefault();
@@ -76,7 +68,7 @@ export default function LogDonation({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div className='columns is-centered' style={styles.regPage}>
+          <div className='columns is-centered'>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>
                 Tell us about your donation!
@@ -87,23 +79,20 @@ export default function LogDonation({ token }) {
                   <h3>{error}</h3>
                 </div>
               )}
-              <div className='box p-4'>
+              <div className='p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
                     <form onSubmit={handleSubmit}>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
-                          <label
-                            className='label has-text-centered'
-                            htmlFor='dono-date'
-                          >
+                          <label className='label' htmlFor='dono-date'>
                             <div className='is-size-5 mb-1'>
                               When did you donate?
                             </div>
                           </label>
                           <input
                             type='date'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='dono-date'
                             required
                             placeholder='When did you donate?'
@@ -124,7 +113,7 @@ export default function LogDonation({ token }) {
                           </label>
                           <input
                             type='text'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='dono-org'
                             required
                             placeholder='Organization Name'
@@ -147,7 +136,7 @@ export default function LogDonation({ token }) {
                             $
                             <input
                               type='number'
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='dono-money'
                               required
                               placeholder='$'
@@ -169,7 +158,7 @@ export default function LogDonation({ token }) {
                           </label>
                           <div className='select'>
                             <select
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='dono-cause'
                               required
                               value={cause}
