@@ -12,6 +12,10 @@ export default function LogVolunteering({ token }) {
   const [details, setDetails] = useState('');
   const [error, setError] = useState('');
   const [volSpinner, setVolSpinner] = useState(false);
+  const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState('');
+  const [filename, setFilename] = useState('No file uploaded...');
+  const [uploadDone, setUploadDone] = useState(false);
 
   const today = () => {
     let newDate = new Date();
@@ -29,14 +33,37 @@ export default function LogVolunteering({ token }) {
     event.preventDefault();
     setVolSpinner(true);
     axios
+      .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+        headers: {
+          'Content-Type': 'image/*',
+          'Content-Disposition': `attachment;filename=${filename}`,
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res.data.upload);
+        setImgURL(res.data.upload);
+        setUploadDone(true);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setVolSpinner(false);
+      });
+    axios
       .post(
         `https://charitable-tracker.herokuapp.com/api/Vrecords/`,
         {
-          hours: dono,
+          hoursdonated: dono,
           created_at: date,
           organization: org,
           description: details,
           cause: cause,
+          imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+            ' ',
+            '_'
+          )}`,
         },
         {
           headers: { Authorization: `Token ${token}` },
@@ -108,7 +135,7 @@ export default function LogVolunteering({ token }) {
                             htmlFor='vol-org'
                           >
                             <div className='is-size-5 mb-1'>
-                              What is the organizations name?
+                              What is the organization's name?
                             </div>
                           </label>
                           <input
@@ -202,6 +229,64 @@ export default function LogVolunteering({ token }) {
                           value={details}
                           onChange={(event) => setDetails(event.target.value)}
                         />
+                      </div>
+                      <div className='field is-grouped is-grouped-centered'>
+                        <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
+                          <label
+                            className='label has-text-centered'
+                            htmlFor='dono-cause'
+                          >
+                            <div className='is-size-5'>
+                              Have a receipt or email confirmation?
+                            </div>
+                            <div className='is-size-5'>Upload it here!</div>
+                            <div className='is-size-7 has-text-grey mb-1'>
+                              <i>{`(optional)`}</i>
+                            </div>
+                          </label>
+                          <div className='file has-name is-boxed'>
+                            <label className='file-label'>
+                              <input
+                                className='file-input'
+                                type='file'
+                                name='receipt'
+                                accept='image/*'
+                                onChange={(event) => {
+                                  console.log(event.target.files[0]);
+                                  console.log(event.target.files[0].name);
+                                  setImage(event.target.files[0]);
+                                  setFilename(event.target.files[0].name);
+                                }}
+                              />
+                              <div className='button is-info is-large is-rounded'>
+                                Choose a file…
+                              </div>
+                              <span className='file-name'>{filename}</span>
+                            </label>
+                          </div>
+                          {image && (
+                            <div>
+                              <div className='columns is-centered mt-4'>
+                                <div
+                                  className='button is-danger'
+                                  onClick={() => {
+                                    setImage(null);
+                                    setFilename('No file uploaded...');
+                                  }}
+                                >
+                                  Remove
+                                </div>
+                              </div>
+                              <div className='columns is-centered'>
+                                <img
+                                  alt='not found'
+                                  width={'250px'}
+                                  src={URL.createObjectURL(image)}
+                                />
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>

@@ -11,26 +11,52 @@ export default function LogDonation({ token }) {
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
   const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState('');
   const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
+  const [uploadDone, setUploadDone] = useState(false);
 
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
     event.preventDefault();
     setDonoSpinner(true);
     axios
-      .post(
-        `https://charitable-tracker.herokuapp.com/api/Drecords/`,
-        {
-          amountdonated: dono,
-          created_at: date,
-          organization: org,
-          cause: cause,
+      .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+        headers: {
+          'Content-Type': 'image/*',
+          'Content-Disposition': `attachment;filename=${filename}`,
+          Authorization: `Token ${token}`,
         },
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      )
+      })
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res.data.upload);
+        setImgURL(res.data.upload);
+        setUploadDone(true);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setDonoSpinner(false);
+      })
+      .then((uploadDone) => {
+        axios.post(
+          `https://charitable-tracker.herokuapp.com/api/Drecords/`,
+          {
+            amountdonated: dono,
+            created_at: date,
+            organization: org,
+            cause: cause,
+            imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+              ' ',
+              '_'
+            )}`,
+          },
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+      })
       .then((res) => {
         console.log('Successfully submitted Edit!');
         setDonoSpinner(false);
@@ -39,6 +65,7 @@ export default function LogDonation({ token }) {
       .catch((e) => {
         console.log(e);
         setError(e.message);
+        setDonoSpinner(false);
       });
   };
 
@@ -110,7 +137,7 @@ export default function LogDonation({ token }) {
                             htmlFor='dono-org'
                           >
                             <div className='is-size-5 mb-1'>
-                              What is the organizations name?
+                              What is the organization's name?
                             </div>
                           </label>
                           <input
@@ -166,6 +193,7 @@ export default function LogDonation({ token }) {
                               value={cause}
                               onChange={(event) => setCause(event.target.value)}
                             >
+                              <option>------</option>
                               <option>Animals</option>
                               <option>Arts Culture Humanities</option>
                               <option>Asian Rights</option>
@@ -207,6 +235,7 @@ export default function LogDonation({ token }) {
                                 accept='image/*'
                                 onChange={(event) => {
                                   console.log(event.target.files[0]);
+                                  console.log(event.target.files[0].name);
                                   setImage(event.target.files[0]);
                                   setFilename(event.target.files[0].name);
                                 }}
