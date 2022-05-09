@@ -10,33 +10,53 @@ export default function LogDonation({ token }) {
   const [dono, setDono] = useState(0);
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
+  const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState('');
+  const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
-
-  const styles = {
-    regPage: {
-      minHeight: '100vh',
-      height: '100%',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
-    },
-  };
+  const [uploadDone, setUploadDone] = useState(false);
 
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
     event.preventDefault();
     setDonoSpinner(true);
     axios
-      .post(
-        `https://charitable-tracker.herokuapp.com/api/Drecords/`,
-        {
-          amountdonated: dono,
-          created_at: date,
-          organization: org,
-          cause: cause,
+      .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+        headers: {
+          'Content-Type': 'image/*',
+          'Content-Disposition': `attachment;filename=${filename}`,
+          Authorization: `Token ${token}`,
         },
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      )
+      })
+      .then((res) => {
+        console.log('Successfully submitted Edit!');
+        console.log(res.data.upload);
+        setImgURL(res.data.upload);
+        setUploadDone(true);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setDonoSpinner(false);
+      })
+      .then((uploadDone) => {
+        axios.post(
+          `https://charitable-tracker.herokuapp.com/api/Drecords/`,
+          {
+            amountdonated: dono,
+            created_at: date,
+            organization: org,
+            cause: cause,
+            imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+              ' ',
+              '_'
+            )}`,
+          },
+          {
+            headers: { Authorization: `Token ${token}` },
+          }
+        );
+      })
       .then((res) => {
         console.log('Successfully submitted Edit!');
         setDonoSpinner(false);
@@ -45,6 +65,7 @@ export default function LogDonation({ token }) {
       .catch((e) => {
         console.log(e);
         setError(e.message);
+        setDonoSpinner(false);
       });
   };
 
@@ -76,7 +97,7 @@ export default function LogDonation({ token }) {
       <div className='column'>
         <br></br>
         <main>
-          <div className='columns is-centered' style={styles.regPage}>
+          <div className='columns is-centered'>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>
                 Tell us about your donation!
@@ -87,23 +108,20 @@ export default function LogDonation({ token }) {
                   <h3>{error}</h3>
                 </div>
               )}
-              <div className='box p-4'>
+              <div className='p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
                     <form onSubmit={handleSubmit}>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
-                          <label
-                            className='label has-text-centered'
-                            htmlFor='dono-date'
-                          >
+                          <label className='label' htmlFor='dono-date'>
                             <div className='is-size-5 mb-1'>
                               When did you donate?
                             </div>
                           </label>
                           <input
                             type='date'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='dono-date'
                             required
                             placeholder='When did you donate?'
@@ -119,12 +137,12 @@ export default function LogDonation({ token }) {
                             htmlFor='dono-org'
                           >
                             <div className='is-size-5 mb-1'>
-                              What is the organizations name?
+                              What is the organization's name?
                             </div>
                           </label>
                           <input
                             type='text'
-                            className='input is-rounded has-text-centered'
+                            className='input is-rounded'
                             id='dono-org'
                             required
                             placeholder='Organization Name'
@@ -147,7 +165,7 @@ export default function LogDonation({ token }) {
                             $
                             <input
                               type='number'
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='dono-money'
                               required
                               placeholder='$'
@@ -169,12 +187,13 @@ export default function LogDonation({ token }) {
                           </label>
                           <div className='select'>
                             <select
-                              className='input is-rounded has-text-centered'
+                              className='input is-rounded'
                               id='dono-cause'
                               required
                               value={cause}
                               onChange={(event) => setCause(event.target.value)}
                             >
+                              <option>------</option>
                               <option>Animals</option>
                               <option>Arts Culture Humanities</option>
                               <option>Asian Rights</option>
@@ -193,39 +212,7 @@ export default function LogDonation({ token }) {
                           </div>
                         </div>
                       </div>
-                      {/* <div className='field is-grouped is-grouped-centered'>
-                        <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
-                          <label
-                            className='label has-text-centered'
-                            htmlFor='dono-cause'
-                          >
-                            <div className='is-size-5 mb-1'>
-                              Is this associated with a goal?
-                            </div>
-                          </label>
-                          <div className='select'>
-                            <select
-                              className='input is-rounded has-text-centered'
-                              id='dono-cause'
-                              required
-                              value={goal}
-                              onChange={(event) => setGoal(event.target.value)}
-                            >
-                              <option>------</option>
-                              {isLoading ? (
-                                <></>
-                              ) : (
-                                <>
-                                  {goals.map((g, key) => {
-                                    return <option>{`${g.goaltitle}`}</option>;
-                                  })}
-                                </>
-                              )}
-                            </select>
-                          </div>
-                        </div>
-                      </div> */}
-                      {/* <div className='field is-grouped is-grouped-centered'>
+                      <div className='field is-grouped is-grouped-centered'>
                         <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
                           <label
                             className='label has-text-centered'
@@ -239,11 +226,50 @@ export default function LogDonation({ token }) {
                               <i>{`(optional)`}</i>
                             </div>
                           </label>
-                          <div className='button is-info is-large is-rounded mb-6'>
-                            Upload Photo
+                          <div className='file has-name is-boxed'>
+                            <label className='file-label'>
+                              <input
+                                className='file-input'
+                                type='file'
+                                name='receipt'
+                                accept='image/*'
+                                onChange={(event) => {
+                                  console.log(event.target.files[0]);
+                                  console.log(event.target.files[0].name);
+                                  setImage(event.target.files[0]);
+                                  setFilename(event.target.files[0].name);
+                                }}
+                              />
+                              <div className='button is-info is-large is-rounded'>
+                                Choose a file…
+                              </div>
+                              <span className='file-name'>{filename}</span>
+                            </label>
                           </div>
+                          {image && (
+                            <div>
+                              <div className='columns is-centered mt-4'>
+                                <div
+                                  className='button is-danger'
+                                  onClick={() => {
+                                    setImage(null);
+                                    setFilename('No file uploaded...');
+                                  }}
+                                >
+                                  Remove
+                                </div>
+                              </div>
+                              <div className='columns is-centered'>
+                                <img
+                                  alt='not found'
+                                  width={'250px'}
+                                  src={URL.createObjectURL(image)}
+                                />
+                              </div>
+                            </div>
+                          )}
                         </div>
-                      </div> */}
+                      </div>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
                           <button className='button is-success is-large pl-6 pr-6 mt-4 mb-4'>

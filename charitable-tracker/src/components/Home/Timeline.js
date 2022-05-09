@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Timeline,
@@ -9,13 +9,42 @@ import {
 } from '@merc/react-timeline';
 import logo from '../../images/logo192.png';
 import Loading from '../Loading/Loading';
+import axios from 'axios';
 
-export default function TimelineCT() {
-  const [isLoading, setIsLoading] = useState(false);
+export default function TimelineCT(props) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [records, setRecords] = useState(null);
+
+  const dateConvert = (date) => {
+    const [year, month, day] = date.split('-');
+    return `${month}/${day}/${year}`;
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+    setError('');
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/record-list/', {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Donations Called');
+        console.log(res.data);
+        setRecords(res.data.results);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  }, [error, props.token]);
 
   const logoMarker = () => (
     <img src={logo} alt='logo marker' width='25' className='pl-1' />
   );
+
   const customTheme = createTheme(themes.default, {
     card: {
       backgroundColor: '',
@@ -44,48 +73,34 @@ export default function TimelineCT() {
             <div className='box p-0'>
               <Timeline theme={customTheme}>
                 <Events>
-                  <TextEvent date='3/14/22' text='' marker={logoMarker}>
-                    <Link
-                      to='/donations#3'
-                      className='is-size-7-mobile has-text-black'
-                    >
-                      Donated <b>$15</b> to <b>She Should Run</b>, benefiting{' '}
-                      <i>Womens Rights</i>
-                    </Link>
-                  </TextEvent>
-                  <TextEvent date='2/24/22' text='' marker={logoMarker}>
-                    <Link
-                      to='/volunteering#2'
-                      className='is-size-7-mobile has-text-black'
-                    >
-                      Volunteered <b>5 hours</b> for{' '}
-                      <b>Bellevue Presbyterian Church</b>, benefiting{' '}
-                      <i>Worship</i>
-                    </Link>
-                  </TextEvent>
-                  <TextEvent date='1/2/22' text='' marker={logoMarker}>
-                    <Link
-                      to='/donations#2'
-                      className='is-size-7-mobile has-text-black'
-                    >
-                      Donated <b>$25</b> to <b>The American Red Cross</b>,
-                      benefiting <i>Disaster Relief</i>
-                    </Link>
-                  </TextEvent>
-                  <TextEvent
-                    date='1/1/22'
-                    text=''
-                    marker={logoMarker}
-                    className='is-size-7-mobile'
-                  >
-                    <Link
-                      to='/volunteering#1'
-                      className='is-size-7-mobile has-text-black'
-                    >
-                      Volunteered <b>4 hours</b> for <b>Wings Over America</b>,
-                      benefiting <i>Education</i>
-                    </Link>
-                  </TextEvent>
+                  {records.map((r, key) => {
+                    return (
+                      <TextEvent
+                        date={dateConvert(r.created_at)}
+                        text=''
+                        marker={logoMarker}
+                      >
+                        {r.amountdonated && (
+                          <>
+                            <div className='is-size-7-mobile has-text-black'>
+                              Donated <b>{`$${r.amountdonated}`}</b> to{' '}
+                              <b>{`${r.organization}`}</b>, benefiting{' '}
+                              <i>{`${r.cause}`}</i>
+                            </div>
+                          </>
+                        )}
+                        {r.hoursdonated && (
+                          <>
+                            <div className='is-size-7-mobile has-text-black'>
+                              Donated <b>{`${r.hoursdonated} hours`}</b> to{' '}
+                              <b>{`${r.organization}`}</b>, benefiting{' '}
+                              <i>{`${r.cause}`}</i>
+                            </div>
+                          </>
+                        )}
+                      </TextEvent>
+                    );
+                  })}
                 </Events>
               </Timeline>
             </div>

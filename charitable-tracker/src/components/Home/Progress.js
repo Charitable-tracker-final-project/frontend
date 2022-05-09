@@ -1,39 +1,71 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '../Loading/Loading';
+import axios from 'axios';
 
-export default function Progress() {
-  const [income, setIncome] = useState('67000');
-  const [donosToDate, setDonosToDate] = useState('23456');
-  const [cGoalProgress, setCGoalProgress] = useState('32');
-  const [cGoal, setCGoal] = useState('50');
-  const [cGoalOrg, setCGoalOrg] = useState('');
-  const [cGoalCause, setCGoalCause] = useState('');
-  const [cGoalTime, setCGoalTime] = useState('');
-  const [cGoalDonos, setCGoalDonos] = useState(true);
+export default function Progress(props) {
+  const income = props.income;
+  const dGoal = props.dGoalAmount;
+  const vGoal = props.vGoalAmount;
+  const [donosToDate, setDonosToDate] = useState('');
+  const [volToDate, setVolToDate] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const incomeMath = (donos, income) => {
     let percentage = (donos / income) * 100;
     percentage = Math.round(percentage);
-    return `${percentage}% of your annual income ($${income})`;
+    return `You've donated $${donos}, which is ${percentage}% of your annual income of $${income}`;
   };
 
-  const dGoalMath = (donos, goal) => {
-    return `$${donos} donated towards your goal of $${goal}${
-      cGoalTime ? ` this ${cGoalTime}` : ''
-    }${cGoalOrg ? ` to ${cGoalOrg}` : ''}${
-      cGoalCause ? `, benefitting ${cGoalCause}` : ''
-    }`;
+  const dGoalMath = (donos, dGoal) => {
+    let percentage = (donos / dGoal) * 100;
+    percentage = Math.round(percentage);
+    return `You've donated $${donos}, which is ${percentage}% of your goal of $${dGoal}`;
   };
 
-  const vGoalMath = (volunteering, goal) => {
-    return `${volunteering} hours towards your goal of ${goal} hours${
-      cGoalTime ? ` this ${cGoalTime}` : ''
-    }${cGoalOrg ? ` with ${cGoalOrg},` : ''} ${
-      cGoalCause ? ` benefitting ${cGoalCause}` : ''
-    }`;
+  const vGoalMath = (vol, vGoal) => {
+    let percentage = (vol / vGoal) * 100;
+    percentage = Math.round(percentage);
+    return `You've volunteered ${vol} hours, which is ${percentage}% of your goal of ${vGoal} hours`;
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    setError('');
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/Drecords/', {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Donations Called');
+        setDonosToDate(res.data[0].alldonated.alldonated);
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+
+    axios
+      .get('https://charitable-tracker.herokuapp.com/api/Vrecords/', {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
+      .then((res) => {
+        console.log('Get Volunteering Called');
+        console.log(res.data);
+        res.data.map((v, key) => {
+          return setVolToDate(volToDate + v.hoursdonated);
+        });
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
+  }, [error, props.token]);
+
+  console.log(volToDate);
   return (
     <>
       <div className='column is-11 is-6-widescreen'>
@@ -47,7 +79,7 @@ export default function Progress() {
             <div className='box'>
               <h1 className='is-size-7-mobile'>Donations this year:</h1>
               <progress
-                className='progress m-0 is-info'
+                className='progress m-0 is-success'
                 value={donosToDate}
                 max={income}
               ></progress>
@@ -57,17 +89,28 @@ export default function Progress() {
               <br></br>
               <br></br>
               <h1 className='is-size-7-mobile'>
-                Progress Towards Nearest Goal:
+                Progress Towards Donation Goal:
               </h1>
               <progress
-                className='progress m-0 is-success'
-                value={cGoalProgress}
-                max={cGoal}
+                className='progress m-0 is-link'
+                value={donosToDate}
+                max={dGoal}
               ></progress>
               <div className='is-size-7-mobile'>
-                {cGoalDonos
-                  ? dGoalMath(cGoalProgress, cGoal)
-                  : vGoalMath(cGoalProgress, cGoal)}
+                {dGoalMath(donosToDate, dGoal)}
+              </div>
+              <br></br>
+              <br></br>
+              <h1 className='is-size-7-mobile'>
+                Progress Towards Volunteer Goal:
+              </h1>
+              <progress
+                className='progress m-0 is-info'
+                value={volToDate}
+                max={dGoal}
+              ></progress>
+              <div className='is-size-7-mobile'>
+                {vGoalMath(volToDate, vGoal)}
               </div>
             </div>
           </>

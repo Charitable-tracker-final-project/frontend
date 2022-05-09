@@ -14,29 +14,10 @@ import axios from 'axios';
 import Switch from 'react-switch';
 
 export default function Profile(props) {
-  const [date, setDate] = useState('');
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
-  const [isIncome, setIsIncome] = useState([]);
-  const [incomeInput, setIncomeInput] = useState('');
-  const [oldIncome, setOldIncome] = useState('');
-  const [donoGoal, setDonoGoal] = useState([]);
-  const [dGoalAmount, setDGoalAmount] = useState('');
-  const [dGoalLoad, setDGoalLoad] = useState('');
-  const [donoPK, setDonoPK] = useState(0);
-  const [volGoal, setVolGoal] = useState([]);
-  const [vGoalAmount, setVGoalAmount] = useState('');
-  const [vGoalLoad, setVGoalLoad] = useState('');
-  const [volPK, setVolPK] = useState(0);
-  const [pk, setPk] = useState(0);
-  const [username] = useState(props.storeUsername);
   const [isLoading, setIsLoading] = useState(true);
-  const [incomeError, setIncomeError] = useState('');
-  const [incomeSuccess, setIncomeSuccess] = useState(false);
-  const [dGoalError, setDGoalError] = useState('');
-  const [dGoalSuccess, setDGoalSuccess] = useState(false);
-  const [vGoalError, setVGoalError] = useState('');
-  const [vGoalSuccess, setVGoalSuccess] = useState(false);
+  const [username] = useState(props.storeUsername);
 
   const styles = {
     sideBarHeight: {
@@ -49,273 +30,9 @@ export default function Profile(props) {
     },
   };
 
-  const today = () => {
-    let newDate = new Date();
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-
-    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${
-      day > 9 ? day : `0${day}`
-    }`;
-  };
-
-  useEffect(() => {
-    setDate(today());
-  }, []);
-
-  const handleIncome = (event) => {
-    event.preventDefault();
-    setIncomeError('');
-    setIncomeSuccess(false);
-    axios
-      .put(
-        `https://charitable-tracker.herokuapp.com/api/annualincome/${pk}/`,
-        {
-          annual_income: incomeInput,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Edit!');
-        console.log(res);
-        setIncomeSuccess(true);
-        setOldIncome(incomeInput);
-      })
-      .catch((e) => {
-        console.log(e);
-        setIncomeError(e.message);
-      });
-  };
-
-  const handleDGoalSubmit = (event) => {
-    event.preventDefault();
-    setDGoalError('');
-    setDGoalSuccess(false);
-    axios
-      .put(
-        `https://charitable-tracker.herokuapp.com/api/Dgoal/${donoPK}/`,
-        {
-          dollars: dGoalAmount,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Edit!');
-        console.log(res);
-        setDGoalSuccess(true);
-        setDGoalLoad(dGoalAmount);
-      })
-      .catch((e) => {
-        console.log(e);
-        setDGoalError(e.message);
-      });
-  };
-
-  const handleVGoalSubmit = (event) => {
-    event.preventDefault();
-    setVGoalError('');
-    setVGoalSuccess(false);
-    axios
-      .put(
-        `https://charitable-tracker.herokuapp.com/api/Vgoal/${volPK}/`,
-        {
-          hours: vGoalAmount,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Edit!');
-        console.log(res);
-        setVGoalSuccess(true);
-        setVGoalLoad(vGoalAmount);
-      })
-      .catch((e) => {
-        console.log(e);
-        setVGoalError(e.message);
-        setIsLoading(true);
-      });
-  };
-
-  const handlePost = (event) => {
-    event.preventDefault();
-    setIncomeError('');
-    setIncomeSuccess(false);
-    axios
-      .post(
-        `https://charitable-tracker.herokuapp.com/api/annualincome/`,
-        {
-          annual_income: incomeInput,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Post!');
-        console.log(res);
-        setIncomeSuccess(true);
-        setOldIncome(incomeInput);
-      })
-      .catch((e) => {
-        console.log(e);
-        setIncomeError(e.message);
-      });
-  };
-
-  const handleDGoalPost = (event) => {
-    event.preventDefault();
-    setDGoalError('');
-    setDGoalSuccess(false);
-    axios
-      .post(
-        `https://charitable-tracker.herokuapp.com/api/Dgoals/`,
-        {
-          dgoaltitle: `${username}'s Donation Goal`,
-          dollars: dGoalAmount,
-          created_at: date,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Post!');
-        console.log(res);
-        setDGoalSuccess(true);
-        setDGoalLoad(vGoalAmount);
-      })
-      .catch((e) => {
-        console.log(e);
-        setDGoalError(e.message);
-      });
-  };
-
-  const handleVGoalPost = (event) => {
-    event.preventDefault();
-    setVGoalError('');
-    axios
-      .post(
-        `https://charitable-tracker.herokuapp.com/api/Vgoals/`,
-        {
-          vgoaltitle: `${username}'s Volunteer Goal`,
-          hours: vGoalAmount,
-          created_at: date,
-        },
-        {
-          headers: { Authorization: `Token ${props.token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Post!');
-        console.log(res);
-        setVGoalSuccess(true);
-        setVGoalLoad(vGoalAmount);
-      })
-      .catch((e) => {
-        console.log(e);
-        setVGoalError(e.message);
-      });
-  };
-
   const onClickMenuIcon = () => {
     setCollapsed(!collapsed);
   };
-
-  useEffect(() => {
-    setIncomeError('');
-    setDGoalError('');
-    setVGoalError('');
-
-    axios
-      .get('https://charitable-tracker.herokuapp.com/api/annualincome/', {
-        headers: {
-          Authorization: `Token ${props.token}`,
-        },
-      })
-      .then((res) => {
-        console.log('Get Income Called');
-        setIsIncome(res.data);
-        console.log(res.data);
-        setIncomeInput(
-          res.data.find((e) => {
-            return e.annual_income;
-          }).annual_income
-        );
-        setOldIncome(
-          res.data.find((e) => {
-            return e.annual_income;
-          }).annual_income
-        );
-        setPk(
-          res.data.find((e) => {
-            return e.annual_income;
-          }).pk
-        );
-      })
-      .catch((e) => {
-        setIncomeError(e.message);
-      });
-
-    axios
-      .get('https://charitable-tracker.herokuapp.com/api/Dgoals/', {
-        headers: {
-          Authorization: `Token ${props.token}`,
-        },
-      })
-      .then((res) => {
-        console.log('Get Donation Goals Called');
-        console.log(res.data);
-        setDonoGoal(res.data);
-        setDGoalAmount(
-          res.data.find((e) => {
-            return e.dollars;
-          }).dollars
-        );
-        setDonoPK(
-          res.data.find((e) => {
-            return e.dollars;
-          }).pk
-        );
-      })
-      .catch((e) => {
-        setDGoalError(e.message);
-      });
-
-    axios
-      .get('https://charitable-tracker.herokuapp.com/api/Vgoals/', {
-        headers: {
-          Authorization: `Token ${props.token}`,
-        },
-      })
-      .then((res) => {
-        console.log('Get Volunteer Goals Called');
-        setVolGoal(res.data);
-        console.log(res.data);
-        setVGoalAmount(
-          res.data.find((e) => {
-            return e.hours;
-          }).hours
-        );
-        setVolPK(
-          res.data.find((e) => {
-            return e.hours;
-          }).pk
-        );
-      })
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((e) => {
-        setDGoalError(e.message);
-      });
-  }, [props.token, oldIncome, dGoalLoad, vGoalLoad]);
 
   return (
     <>
@@ -605,15 +322,20 @@ export default function Profile(props) {
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <SubMenu
             title={
-              donoGoal.length > 0 ? 'Edit Donation Goal' : 'Add Donation Goal'
+              props.donoGoal.length > 0
+                ? 'Edit Donation Goal'
+                : 'Add Donation Goal'
             }
             className={`${isActive ? '' : 'is-invisible'}`}
-            onOpenChange={() => [setDGoalSuccess(false), setDGoalError('')]}
+            onOpenChange={() => [
+              props.setDGoalSuccess(false),
+              props.setDGoalError(''),
+            ]}
           >
             <MenuItem>
-              {donoGoal.length > 0 ? (
+              {props.donoGoal.length > 0 ? (
                 <>
-                  <form onSubmit={handleDGoalSubmit}>
+                  <form onSubmit={props.handleDGoalSubmit}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-size-4'>
@@ -623,9 +345,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='150'
-                            value={dGoalAmount}
+                            value={props.dGoalAmount}
                             onChange={(event) =>
-                              setDGoalAmount(event.target.value)
+                              props.setDGoalAmount(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -642,14 +364,14 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
-                    {dGoalSuccess && (
+                    {props.dGoalSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully updated
                         <br></br>
                         Donation Goal!
                       </div>
                     )}
-                    {dGoalError && (
+                    {props.dGoalError && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>
@@ -660,7 +382,7 @@ export default function Profile(props) {
                 </>
               ) : (
                 <>
-                  <form onSubmit={handleDGoalPost}>
+                  <form onSubmit={props.handleDGoalPost}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-size-4'>
@@ -670,9 +392,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='150'
-                            value={dGoalAmount}
+                            value={props.dGoalAmount}
                             onChange={(event) =>
-                              setDGoalAmount(event.target.value)
+                              props.setDGoalAmount(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -689,14 +411,14 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
-                    {dGoalSuccess && (
+                    {props.dGoalSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully Added
                         <br></br>
                         Donation Goal!
                       </div>
                     )}
-                    {dGoalError && !dGoalError.status === 204 && (
+                    {props.dGoalError && !props.dGoalError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>
@@ -710,15 +432,20 @@ export default function Profile(props) {
           </SubMenu>
           <SubMenu
             title={
-              volGoal.length > 0 ? 'Edit Volunteer Goal' : 'Add Volunteer Goal'
+              props.volGoal.length > 0
+                ? 'Edit Volunteer Goal'
+                : 'Add Volunteer Goal'
             }
             className={`${isActive ? '' : 'is-invisible'}`}
-            onOpenChange={() => [setVGoalSuccess(false), setVGoalError('')]}
+            onOpenChange={() => [
+              props.setVGoalSuccess(false),
+              props.setVGoalError(''),
+            ]}
           >
             <MenuItem>
-              {volGoal.length > 0 ? (
+              {props.volGoal.length > 0 ? (
                 <>
-                  <form onSubmit={handleVGoalSubmit}>
+                  <form onSubmit={props.handleVGoalSubmit}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-align-items-center'>
@@ -727,9 +454,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='60'
-                            value={vGoalAmount}
+                            value={props.vGoalAmount}
                             onChange={(event) =>
-                              setVGoalAmount(event.target.value)
+                              props.setVGoalAmount(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -747,14 +474,14 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
-                    {vGoalSuccess && (
+                    {props.vGoalSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully updated
                         <br></br>
                         Volunteer Goal!
                       </div>
                     )}
-                    {vGoalError && (
+                    {props.vGoalError && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>
@@ -765,7 +492,7 @@ export default function Profile(props) {
                 </>
               ) : (
                 <>
-                  <form onSubmit={handleVGoalPost}>
+                  <form onSubmit={props.handleVGoalPost}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-align-items-center'>
@@ -774,9 +501,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='60'
-                            value={vGoalAmount}
+                            value={props.vGoalAmount}
                             onChange={(event) =>
-                              setVGoalAmount(event.target.value)
+                              props.setVGoalAmount(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -794,14 +521,14 @@ export default function Profile(props) {
                         </button>
                       </div>
                     </div>
-                    {vGoalSuccess && (
+                    {props.vGoalSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully Added
                         <br></br>
                         Volunteer Goal!
                       </div>
                     )}
-                    {vGoalError && !vGoalError.status === 204 && (
+                    {props.vGoalError && !props.vGoalError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>
@@ -817,16 +544,21 @@ export default function Profile(props) {
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <SubMenu
             title={
-              isIncome.length > 0 ? 'Edit Yearly Income' : 'Add Yearly Income'
+              props.isIncome.length > 0
+                ? 'Edit Yearly Income'
+                : 'Add Yearly Income'
             }
             className={`${isActive ? '' : 'is-invisible'}`}
-            onOpenChange={() => [setIncomeSuccess(false), setIncomeError('')]}
+            onOpenChange={() => [
+              props.setIncomeSuccess(false),
+              props.setIncomeError(''),
+            ]}
           >
             Yearly Income:
             <MenuItem>
-              {isIncome.length > 0 ? (
+              {props.isIncome.length > 0 ? (
                 <>
-                  <form onSubmit={handleIncome}>
+                  <form onSubmit={props.handleIncome}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-size-4'>
@@ -836,9 +568,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='35000'
-                            value={incomeInput}
+                            value={props.incomeInput}
                             onChange={(event) =>
-                              setIncomeInput(event.target.value)
+                              props.setIncomeInput(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -858,20 +590,20 @@ export default function Profile(props) {
                         <div
                           className='button is-waring is-small'
                           type='reset'
-                          onClick={() => setIncomeInput(oldIncome)}
+                          onClick={() => props.setIncomeInput(props.oldIncome)}
                         >
                           Reset
                         </div>
                       </div>
                     </div>
-                    {incomeSuccess && (
+                    {props.incomeSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully updated
                         <br></br>
                         annual income!
                       </div>
                     )}
-                    {incomeError && (
+                    {props.incomeError && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>
@@ -882,7 +614,7 @@ export default function Profile(props) {
                 </>
               ) : (
                 <>
-                  <form onSubmit={handlePost}>
+                  <form onSubmit={props.handlePost}>
                     <div className='field'>
                       <div className='control'>
                         <div className='is-inline-flex is-size-4'>
@@ -892,9 +624,9 @@ export default function Profile(props) {
                             className='input is-rounded'
                             id='income'
                             placeholder='35000'
-                            value={incomeInput}
+                            value={props.incomeInput}
                             onChange={(event) =>
-                              setIncomeInput(event.target.value)
+                              props.setIncomeInput(event.target.value)
                             }
                             pattern='[0-9]+'
                           />
@@ -914,20 +646,20 @@ export default function Profile(props) {
                         <div
                           className='button is-waring is-small'
                           type='reset'
-                          onClick={() => setIncomeInput(oldIncome)}
+                          onClick={() => props.setIncomeInput(props.oldIncome)}
                         >
                           Reset
                         </div>
                       </div>
                     </div>
-                    {incomeSuccess && (
+                    {props.incomeSuccess && (
                       <div className='box has-background-success has-text-white has-text-centered'>
                         Successfully added
                         <br></br>
                         annual income!
                       </div>
                     )}
-                    {incomeError && !incomeError.status === 204 && (
+                    {props.incomeError && !props.incomeError.status === 204 && (
                       <div className='box has-background-danger has-text-white has-text-centered'>
                         Request Failed
                         <br></br>

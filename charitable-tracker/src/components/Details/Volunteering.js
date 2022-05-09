@@ -7,7 +7,8 @@ export default function Volunteering({ token }) {
   const [volunteerings, setVolunteerings] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const [isActive, setIsActive] = useState(0);
+  const [isDActive, setIsDActive] = useState(0);
+  const [isRActive, setIsRActive] = useState(0);
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
@@ -74,56 +75,107 @@ export default function Volunteering({ token }) {
                 {volunteerings.map((v, key) => {
                   const V_id = v.pk;
                   return (
-                    <div className='box p-5 mb-5' key={key}>
-                      <div className='columns'>
-                        <div className='column is-9'>
-                          <p className='is-size-7 has-text-grey'>{`${dateConvert(
-                            v.created_at
-                          )}`}</p>
-                          You volunteered <b>{`${v.hours} hours`}</b> with{' '}
-                          <b>{`${v.organization}`}</b>, benefiting{' '}
-                          <b>
-                            <i>{`${v.cause}`}</i>
-                          </b>
-                        </div>
-                        <div className='column is-1' />
-                        <div className='column is-2 pr-6'>
-                          <div className='field is-grouped is-grouped-centered'>
-                            <div className='control'>
-                              <Link to={`/volunteering/edit/${V_id}`}>
-                                <div className='button is-link'>
-                                  Edit Volunteering
+                    <>
+                      {v.hoursdonated && (
+                        <>
+                          <div className='box p-5 mb-5' key={key}>
+                            <div className='columns'>
+                              <div className='column is-9'>
+                                <p className='is-size-7 has-text-grey'>{`${dateConvert(
+                                  v.created_at
+                                )}`}</p>
+                                <div>
+                                  You volunteered <b>{`${v.hours} hours`}</b>{' '}
+                                  with <b>{`${v.organization}`}</b>, benefiting{' '}
+                                  <b>
+                                    <i>{`${v.cause}`}</i>
+                                  </b>
                                 </div>
-                              </Link>
-                            </div>
-                          </div>
-                          <div className='field is-grouped is-grouped-centered'>
-                            <div className='control'>
-                              <div
-                                className='button is-info'
-                                onClick={
-                                  isActive === V_id
-                                    ? () => setIsActive(null)
-                                    : () => setIsActive(V_id)
-                                }
-                              >
-                                View Details
+                              </div>
+                              <div className='column is-1' />
+                              <div className='column is-2 pr-6'>
+                                <div className='field is-grouped is-grouped-centered'>
+                                  <div className='control'>
+                                    <Link to={`/volunteering/edit/${V_id}`}>
+                                      <div className='button is-link'>
+                                        Edit Volunteering
+                                      </div>
+                                    </Link>
+                                  </div>
+                                </div>
+                                {v.description && (
+                                  <>
+                                    <div className='field is-grouped is-grouped-centered'>
+                                      <div className='control'>
+                                        <div
+                                          className='button is-info'
+                                          onClick={
+                                            isDActive === V_id
+                                              ? () => setIsDActive(null)
+                                              : () => setIsDActive(V_id)
+                                          }
+                                        >
+                                          View Details
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
+                                {v.imgreciept && (
+                                  <>
+                                    <div className='field is-grouped is-grouped-centered'>
+                                      <div className='control'>
+                                        <div
+                                          className='button is-info'
+                                          onClick={
+                                            isRActive === V_id
+                                              ? () => setIsRActive(null)
+                                              : () => setIsRActive(V_id)
+                                          }
+                                        >
+                                          View Receipt
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </>
+                                )}
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                      {isActive === V_id && (
-                        <>
-                          <hr></hr>
-                          <div className='columns is-centered'>
-                            <div className='column'>
-                              <p>{v.description}</p>
-                            </div>
+                            {isDActive === V_id && (
+                              <>
+                                <hr></hr>
+                                <div className='columns is-centered'>
+                                  <div className='column'>
+                                    <p>{v.description}</p>
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            {isRActive === V_id && (
+                              <>
+                                <hr></hr>
+                                <div className='columns'>
+                                  <p className='is-size-7 has-text-grey'>{`${v.imgreciept.replace(
+                                    'https://charitabletracker.s3.amazonaws.com/reciepts/',
+                                    ''
+                                  )}`}</p>
+                                </div>
+                                <div className='columns is-centered'>
+                                  <div className='column is-flex is-align-content-center is-justify-content-center'>
+                                    <img
+                                      src={v.imgreciept}
+                                      alt={`receipt from ${dateConvert(
+                                        v.created_at
+                                      )} donation`}
+                                    />
+                                  </div>
+                                </div>
+                              </>
+                            )}
                           </div>
                         </>
                       )}
-                    </div>
+                    </>
                   );
                 })}
               </>

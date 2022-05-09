@@ -74,20 +74,6 @@ function App() {
   return (
     <>
       <Router>
-        <Routes>
-          <Route
-            path='/register'
-            element={
-              <Register
-                token={token}
-                setToken={setToken}
-                newUser={newUser}
-                setNewUser={setNewUser}
-                setAuth={setAuth}
-              />
-            }
-          />
-        </Routes>
         {!token ? (
           <Routes>
             <>
@@ -183,6 +169,20 @@ function App() {
             </div>
           </>
         )}
+        <Routes>
+          <Route
+            path='/register'
+            element={
+              <Register
+                token={token}
+                setToken={setToken}
+                newUser={newUser}
+                setNewUser={setNewUser}
+                setAuth={setAuth}
+              />
+            }
+          />
+        </Routes>
       </Router>
       <footer className='footer has-background-white p-1 m-0'>
         <div className='field is-grouped is-grouped-right p-0 m-0'>
