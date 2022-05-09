@@ -107,7 +107,7 @@ export default function Progress(props) {
               <progress
                 className='progress m-0 is-info'
                 value={volToDate}
-                max={dGoal}
+                max={vGoal}
               ></progress>
               <div className='is-size-7-mobile'>
                 {vGoalMath(volToDate, vGoal)}

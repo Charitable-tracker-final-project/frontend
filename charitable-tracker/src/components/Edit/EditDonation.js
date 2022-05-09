@@ -12,13 +12,16 @@ export default function EditDonation({ token }) {
   const [cause, setCause] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState('');
+  const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
+  const [deleteImage, setDeleteImage] = useState(false);
 
   const styles = {
     regPage: {
       minHeight: '100vh',
       height: '100%',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
     },
   };
 
@@ -35,28 +38,99 @@ export default function EditDonation({ token }) {
     console.log('Handle Edit Called');
     event.preventDefault();
     setDonoSpinner(true);
-    axios
-      .patch(
-        `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
-        {
-          amountdonated: dono,
-          created_at: date,
-          organization: org,
-          cause: cause,
-        },
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      )
-      .then((res) => {
-        console.log('Successfully submitted Edit!');
-        setDonoSpinner(false);
-        navigate(`/donations`);
-      })
-      .catch((e) => {
-        console.log(e);
-        setError(e.message);
-      });
+
+    image &&
+      axios
+        .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+          headers: {
+            'Content-Type': 'image/*',
+            'Content-Disposition': `attachment;filename=${filename}`,
+            Authorization: `Token ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log('Successfully submitted Image!');
+          console.log(res.data.upload);
+          setImgURL(res.data.upload);
+        })
+        .catch((e) => {
+          console.log(e);
+          setError(e.message);
+          setDonoSpinner(false);
+        });
+    image
+      ? axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
+            {
+              amountdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+              imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+                ' ',
+                '_'
+              )}`,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setDonoSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          })
+      : deleteImage
+      ? axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
+            {
+              amountdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+              imgreciept: '',
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setDonoSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          })
+      : axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
+            {
+              amountdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setDonoSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          });
   };
 
   const handleDelete = (event) => {
@@ -97,6 +171,10 @@ export default function EditDonation({ token }) {
         setCause(res.data.cause);
         setDono(res.data.amountdonated);
         setIsLoading(false);
+        setImgURL(res.data.imgreciept);
+        res.data.imgreciept
+          ? setFilename(res.data.imgreciept)
+          : setFilename(null);
       })
       .catch((e) => {
         setError(e.message);
@@ -116,7 +194,7 @@ export default function EditDonation({ token }) {
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>Edit your donation!</h1>
               {donoSpinner && <Loading />}
-              <div className='box p-4'>
+              <div className='p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
                     {isLoading ? (
@@ -248,9 +326,74 @@ export default function EditDonation({ token }) {
                                   <i>{`(optional)`}</i>
                                 </div>
                               </label>
-                              <div className='button is-info is-large is-rounded mb-6'>
-                                Upload Photo
+                              <div className='file has-name is-boxed'>
+                                <label className='file-label'>
+                                  <input
+                                    className='file-input'
+                                    type='file'
+                                    name='receipt'
+                                    accept='image/*'
+                                    onChange={(event) => {
+                                      console.log(event.target.files[0]);
+                                      console.log(event.target.files[0].name);
+                                      setImage(event.target.files[0]);
+                                      setFilename(event.target.files[0].name);
+                                    }}
+                                  />
+                                  <div className='button is-info is-large is-rounded'>
+                                    Choose a file…
+                                  </div>
+                                  <span className='file-name'>{filename}</span>
+                                </label>
                               </div>
+                              {image ? (
+                                <div>
+                                  <div className='columns is-centered mt-4'>
+                                    <div
+                                      className='button is-danger'
+                                      onClick={() => {
+                                        setImage(null);
+                                        setFilename('No file uploaded...');
+                                        setDeleteImage(true);
+                                      }}
+                                    >
+                                      Remove
+                                    </div>
+                                  </div>
+                                  <div className='columns is-centered'>
+                                    <img
+                                      alt='not found'
+                                      width={'250px'}
+                                      src={URL.createObjectURL(image)}
+                                    />
+                                  </div>
+                                </div>
+                              ) : (
+                                <div>
+                                  {filename && (
+                                    <>
+                                      <div className='columns is-centered mt-4'>
+                                        <div
+                                          className='button is-danger'
+                                          onClick={() => {
+                                            setImage(null);
+                                            setFilename('No file uploaded...');
+                                          }}
+                                        >
+                                          Remove
+                                        </div>
+                                      </div>
+                                      <div className='columns is-centered'>
+                                        <img
+                                          alt='not found'
+                                          width={'250px'}
+                                          src={filename}
+                                        />
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              )}
                             </div>
                           </div>
                           <div className='field is-grouped is-grouped-centered'>
