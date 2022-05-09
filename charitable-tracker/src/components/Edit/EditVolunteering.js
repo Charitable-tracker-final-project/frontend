@@ -324,14 +324,16 @@ export default function EditVolunteering({ token }) {
                               htmlFor='vol-hours'
                             >
                               <div className='is-size-5 mb-1'>
-                                Give us some details!
+                                Write down any notes you have!
+                              </div>
+                              <div className='columns is-size-6 mb-1 is-centered has-text-grey'>
+                                <i>{`(optional)`}</i>
                               </div>
                             </label>
                             <textarea
                               type='text'
                               className='textarea is-rounded'
                               id='don-email'
-                              required
                               placeholder='Details go here!'
                               value={details}
                               onChange={(event) =>
