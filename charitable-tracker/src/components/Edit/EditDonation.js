@@ -338,6 +338,7 @@ export default function EditDonation({ token }) {
                                       console.log(event.target.files[0].name);
                                       setImage(event.target.files[0]);
                                       setFilename(event.target.files[0].name);
+                                      setDeleteImage(false);
                                     }}
                                   />
                                   <div className='button is-info is-large is-rounded'>
@@ -377,7 +378,8 @@ export default function EditDonation({ token }) {
                                           className='button is-danger'
                                           onClick={() => {
                                             setImage(null);
-                                            setFilename('No file uploaded...');
+                                            setFilename('');
+                                            setDeleteImage(true);
                                           }}
                                         >
                                           Remove
