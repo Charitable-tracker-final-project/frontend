@@ -185,10 +185,6 @@ export default function EditVolunteering({ token }) {
       });
   }, [params.V_id, token]);
 
-  useEffect(() => {
-    setDate(today());
-  }, []);
-
   return (
     <>
       <div className='column'>
