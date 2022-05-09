@@ -85,8 +85,9 @@ export default function Volunteering({ token }) {
                                   v.created_at
                                 )}`}</p>
                                 <div>
-                                  You volunteered <b>{`${v.hours} hours`}</b>{' '}
-                                  with <b>{`${v.organization}`}</b>, benefiting{' '}
+                                  You volunteered{' '}
+                                  <b>{`${v.hoursdonated} hours`}</b> with{' '}
+                                  <b>{`${v.organization}`}</b>, benefiting{' '}
                                   <b>
                                     <i>{`${v.cause}`}</i>
                                   </b>
