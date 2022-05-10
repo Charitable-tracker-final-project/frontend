@@ -200,6 +200,7 @@ export default function EditVolunteering({ token }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(
         `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,

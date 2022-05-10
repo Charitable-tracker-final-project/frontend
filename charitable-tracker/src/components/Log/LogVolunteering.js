@@ -161,6 +161,7 @@ export default function LogVolunteering({ token }) {
 
   useEffect(() => {
     setDate(today());
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -366,7 +367,7 @@ export default function LogVolunteering({ token }) {
                       </div>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
-                          <button className='button is-info is-size-3 is-large pl-6 pr-6 mt-4 mb-4'>
+                          <button className='button is-large is-success pl-6 pr-6 mt-4 mb-4'>
                             Submit
                           </button>
                         </div>

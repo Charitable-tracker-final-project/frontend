@@ -161,6 +161,7 @@ export default function LogDonation({ token }) {
 
   useEffect(() => {
     setDate(today());
+    window.scrollTo(0, 0);
   }, []);
 
   return (

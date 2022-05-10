@@ -196,6 +196,7 @@ export default function EditDonation({ token }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(
         `https://charitable-tracker.herokuapp.com/api/Drecord/${params.D_id}/`,
