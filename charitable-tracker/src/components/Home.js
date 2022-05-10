@@ -44,6 +44,7 @@ export default function Home(props) {
   const [dGoalSuccess, setDGoalSuccess] = useState(false);
   const [vGoalError, setVGoalError] = useState('');
   const [vGoalSuccess, setVGoalSuccess] = useState(false);
+  const [hideSide, setHideSide] = useState(false);
   const today = () => {
     let newDate = new Date();
     let day = newDate.getDate();
@@ -309,7 +310,7 @@ export default function Home(props) {
 
   return (
     <>
-      <div className='column is-narrow'>
+      <div className={`column is-narrow ${hideSide && 'is-invisible'}`}>
         <Profile
           storeUsername={props.storeuUsername}
           token={props.token}
@@ -408,8 +409,12 @@ export default function Home(props) {
               />
             )}
             {timeline && <TimelineCT token={props.token} />}
-            {vol && <Volunteering token={props.token} />}
-            {dono && <Donations token={props.token} />}
+            {vol && (
+              <Volunteering token={props.token} setHideSide={setHideSide} />
+            )}
+            {dono && (
+              <Donations token={props.token} setHideSide={setHideSide} />
+            )}
           </div>
         </main>
       </div>

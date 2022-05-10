@@ -4,13 +4,16 @@ import axios from 'axios';
 import Loading from '../Loading/Loading';
 import Pagination from 'bulma-pagination-react';
 
-export default function Donations({ token }) {
+export default function Donations(props) {
   const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
-  const [pag, setPag] = useState(null);
+  const [isImg, setIsImg] = useState(false);
+  const [img, setImg] = useState('');
+  const [imgDate, setImgDate] = useState('');
   const [current, setCurrent] = useState(1);
+  const [pag, setPag] = useState(null);
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
@@ -26,7 +29,7 @@ export default function Donations({ token }) {
         `https://charitable-tracker.herokuapp.com/api/Drecords/?page=${page}`,
         {
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Token ${props.token}`,
           },
         }
       )
@@ -48,7 +51,7 @@ export default function Donations({ token }) {
     axios
       .get('https://charitable-tracker.herokuapp.com/api/Drecords/', {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${props.token}`,
         },
       })
       .then((res) => {
@@ -62,7 +65,7 @@ export default function Donations({ token }) {
       .catch((e) => {
         setError(e.message);
       });
-  }, [token]);
+  }, [props.token]);
 
   return (
     <>
@@ -169,13 +172,20 @@ export default function Donations({ token }) {
                                   )}`}</p>
                                 </div>
                                 <div className='columns is-centered'>
-                                  <div className='column is-flex is-align-content-center is-justify-content-center'>
+                                  <div className='column is-flex is-3 is-align-content-center is-justify-content-center'>
                                     <img
                                       src={d.imgreciept}
                                       alt={`receipt from ${dateConvert(
                                         d.created_at
                                       )} donation`}
                                       maxWidth='100%'
+                                      className='is-clickable'
+                                      onClick={() => [
+                                        setIsImg(true),
+                                        setImg(d.imgreciept),
+                                        setImgDate(dateConvert(d.created_at)),
+                                        props.setHideSide(true),
+                                      ]}
                                     />
                                   </div>
                                 </div>
@@ -196,6 +206,29 @@ export default function Donations({ token }) {
             )}
           </>
         )}
+      </div>
+      <div className={`modal ${isImg ? 'is-active' : ''}`}>
+        <div className='modal-background'>
+          <div className='modal-content'>
+            <div className='box'>
+              <img
+                src={img}
+                alt={`receipt from ${imgDate} donation`}
+                maxWidth='100%'
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className='modal-close is-large'
+          aria-label='close'
+          onClick={() => [
+            setIsImg(false),
+            setImg(''),
+            setImgDate(''),
+            props.setHideSide(false),
+          ]}
+        />
       </div>
     </>
   );
