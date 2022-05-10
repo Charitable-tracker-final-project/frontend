@@ -180,7 +180,6 @@ export default function Graphs2Org({ token }) {
             </>
           ) : (
             <>
-              TEST
               {error && (
                 <div className='box has-background-danger has-text-white'>
                   <h3>{error}</h3>

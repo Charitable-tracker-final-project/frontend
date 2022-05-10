@@ -174,7 +174,6 @@ export default function Graphs2Cause({ token }) {
             </>
           ) : (
             <>
-              Test
               {error && (
                 <div className='box has-background-danger has-text-white'>
                   <h3>{error}</h3>
