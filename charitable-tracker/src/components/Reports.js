@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Graphs2 from './Reports/Graphs2';
+import Graphs2 from './Reports/Graphs2Cause';
 import Graphs4 from './Reports/Graphs4';
 import Graphs6 from './Reports/Graphs6';
 import axios from 'axios';

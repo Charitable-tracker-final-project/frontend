@@ -11,7 +11,7 @@ export default function Donations({ token }) {
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Donations({ token }) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        setDonations(res.data);
+        setDonations(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -40,6 +40,11 @@ export default function Donations({ token }) {
         {isLoading ? (
           <>
             <Loading />
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
+              </div>
+            )}
           </>
         ) : (
           <>

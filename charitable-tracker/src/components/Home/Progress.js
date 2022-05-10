@@ -14,19 +14,37 @@ export default function Progress(props) {
   const incomeMath = (donos, income) => {
     let percentage = (donos / income) * 100;
     percentage = Math.round(percentage);
-    return `You've donated $${donos}, which is ${percentage}% of your annual income of $${income}`;
+    return donosToDate && income
+      ? `You've donated $${donos}, which is ${percentage}% of your annual income of $${income}`
+      : !donosToDate && income
+      ? `You haven't made any donations yet...`
+      : !income && donosToDate
+      ? `You haven't set your income yet...`
+      : `You haven't set your income or made any donations yet...`;
   };
 
   const dGoalMath = (donos, dGoal) => {
     let percentage = (donos / dGoal) * 100;
     percentage = Math.round(percentage);
-    return `You've donated $${donos}, which is ${percentage}% of your goal of $${dGoal}`;
+    return dGoal && donosToDate
+      ? `You've donated $${donos}, which is ${percentage}% of your goal of $${dGoal}`
+      : !donosToDate && dGoal
+      ? `You haven't made any donations yet...`
+      : !dGoal && donosToDate
+      ? `You haven't set a donation goal yet...`
+      : `You haven't made any donations or set a donation goal yet...`;
   };
 
   const vGoalMath = (vol, vGoal) => {
     let percentage = (vol / vGoal) * 100;
     percentage = Math.round(percentage);
-    return `You've volunteered ${vol} hours, which is ${percentage}% of your goal of ${vGoal} hours`;
+    return vGoal && volToDate
+      ? `You've volunteered ${vol} hours, which is ${percentage}% of your goal of ${vGoal} hours`
+      : !volToDate && vGoal
+      ? `You haven't logged any volunteer hours yet...`
+      : !vGoal && volToDate
+      ? `You haven't set a volunteer goal yet...`
+      : `You haven't logged any volunteer hours or set a volunteer goal yet...`;
   };
 
   useEffect(() => {
@@ -40,11 +58,13 @@ export default function Progress(props) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        setDonosToDate(res.data[0].alldonated.alldonated);
+        console.log(res.data.results[0].alldonated.alldonated);
+        setDonosToDate(res.data.results[0].alldonated.alldonated);
         setIsLoading(false);
       })
       .catch((e) => {
         setError(e.message);
+        setIsLoading(false);
       });
 
     axios
@@ -55,17 +75,17 @@ export default function Progress(props) {
       })
       .then((res) => {
         console.log('Get Volunteering Called');
-        console.log(res.data);
-        res.data.map((v, key) => {
-          return setVolToDate(volToDate + v.hoursdonated);
-        });
+        console.log(res.data.results[0].allhours.allhours);
+        setVolToDate(res.data.results[0].allhours.allhours);
+      })
+      .then(() => {
+        setIsLoading(false);
       })
       .catch((e) => {
         setError(e.message);
       });
-  }, [error, props.token]);
+  }, [props.token]);
 
-  console.log(volToDate);
   return (
     <>
       <div className='column is-11 is-6-widescreen'>
@@ -73,6 +93,11 @@ export default function Progress(props) {
         {isLoading ? (
           <>
             <Loading />
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>We had a problem loading. Please try again...</h3>
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -107,7 +132,7 @@ export default function Progress(props) {
               <progress
                 className='progress m-0 is-info'
                 value={volToDate}
-                max={dGoal}
+                max={vGoal}
               ></progress>
               <div className='is-size-7-mobile'>
                 {vGoalMath(volToDate, vGoal)}

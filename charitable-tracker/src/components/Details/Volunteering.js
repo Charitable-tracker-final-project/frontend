@@ -12,7 +12,7 @@ export default function Volunteering({ token }) {
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
-    return `${day}/${month}/${year}`;
+    return `${month}/${day}/${year}`;
   };
 
   useEffect(() => {
@@ -24,7 +24,8 @@ export default function Volunteering({ token }) {
       })
       .then((res) => {
         console.log('Get Volunteering Called');
-        setVolunteerings(res.data);
+        console.log(res.data.results);
+        setVolunteerings(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -41,6 +42,11 @@ export default function Volunteering({ token }) {
         {isLoading ? (
           <>
             <Loading />
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
+              </div>
+            )}
           </>
         ) : (
           <>
@@ -60,7 +66,7 @@ export default function Volunteering({ token }) {
                       <div className='field is-grouped is-grouped-centered mt-5'>
                         <div className='control'>
                           <Link to={`/new/volunteer-hours`}>
-                            <div className='button is-large is-primary'>
+                            <div className='button is-large is-info'>
                               Enter New Volunteer Hours
                             </div>
                           </Link>
@@ -85,8 +91,9 @@ export default function Volunteering({ token }) {
                                   v.created_at
                                 )}`}</p>
                                 <div>
-                                  You volunteered <b>{`${v.hours} hours`}</b>{' '}
-                                  with <b>{`${v.organization}`}</b>, benefiting{' '}
+                                  You volunteered{' '}
+                                  <b>{`${v.hoursdonated} hours`}</b> with{' '}
+                                  <b>{`${v.organization}`}</b>, benefiting{' '}
                                   <b>
                                     <i>{`${v.cause}`}</i>
                                   </b>
@@ -97,7 +104,7 @@ export default function Volunteering({ token }) {
                                 <div className='field is-grouped is-grouped-centered'>
                                   <div className='control'>
                                     <Link to={`/volunteering/edit/${V_id}`}>
-                                      <div className='button is-link'>
+                                      <div className='button is-link p-1'>
                                         Edit Volunteering
                                       </div>
                                     </Link>
@@ -108,14 +115,14 @@ export default function Volunteering({ token }) {
                                     <div className='field is-grouped is-grouped-centered'>
                                       <div className='control'>
                                         <div
-                                          className='button is-info'
+                                          className='button is-info pl-5 pr-5'
                                           onClick={
                                             isDActive === V_id
                                               ? () => setIsDActive(null)
                                               : () => setIsDActive(V_id)
                                           }
                                         >
-                                          View Details
+                                          View Notes
                                         </div>
                                       </div>
                                     </div>
@@ -126,7 +133,7 @@ export default function Volunteering({ token }) {
                                     <div className='field is-grouped is-grouped-centered'>
                                       <div className='control'>
                                         <div
-                                          className='button is-info'
+                                          className='button is-info p-4'
                                           onClick={
                                             isRActive === V_id
                                               ? () => setIsRActive(null)

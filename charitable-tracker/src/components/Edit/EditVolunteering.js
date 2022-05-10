@@ -13,13 +13,16 @@ export default function EditVolunteering({ token }) {
   const [details, setDetails] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [image, setImage] = useState(null);
+  const [imgURL, setImgURL] = useState('');
+  const [filename, setFilename] = useState('No file uploaded...');
   const [volSpinner, setVolSpinner] = useState(false);
+  const [deleteImage, setDeleteImage] = useState(false);
 
   const styles = {
     regPage: {
       minHeight: '100vh',
       height: '100%',
-      backgroundImage: 'linear-gradient(white, #F1F5FF, #CBD9FF)',
     },
   };
 
@@ -36,14 +39,127 @@ export default function EditVolunteering({ token }) {
     console.log('Handle Edit Called');
     event.preventDefault();
     setVolSpinner(true);
+
+    image &&
+      axios
+        .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+          headers: {
+            'Content-Type': 'image/*',
+            'Content-Disposition': `attachment;filename=${filename}`,
+            Authorization: `Token ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log('Successfully submitted Image!');
+          console.log(res.data.upload);
+          setImgURL(res.data.upload);
+        })
+        .catch((e) => {
+          console.log(e);
+          setError(e.message);
+          setVolSpinner(false);
+        });
+
+    image
+      ? axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
+            {
+              hoursdonated: dono,
+              created_at: date,
+              organization: org,
+              description: details,
+              cause: cause,
+              imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+                ' ',
+                '_'
+              )}`,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setVolSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          })
+      : deleteImage
+      ? axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
+            {
+              hoursdonated: dono,
+              created_at: date,
+              organization: org,
+              description: details,
+              cause: cause,
+              imgreciept: '',
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setVolSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          })
+      : axios
+          .patch(
+            `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
+            {
+              hoursdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Edit!');
+            setVolSpinner(false);
+            navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+          });
+
     axios
-      .patch(
-        `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/org/`,
         {
-          hours: dono,
-          created_at: date,
           organization: org,
-          description: details,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Org!');
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setVolSpinner(false);
+      });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/cause/`,
+        {
           cause: cause,
         },
         {
@@ -51,13 +167,13 @@ export default function EditVolunteering({ token }) {
         }
       )
       .then((res) => {
-        console.log('Successfully submitted Edit!');
-        setVolSpinner(false);
-        navigate(`/volunteering`);
+        console.log('Successfully submitted Cause!');
+        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
         setError(e.message);
+        setVolSpinner(false);
       });
   };
 
@@ -98,17 +214,16 @@ export default function EditVolunteering({ token }) {
         setOrg(res.data.organization);
         setDetails(res.data.description);
         setCause(res.data.cause);
-        setDono(res.data.hours);
+        setDono(res.data.hoursdonated);
         setIsLoading(false);
+        res.data.imgreciept
+          ? setFilename(res.data.imgreciept)
+          : setFilename(null);
       })
       .catch((e) => {
         setError(e.message);
       });
   }, [params.V_id, token]);
-
-  useEffect(() => {
-    setDate(today());
-  }, []);
 
   return (
     <>
@@ -121,7 +236,7 @@ export default function EditVolunteering({ token }) {
                 Edit your volunteering!
               </h1>
               {volSpinner && <Loading />}
-              <div className='box p-4'>
+              <div className='p-4'>
                 <div className='columns is-centered'>
                   <div className='column is-two-thirds'>
                     {isLoading ? (
@@ -245,20 +360,108 @@ export default function EditVolunteering({ token }) {
                               htmlFor='vol-hours'
                             >
                               <div className='is-size-5 mb-1'>
-                                Give us some details!
+                                Write down any notes you have!
+                              </div>
+                              <div className='columns is-size-6 mb-1 is-centered has-text-grey'>
+                                <i>{`(optional)`}</i>
                               </div>
                             </label>
                             <textarea
                               type='text'
                               className='textarea is-rounded'
                               id='don-email'
-                              required
                               placeholder='Details go here!'
                               value={details}
                               onChange={(event) =>
                                 setDetails(event.target.value)
                               }
                             />
+                          </div>
+                          <div className='field is-grouped is-grouped-centered'>
+                            <div className='control is-flex is-flex-direction-column is-align-items-center mb-3'>
+                              <label
+                                className='label has-text-centered'
+                                htmlFor='dono-cause'
+                              >
+                                <div className='is-size-5'>
+                                  Have a receipt or email confirmation?
+                                </div>
+                                <div className='is-size-5'>Upload it here!</div>
+                                <div className='is-size-7 has-text-grey mb-1'>
+                                  <i>{`(optional)`}</i>
+                                </div>
+                              </label>
+                              <div className='file has-name is-boxed'>
+                                <label className='file-label'>
+                                  <input
+                                    className='file-input'
+                                    type='file'
+                                    name='receipt'
+                                    accept='image/*'
+                                    onChange={(event) => {
+                                      console.log(event.target.files[0]);
+                                      console.log(event.target.files[0].name);
+                                      setImage(event.target.files[0]);
+                                      setFilename(event.target.files[0].name);
+                                      setDeleteImage(false);
+                                    }}
+                                  />
+                                  <div className='button is-info is-large is-rounded'>
+                                    Choose a file…
+                                  </div>
+                                  <span className='file-name'>{filename}</span>
+                                </label>
+                              </div>
+                              {image ? (
+                                <div>
+                                  <div className='columns is-centered mt-4'>
+                                    <div
+                                      className='button is-danger'
+                                      onClick={() => {
+                                        setImage(null);
+                                        setFilename('No file uploaded...');
+                                        setDeleteImage(true);
+                                      }}
+                                    >
+                                      Remove
+                                    </div>
+                                  </div>
+                                  <div className='columns is-centered'>
+                                    <img
+                                      alt='not found'
+                                      width={'250px'}
+                                      src={URL.createObjectURL(image)}
+                                    />
+                                  </div>
+                                </div>
+                              ) : (
+                                <div>
+                                  {filename && (
+                                    <>
+                                      <div className='columns is-centered mt-4'>
+                                        <div
+                                          className='button is-danger'
+                                          onClick={() => {
+                                            setImage(null);
+                                            setFilename('');
+                                            setDeleteImage(true);
+                                          }}
+                                        >
+                                          Remove
+                                        </div>
+                                      </div>
+                                      <div className='columns is-centered'>
+                                        <img
+                                          alt='not found'
+                                          width={'250px'}
+                                          src={filename}
+                                        />
+                                      </div>
+                                    </>
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
                           <div className='field is-grouped is-grouped-centered'>
                             <div className='control'>

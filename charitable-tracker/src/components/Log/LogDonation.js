@@ -18,49 +18,120 @@ export default function LogDonation({ token }) {
 
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
+    console.log(image);
     event.preventDefault();
     setDonoSpinner(true);
+
+    image &&
+      axios
+        .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
+          headers: {
+            'Content-Type': 'image/*',
+            'Content-Disposition': `attachment;filename=${filename}`,
+            Authorization: `Token ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log('Successfully submitted Image!');
+          console.log(res.data.upload);
+          setImgURL(res.data.upload);
+          setUploadDone(true);
+        })
+        .catch((e) => {
+          console.log(e);
+          setError(e.message);
+          setDonoSpinner(false);
+        });
+
+    image
+      ? axios
+          .post(
+            `https://charitable-tracker.herokuapp.com/api/Drecords/`,
+            {
+              amountdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+              imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
+                ' ',
+                '_'
+              )}`,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Donation!');
+            setDonoSpinner(false);
+            params === true
+              ? navigate('/new/goal/?newuser=true')
+              : navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+            setDonoSpinner(false);
+          })
+      : axios
+          .post(
+            `https://charitable-tracker.herokuapp.com/api/Drecords/`,
+            {
+              amountdonated: dono,
+              created_at: date,
+              organization: org,
+              cause: cause,
+            },
+            {
+              headers: { Authorization: `Token ${token}` },
+            }
+          )
+          .then((res) => {
+            console.log('Successfully submitted Donation!');
+            setDonoSpinner(false);
+            params === true
+              ? navigate('/new/goal/?newuser=true')
+              : navigate(`/`);
+          })
+          .catch((e) => {
+            console.log(e);
+            setError(e.message);
+            setDonoSpinner(false);
+          });
+
     axios
-      .post(`https://charitable-tracker.herokuapp.com/api/upload/`, image, {
-        headers: {
-          'Content-Type': 'image/*',
-          'Content-Disposition': `attachment;filename=${filename}`,
-          Authorization: `Token ${token}`,
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/org/`,
+        {
+          organization: org,
         },
-      })
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
       .then((res) => {
-        console.log('Successfully submitted Edit!');
-        console.log(res.data.upload);
-        setImgURL(res.data.upload);
-        setUploadDone(true);
+        console.log('Successfully submitted Org!');
+        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
         setError(e.message);
         setDonoSpinner(false);
-      })
-      .then((uploadDone) => {
-        axios.post(
-          `https://charitable-tracker.herokuapp.com/api/Drecords/`,
-          {
-            amountdonated: dono,
-            created_at: date,
-            organization: org,
-            cause: cause,
-            imgreciept: `https://charitabletracker.s3.amazonaws.com/reciepts/${filename.replaceAll(
-              ' ',
-              '_'
-            )}`,
-          },
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
-      })
+      });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/cause/`,
+        {
+          cause: cause,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
       .then((res) => {
-        console.log('Successfully submitted Edit!');
-        setDonoSpinner(false);
-        params === true ? navigate('/new/goal/?newuser=true') : navigate(`/`);
+        console.log('Successfully submitted Cause!');
+        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -193,7 +264,7 @@ export default function LogDonation({ token }) {
                               value={cause}
                               onChange={(event) => setCause(event.target.value)}
                             >
-                              <option>------</option>
+                              <option />
                               <option>Animals</option>
                               <option>Arts Culture Humanities</option>
                               <option>Asian Rights</option>
