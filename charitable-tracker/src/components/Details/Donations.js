@@ -69,7 +69,7 @@ export default function Donations(props) {
 
   return (
     <>
-      <div className='column is-11 is-5-widescreen m-4 p-5 box is-3-fullhd'>
+      <div className='column is-11 is-5-widescreen box m-3 p-5 is-3-fullhd'>
         <h1 className='title'>My Donations:</h1>
         <hr />
         {isLoading ? (
@@ -137,7 +137,7 @@ export default function Donations(props) {
                                 <div className='field is-grouped is-grouped-centered'>
                                   <div className='control'>
                                     <Link to={`/donations/edit/${D_id}`}>
-                                      <div className='button is-link'>
+                                      <div className='button is-small is-link'>
                                         Edit Donation
                                       </div>
                                     </Link>
@@ -148,7 +148,7 @@ export default function Donations(props) {
                                     <div className='control'>
                                       {d.imgreciept ? (
                                         <div
-                                          className='button is-info'
+                                          className='button is-small is-info'
                                           onClick={
                                             isActive === D_id
                                               ? () => setIsActive(null)
@@ -159,7 +159,7 @@ export default function Donations(props) {
                                         </div>
                                       ) : (
                                         <div
-                                          className='button is-info'
+                                          className='button is-small is-info'
                                           disabled
                                         >
                                           View Receipt

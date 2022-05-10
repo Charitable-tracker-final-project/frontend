@@ -397,7 +397,7 @@ export default function Home(props) {
                 </h1>
               </>
             )}
-          <div className='columns is-flex-widescreen is-flex-wrap-wrap is-centered'>
+          <div className='columns is-flex-widescreen is-flex-wrap-wrap is-justify-content-space-around is-centered'>
             {graphs2 && <Graphs2Cause token={props.token} />}
             {graphs6 && <Graphs2Org token={props.token} />}
             {progress && (
