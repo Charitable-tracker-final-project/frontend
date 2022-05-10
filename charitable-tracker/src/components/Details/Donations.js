@@ -69,8 +69,9 @@ export default function Donations(props) {
 
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
+      <div className='column is-11 is-5-widescreen m-4 p-5 box is-3-fullhd'>
         <h1 className='title'>My Donations:</h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -116,7 +117,7 @@ export default function Donations(props) {
                     <>
                       {d.amountdonated && (
                         <>
-                          <div className='box p-5 mb-5' key={key}>
+                          <div className='p-5 mb-5' key={key}>
                             <div className='columns'>
                               <div className='column is-9'>
                                 <p className='is-size-7 has-text-grey'>{`${dateConvert(
@@ -142,10 +143,10 @@ export default function Donations(props) {
                                     </Link>
                                   </div>
                                 </div>
-                                {d.imgreciept && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {d.imgreciept ? (
                                         <div
                                           className='button is-info'
                                           onClick={
@@ -156,10 +157,17 @@ export default function Donations(props) {
                                         >
                                           View Receipt
                                         </div>
-                                      </div>
+                                      ) : (
+                                        <div
+                                          className='button is-info'
+                                          disabled
+                                        >
+                                          View Receipt
+                                        </div>
+                                      )}
                                     </div>
-                                  </>
-                                )}
+                                  </div>
+                                </>
                               </div>
                             </div>
                             {isActive === D_id && (
@@ -194,6 +202,7 @@ export default function Donations(props) {
                           </div>
                         </>
                       )}
+                      <hr />
                     </>
                   );
                 })}
@@ -201,6 +210,8 @@ export default function Donations(props) {
                   pages={Math.ceil(pag.count / 5)}
                   currentPage={current}
                   onChange={(page) => handlePage(page)}
+                  prevClassName={pag.count <= 5 && 'is-hidden'}
+                  nextClassName={pag.count <= 5 && 'is-hidden'}
                 />
               </>
             )}

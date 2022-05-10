@@ -71,8 +71,9 @@ export default function Volunteering(props) {
 
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
+      <div className='column is-11 is-5-widescreen box m-4 p-5 is-3-fullhd'>
         <h1 className='title'>My Volunteering:</h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -118,7 +119,7 @@ export default function Volunteering(props) {
                     <>
                       {v.hoursdonated && (
                         <>
-                          <div className='box p-5 mb-5' key={key}>
+                          <div className='p-5 mb-5' key={key}>
                             <div className='columns'>
                               <div className='column is-9'>
                                 <p className='is-size-7 has-text-grey'>{`${dateConvert(
@@ -144,10 +145,10 @@ export default function Volunteering(props) {
                                     </Link>
                                   </div>
                                 </div>
-                                {v.description && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {v.description ? (
                                         <div
                                           className='button is-info pl-5 pr-5'
                                           onClick={
@@ -158,14 +159,21 @@ export default function Volunteering(props) {
                                         >
                                           View Notes
                                         </div>
-                                      </div>
+                                      ) : (
+                                        <div
+                                          className='button is-info pl-5 pr-5'
+                                          disabled
+                                        >
+                                          View Notes
+                                        </div>
+                                      )}
                                     </div>
-                                  </>
-                                )}
-                                {v.imgreciept && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                  </div>
+                                </>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {v.imgreciept ? (
                                         <div
                                           className='button is-info p-4'
                                           onClick={
@@ -176,10 +184,17 @@ export default function Volunteering(props) {
                                         >
                                           View Receipt
                                         </div>
-                                      </div>
+                                      ) : (
+                                        <div
+                                          className='button is-info p-4'
+                                          disabled
+                                        >
+                                          View Receipt
+                                        </div>
+                                      )}
                                     </div>
-                                  </>
-                                )}
+                                  </div>
+                                </>
                               </div>
                             </div>
                             {isDActive === V_id && (
@@ -223,6 +238,7 @@ export default function Volunteering(props) {
                           </div>
                         </>
                       )}
+                      <hr />
                     </>
                   );
                 })}
@@ -230,6 +246,8 @@ export default function Volunteering(props) {
                   pages={Math.ceil(pag.count / 5)}
                   currentPage={current}
                   onChange={(page) => handlePage(page)}
+                  prevClassName={pag.next && 'is-hidden'}
+                  nextClassName={pag.previous && 'is-hidden'}
                 />
               </>
             )}

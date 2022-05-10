@@ -198,7 +198,8 @@ export default function Graphs2Cause({ token }) {
                   </select>
                 </div>
               </div>
-              <h1 className='has-text-centered is-size-4 has-text-weight-semibold is-size-5-mobile'>
+              <hr />
+              <h1 className='has-text-centered is-size-4 has-text-weight-semibold is-size-5-mobile pb-5'>
                 {toggle === 'Donations'
                   ? `You donated $${totalDonos} to these causes`
                   : `You Volunteered ${totalHours} hours at these causes`}

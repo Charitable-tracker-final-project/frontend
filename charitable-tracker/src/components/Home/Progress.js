@@ -88,8 +88,9 @@ export default function Progress(props) {
 
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
+      <div className='column is-11 is-5-widescreen box m-4 p-5 is-3-fullhd'>
         <h1 className='title'>Progress Update:</h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -101,7 +102,7 @@ export default function Progress(props) {
           </>
         ) : (
           <>
-            <div className='box'>
+            <div className='p-4'>
               <h1 className='is-size-7-mobile'>Donations this year:</h1>
               <progress
                 className='progress m-0 is-success'

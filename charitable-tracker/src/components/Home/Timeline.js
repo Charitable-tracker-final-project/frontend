@@ -63,8 +63,9 @@ export default function TimelineCT(props) {
   console.log(records);
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
+      <div className='column is-11 is-5-widescreen box m-4 p-5 is-3-fullhd'>
         <h1 className='title'>Contribution Timeline:</h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -78,7 +79,7 @@ export default function TimelineCT(props) {
           <>
             {!records.length > 0 ? (
               <>
-                <div className='box p-5 mb-5'>
+                <div className='p-5 mb-5'>
                   <div className='columns is-centered'>
                     <div className='column is-10 has-text-centered'>
                       <h1 className='is-size-3 has-text-black'>
@@ -108,7 +109,7 @@ export default function TimelineCT(props) {
               </>
             ) : (
               <>
-                <div className='box p-0'>
+                <div className='p-1'>
                   <Timeline theme={customTheme}>
                     <Events>
                       {records.map((r, key) => {
