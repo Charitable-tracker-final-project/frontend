@@ -131,6 +131,46 @@ export default function EditDonation({ token }) {
             console.log(e);
             setError(e.message);
           });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/org/`,
+        {
+          organization: org,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Org!');
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setDonoSpinner(false);
+      });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/cause/`,
+        {
+          cause: cause,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Cause!');
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setDonoSpinner(false);
+      });
   };
 
   const handleDelete = (event) => {

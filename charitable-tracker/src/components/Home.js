@@ -6,7 +6,8 @@ import Profile from './Nav/Profile';
 import Reports from './Reports';
 import Volunteering from './Details/Volunteering';
 import Donations from './Details/Donations';
-import Graphs2 from './Reports/Graphs2';
+import Graphs2Cause from './Reports/Graphs2Cause';
+import Graphs2Org from './Reports/Graphs2Org';
 import Graphs4 from './Reports/Graphs4';
 import Graphs6 from './Reports/Graphs6';
 import { useEffect, useState } from 'react';
@@ -396,6 +397,8 @@ export default function Home(props) {
               </>
             )}
           <div className='columns is-flex-widescreen is-flex-wrap-wrap is-centered'>
+            {graphs2 && <Graphs2Cause token={props.token} />}
+            {graphs6 && <Graphs2Org token={props.token} />}
             {progress && (
               <Progress
                 token={props.token}
@@ -407,9 +410,6 @@ export default function Home(props) {
             {timeline && <TimelineCT token={props.token} />}
             {vol && <Volunteering token={props.token} />}
             {dono && <Donations token={props.token} />}
-            {graphs2 && <Graphs2 token={props.token} />}
-            {graphs6 && <Graphs6 token={props.token} />}
-            {graphs4 && <Graphs4 token={props.token} />}
           </div>
         </main>
       </div>

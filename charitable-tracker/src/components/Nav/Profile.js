@@ -84,6 +84,73 @@ export default function Profile(props) {
           </div>
         </SidebarHeader>
         <Menu iconShape='square' className='has-text-white'>
+          <SubMenu
+            title='My Impact'
+            className={`${isActive ? '' : 'is-invisible'}`}
+          >
+            <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+              <label htmlFor='timeline-switch' className=''>
+                <p className='pr-1'>By Cause</p>
+                <Switch
+                  onChange={() => {
+                    props.setGraphs2(!props.graphs2);
+                    props.setCookie(
+                      'settings',
+                      {
+                        progress: props.progress,
+                        timeline: props.timeline,
+                        graphs2: !props.graphs2,
+                        graphs4: props.graphs4,
+                        graphs6: props.graphs6,
+                        vol: props.vol,
+                        dono: props.dono,
+                      },
+                      {
+                        path: '/',
+                        maxAge: 2147483647,
+                      }
+                    );
+                  }}
+                  checked={props.graphs2}
+                  className='progress-switch'
+                  height={20}
+                  width={50}
+                  onColor={'#b5d13f'}
+                />
+              </label>
+            </MenuItem>
+            <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
+              <label htmlFor='timeline-switch' className=''>
+                <p className='pr-1'>By Organization</p>
+                <Switch
+                  onChange={() => {
+                    props.setGraphs6(!props.graphs6);
+                    props.setCookie(
+                      'settings',
+                      {
+                        progress: props.progress,
+                        timeline: props.timeline,
+                        graphs2: props.graphs2,
+                        graphs4: props.graphs4,
+                        graphs6: !props.graphs6,
+                        vol: props.vol,
+                        dono: props.dono,
+                      },
+                      {
+                        path: '/',
+                        maxAge: 2147483647,
+                      }
+                    );
+                  }}
+                  checked={props.graphs6}
+                  className='progress-switch'
+                  height={20}
+                  width={50}
+                  onColor={'#b5d13f'}
+                />
+              </label>
+            </MenuItem>
+          </SubMenu>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
             <label
               htmlFor='progress-switch'
@@ -220,104 +287,6 @@ export default function Profile(props) {
               />
             </label>
           </MenuItem>
-          <SubMenu
-            title='My Impact'
-            className={`${isActive ? '' : 'is-invisible'}`}
-          >
-            <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-              <label htmlFor='timeline-switch' className=''>
-                <p className='pr-1'>By Donations/Volunteering</p>
-                <Switch
-                  onChange={() => {
-                    props.setGraphs2(!props.graphs2);
-                    props.setCookie(
-                      'settings',
-                      {
-                        progress: props.progress,
-                        timeline: props.timeline,
-                        graphs2: !props.graphs2,
-                        graphs4: props.graphs4,
-                        graphs6: props.graphs6,
-                        vol: props.vol,
-                        dono: props.dono,
-                      },
-                      {
-                        path: '/',
-                        maxAge: 2147483647,
-                      }
-                    );
-                  }}
-                  checked={props.graphs2}
-                  className='progress-switch'
-                  height={20}
-                  width={50}
-                  onColor={'#b5d13f'}
-                />
-              </label>
-            </MenuItem>
-            <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-              <label htmlFor='timeline-switch' className=''>
-                <p className='pr-1'>By Goal</p>
-                <Switch
-                  onChange={() => {
-                    props.setGraphs6(!props.graphs6);
-                    props.setCookie(
-                      'settings',
-                      {
-                        progress: props.progress,
-                        timeline: props.timeline,
-                        graphs2: props.graphs2,
-                        graphs4: props.graphs4,
-                        graphs6: !props.graphs6,
-                        vol: props.vol,
-                        dono: props.dono,
-                      },
-                      {
-                        path: '/',
-                        maxAge: 2147483647,
-                      }
-                    );
-                  }}
-                  checked={props.graphs6}
-                  className='progress-switch'
-                  height={20}
-                  width={50}
-                  onColor={'#b5d13f'}
-                />
-              </label>
-            </MenuItem>
-            <MenuItem className={`${isActive ? '' : 'is-invisible'}`}>
-              <label htmlFor='timeline-switch' className=''>
-                <p className='pr-1'>By Organization</p>
-                <Switch
-                  onChange={() => {
-                    props.setGraphs4(!props.graphs4);
-                    props.setCookie(
-                      'settings',
-                      {
-                        progress: props.progress,
-                        timeline: props.timeline,
-                        graphs2: props.graphs2,
-                        graphs4: !props.graphs4,
-                        graphs6: props.graphs6,
-                        vol: props.vol,
-                        dono: props.dono,
-                      },
-                      {
-                        path: '/',
-                        maxAge: 2147483647,
-                      }
-                    );
-                  }}
-                  checked={props.graphs4}
-                  className='progress-switch'
-                  height={20}
-                  width={50}
-                  onColor={'#b5d13f'}
-                />
-              </label>
-            </MenuItem>
-          </SubMenu>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <MenuItem className={`${isActive ? '' : 'is-invisible'}`}></MenuItem>
           <SubMenu

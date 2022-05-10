@@ -66,7 +66,7 @@ export default function Volunteering({ token }) {
                       <div className='field is-grouped is-grouped-centered mt-5'>
                         <div className='control'>
                           <Link to={`/new/volunteer-hours`}>
-                            <div className='button is-large is-primary'>
+                            <div className='button is-large is-info'>
                               Enter New Volunteer Hours
                             </div>
                           </Link>
