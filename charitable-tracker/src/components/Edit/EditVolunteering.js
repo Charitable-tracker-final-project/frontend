@@ -406,7 +406,7 @@ export default function EditVolunteering({ token }) {
                                       setDeleteImage(false);
                                     }}
                                   />
-                                  <div className='button is-info is-large is-rounded'>
+                                  <div className='button is-info is-large'>
                                     Choose a file…
                                   </div>
                                   <span className='file-name'>{filename}</span>
@@ -415,15 +415,19 @@ export default function EditVolunteering({ token }) {
                               {image ? (
                                 <div>
                                   <div className='columns is-centered mt-4'>
-                                    <div
-                                      className='button is-danger'
-                                      onClick={() => {
-                                        setImage(null);
-                                        setFilename('No file uploaded...');
-                                        setDeleteImage(true);
-                                      }}
-                                    >
-                                      Remove
+                                    <div className='field is-grouped is-grouped-centered'>
+                                      <div className='control'>
+                                        <div
+                                          className='button is-danger mb-1'
+                                          onClick={() => {
+                                            setImage(null);
+                                            setFilename('No file uploaded...');
+                                            setDeleteImage(true);
+                                          }}
+                                        >
+                                          Remove
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className='columns is-centered'>
@@ -439,15 +443,19 @@ export default function EditVolunteering({ token }) {
                                   {filename && (
                                     <>
                                       <div className='columns is-centered mt-4'>
-                                        <div
-                                          className='button is-danger'
-                                          onClick={() => {
-                                            setImage(null);
-                                            setFilename('');
-                                            setDeleteImage(true);
-                                          }}
-                                        >
-                                          Remove
+                                        <div className='field is-grouped is-grouped-centered'>
+                                          <div className='control'>
+                                            <div
+                                              className='button is-danger mb-1'
+                                              onClick={() => {
+                                                setImage(null);
+                                                setFilename('');
+                                                setDeleteImage(true);
+                                              }}
+                                            >
+                                              Remove
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                       <div className='columns is-centered'>
