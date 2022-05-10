@@ -5,7 +5,7 @@ Designed by Adam Lindgren
 
 Logo by Jocelyn Inlay
 
-Database by Ted Fulk, Jocelyn Inley, Osama Mousa
+Database by Ted Fulk, Jocelyn Inlay, Osama Mousa
 
 **Netlify Deploy: https://charitable-tracker.netlify.app/**
 
