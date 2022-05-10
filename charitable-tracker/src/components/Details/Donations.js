@@ -69,7 +69,7 @@ export default function Donations(props) {
 
   return (
     <>
-      <div className='column is-11 is-5-widescreen box m-3 p-5 is-4-fullhd'>
+      <div className='column is-11 is-5-widescreen box m-3 p-5'>
         <h1 className='title'>My Donations:</h1>
         <hr />
         {isLoading ? (
@@ -137,7 +137,7 @@ export default function Donations(props) {
                                 <div className='field is-grouped is-grouped-centered'>
                                   <div className='control'>
                                     <Link to={`/donations/edit/${D_id}`}>
-                                      <div className='button is-small is-link'>
+                                      <div className='button is-small is-warning'>
                                         Edit Donation
                                       </div>
                                     </Link>
