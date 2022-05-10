@@ -10,7 +10,6 @@ import {
 import Navbar from './components/Nav/Navbar';
 import Landing from './components/Landing';
 import Home from './components/Home';
-import bulma from './images/made-with-bulma--semiblack.png';
 import Register from './components/Register';
 import { useState } from 'react';
 import GoalSet from './components/GoalSet';
