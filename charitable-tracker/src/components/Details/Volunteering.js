@@ -24,7 +24,8 @@ export default function Volunteering({ token }) {
       })
       .then((res) => {
         console.log('Get Volunteering Called');
-        setVolunteerings(res.data);
+        console.log(res.data.results);
+        setVolunteerings(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -41,6 +42,11 @@ export default function Volunteering({ token }) {
         {isLoading ? (
           <>
             <Loading />
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
+              </div>
+            )}
           </>
         ) : (
           <>

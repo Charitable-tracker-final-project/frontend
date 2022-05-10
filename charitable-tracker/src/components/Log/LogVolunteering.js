@@ -109,6 +109,46 @@ export default function LogVolunteering({ token }) {
             console.log(e);
             setError(e.message);
           });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/org/`,
+        {
+          organization: org,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Org!');
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setVolSpinner(false);
+      });
+
+    axios
+      .post(
+        `https://charitable-tracker.herokuapp.com/api/cause/`,
+        {
+          cause: cause,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      )
+      .then((res) => {
+        console.log('Successfully submitted Cause!');
+        console.log(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        setError(e.message);
+        setVolSpinner(false);
+      });
   };
 
   function useQuery() {
@@ -222,6 +262,7 @@ export default function LogVolunteering({ token }) {
                               value={cause}
                               onChange={(event) => setCause(event.target.value)}
                             >
+                              <option />
                               <option>Animals</option>
                               <option>Arts Culture Humanities</option>
                               <option>Asian Rights</option>

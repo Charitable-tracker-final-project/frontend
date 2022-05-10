@@ -23,7 +23,7 @@ export default function Donations({ token }) {
       })
       .then((res) => {
         console.log('Get Donations Called');
-        setDonations(res.data);
+        setDonations(res.data.results);
       })
       .then(() => {
         setIsLoading(false);
@@ -40,6 +40,11 @@ export default function Donations({ token }) {
         {isLoading ? (
           <>
             <Loading />
+            {error && (
+              <div className='box has-background-danger has-text-white'>
+                <h3>{error}</h3>
+              </div>
+            )}
           </>
         ) : (
           <>
