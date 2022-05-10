@@ -488,7 +488,7 @@ export default function EditVolunteering({ token }) {
                         </form>
                         <div className='field is-grouped is-grouped-centered'>
                           <div className='control'>
-                            <Link to='/volunteering'>
+                            <Link to='/'>
                               <div className='button is-warning pl-6 pr-6 mt-2 mb-4'>
                                 Back
                               </div>

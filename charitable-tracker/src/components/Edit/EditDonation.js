@@ -459,7 +459,7 @@ export default function EditDonation({ token }) {
                         </form>
                         <div className='field is-grouped is-grouped-centered'>
                           <div className='control'>
-                            <Link to='/donations'>
+                            <Link to='/'>
                               <div className='button is-warning pl-6 pr-6 mt-4 mb-4'>
                                 Back
                               </div>
