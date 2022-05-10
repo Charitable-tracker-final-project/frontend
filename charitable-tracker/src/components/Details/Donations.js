@@ -224,12 +224,14 @@ export default function Donations(props) {
       <div className={`modal ${isImg ? 'is-active' : ''}`}>
         <div className='modal-background'>
           <div className='modal-content'>
-            <div className='box'>
-              <img
-                src={img}
-                alt={`receipt from ${imgDate} donation`}
-                maxWidth='100%'
-              />
+            <div className='column is-10-mobile'>
+              <div className='box'>
+                <img
+                  src={img}
+                  alt={`receipt from ${imgDate} donation`}
+                  maxWidth={'600vw'}
+                />
+              </div>
             </div>
           </div>
         </div>
