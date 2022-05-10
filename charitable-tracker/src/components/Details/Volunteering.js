@@ -4,12 +4,15 @@ import axios from 'axios';
 import Loading from '../Loading/Loading';
 import Pagination from 'bulma-pagination-react';
 
-export default function Volunteering({ token }) {
+export default function Volunteering(props) {
   const [volunteerings, setVolunteerings] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isDActive, setIsDActive] = useState(0);
   const [isRActive, setIsRActive] = useState(0);
+  const [isImg, setIsImg] = useState(false);
+  const [img, setImg] = useState('');
+  const [imgDate, setImgDate] = useState('');
   const [pag, setPag] = useState(null);
   const [current, setCurrent] = useState(1);
 
@@ -27,7 +30,7 @@ export default function Volunteering({ token }) {
         `https://charitable-tracker.herokuapp.com/api/Vrecords/?page=${page}`,
         {
           headers: {
-            Authorization: `Token ${token}`,
+            Authorization: `Token ${props.token}`,
           },
         }
       )
@@ -49,7 +52,7 @@ export default function Volunteering({ token }) {
     axios
       .get('https://charitable-tracker.herokuapp.com/api/Vrecords/', {
         headers: {
-          Authorization: `Token ${token}`,
+          Authorization: `Token ${props.token}`,
         },
       })
       .then((res) => {
@@ -64,7 +67,7 @@ export default function Volunteering({ token }) {
       .catch((e) => {
         setError(e.message);
       });
-  }, [token]);
+  }, [props.token]);
 
   return (
     <>
@@ -199,12 +202,19 @@ export default function Volunteering({ token }) {
                                   )}`}</p>
                                 </div>
                                 <div className='columns is-centered'>
-                                  <div className='column is-flex is-align-content-center is-justify-content-center'>
+                                  <div className='column is-flex is-3 is-align-content-center is-justify-content-center'>
                                     <img
                                       src={v.imgreciept}
                                       alt={`receipt from ${dateConvert(
                                         v.created_at
                                       )} donation`}
+                                      className='is-clickable'
+                                      onClick={() => [
+                                        setIsImg(true),
+                                        setImg(v.imgreciept),
+                                        setImgDate(dateConvert(v.created_at)),
+                                        props.setHideSide(true),
+                                      ]}
                                     />
                                   </div>
                                 </div>
@@ -225,6 +235,29 @@ export default function Volunteering({ token }) {
             )}
           </>
         )}
+      </div>
+      <div className={`modal ${isImg ? 'is-active' : ''}`}>
+        <div className='modal-background'>
+          <div className='modal-content'>
+            <div className='box'>
+              <img
+                src={img}
+                alt={`receipt from ${imgDate} donation`}
+                maxWidth='100%'
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className='modal-close is-large'
+          aria-label='close'
+          onClick={() => [
+            setIsImg(false),
+            setImg(''),
+            setImgDate(''),
+            props.setHideSide(false),
+          ]}
+        />
       </div>
     </>
   );
