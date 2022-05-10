@@ -186,7 +186,7 @@ export default function Graphs2Org({ token }) {
                 </div>
               )}
               <div className='columns'>
-                <h1 className='column is-9 has-text-black has-text-info is-size-4 has-text-weight-bold is-size-5-mobile'>
+                <h1 className='column is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile'>
                   Impact of your{' '}
                   {toggle === 'Donations' ? `Donations` : `Volunteer Time`} to
                   your Organizations:

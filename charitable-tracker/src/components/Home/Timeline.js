@@ -64,7 +64,9 @@ export default function TimelineCT(props) {
   return (
     <>
       <div className='column is-11 is-5-widescreen box m-3 p-5'>
-        <h1 className='title'>Contribution Timeline:</h1>
+        <h1 className='olumn is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile mb-0 pb-0'>
+          Contribution Timeline:
+        </h1>
         <hr />
         {isLoading ? (
           <>

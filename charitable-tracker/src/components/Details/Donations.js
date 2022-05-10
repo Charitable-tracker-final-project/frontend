@@ -70,7 +70,9 @@ export default function Donations(props) {
   return (
     <>
       <div className='column is-11 is-5-widescreen box m-3 p-5'>
-        <h1 className='title'>My Donations:</h1>
+        <h1 className='is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile mb-0 pb-0'>
+          My Donations:
+        </h1>
         <hr />
         {isLoading ? (
           <>
@@ -210,6 +212,7 @@ export default function Donations(props) {
                   pages={Math.ceil(pag.count / 5)}
                   currentPage={current}
                   onChange={(page) => handlePage(page)}
+                  className='is-small'
                   prevClassName={pag.count <= 5 && 'is-hidden'}
                   nextClassName={pag.count <= 5 && 'is-hidden'}
                 />

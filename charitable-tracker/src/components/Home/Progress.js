@@ -20,13 +20,17 @@ export default function Progress(props) {
       ? `You haven't made any donations yet...`
       : !income && donosToDate
       ? `You haven't set your income yet...`
+      : percentage >= 100
+      ? `Congradulations! You've completed your goal!`
       : `You haven't set your income or made any donations yet...`;
   };
 
   const dGoalMath = (donos, dGoal) => {
     let percentage = (donos / dGoal) * 100;
     percentage = Math.round(percentage);
-    return dGoal && donosToDate
+    return donos >= dGoal
+      ? `Congradulations! You're donations of $${donos} have surpassed your goal of $${dGoal}! Time to set a new goal.`
+      : dGoal && donosToDate
       ? `You've donated $${donos}, which is ${percentage}% of your goal of $${dGoal}`
       : !donosToDate && dGoal
       ? `You haven't made any donations yet...`
@@ -38,7 +42,9 @@ export default function Progress(props) {
   const vGoalMath = (vol, vGoal) => {
     let percentage = (vol / vGoal) * 100;
     percentage = Math.round(percentage);
-    return vGoal && volToDate
+    return percentage >= 100
+      ? `Congradulations! You've volunteered ${volToDate} hours, which has suprpassed your goal of ${vGoal} hours! Time to set a new goal.`
+      : vGoal && volToDate
       ? `You've volunteered ${vol} hours, which is ${percentage}% of your goal of ${vGoal} hours`
       : !volToDate && vGoal
       ? `You haven't logged any volunteer hours yet...`
@@ -89,7 +95,9 @@ export default function Progress(props) {
   return (
     <>
       <div className='column is-11 is-5-widescreen box m-3 p-5'>
-        <h1 className='title'>Progress Update:</h1>
+        <h1 className='column is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile mb-0 pb-0'>
+          Progress Update:
+        </h1>
         <hr />
         {isLoading ? (
           <>
@@ -118,7 +126,9 @@ export default function Progress(props) {
                 Progress Towards Donation Goal:
               </h1>
               <progress
-                className='progress m-0 is-link'
+                className={`progress m-0 ${
+                  donosToDate >= dGoal ? 'is-success' : 'is-link'
+                }`}
                 value={donosToDate}
                 max={dGoal}
               ></progress>
@@ -131,7 +141,9 @@ export default function Progress(props) {
                 Progress Towards Volunteer Goal:
               </h1>
               <progress
-                className='progress m-0 is-info'
+                className={`progress m-0 ${
+                  volToDate >= vGoal ? 'is-success' : 'is-info'
+                }`}
                 value={volToDate}
                 max={vGoal}
               ></progress>
