@@ -69,7 +69,7 @@ export default function Donations(props) {
 
   return (
     <>
-      <div className='column is-11 is-5-widescreen box m-3 p-5 is-3-fullhd'>
+      <div className='column is-11 is-5-widescreen box m-3 p-5 is-4-fullhd'>
         <h1 className='title'>My Donations:</h1>
         <hr />
         {isLoading ? (
