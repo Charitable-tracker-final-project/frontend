@@ -23,7 +23,7 @@ export default function LoggedIn({
     <>
       <h1
         className={`title has-text-centered ${
-          step > 1 && `is-invisible is-hidden-touch`
+          step > 1 && `is-hidden is-hidden-touch`
         }`}
       >
         Let's Set Some Goals!

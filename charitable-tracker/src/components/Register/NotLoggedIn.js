@@ -22,7 +22,7 @@ export default function NotLoggedIn({
   return (
     <>
       <h1 className='title has-text-centered'>Let's Get You Signed Up!</h1>
-      <div className='box p-6'>
+      <div className='p-6'>
         {step === 1 && (
           <EnterUsername
             newUser={newUser}
@@ -34,16 +34,6 @@ export default function NotLoggedIn({
           />
         )}
         {step === 2 && (
-          <EnterEmail
-            newUser={newUser}
-            email={email}
-            setEmail={setEmail}
-            setSkipable={setSkipable}
-            step={step}
-            setStep={setStep}
-          />
-        )}
-        {step === 3 && (
           <EnterPassword
             newUser={newUser}
             setNewUser={setNewUser}
@@ -59,7 +49,7 @@ export default function NotLoggedIn({
             setStep={setStep}
           />
         )}
-        {step > 3 && (
+        {step > 2 && (
           <h1>Registration unsuccesful. Please reset and try again!</h1>
         )}
         <div className='field is-grouped is-grouped-centered'>
