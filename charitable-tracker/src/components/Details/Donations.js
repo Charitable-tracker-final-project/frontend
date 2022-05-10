@@ -2,16 +2,46 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
+import Pagination from 'bulma-pagination-react';
 
 export default function Donations({ token }) {
   const [donations, setDonations] = useState(null);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
+  const [pag, setPag] = useState(null);
+  const [current, setCurrent] = useState(1);
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${month}/${day}/${year}`;
+  };
+
+  const handlePage = (page) => {
+    console.log(`Handle Page ${page} Called`);
+    setError('');
+    setCurrent(page);
+    axios
+      .get(
+        `https://charitable-tracker.herokuapp.com/api/Drecords/?page=${page}`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log('Get Volunteering Called');
+        console.log(res.data.results);
+        setDonations(res.data.results);
+        setPag(res.data);
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
   };
 
   useEffect(() => {
@@ -24,6 +54,7 @@ export default function Donations({ token }) {
       .then((res) => {
         console.log('Get Donations Called');
         setDonations(res.data.results);
+        setPag(res.data);
       })
       .then(() => {
         setIsLoading(false);
@@ -156,6 +187,11 @@ export default function Donations({ token }) {
                     </>
                   );
                 })}
+                <Pagination
+                  pages={Math.ceil(pag.count / 5)}
+                  currentPage={current}
+                  onChange={(page) => handlePage(page)}
+                />
               </>
             )}
           </>
