@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
+import Pagination from 'bulma-pagination-react';
 
 export default function Volunteering({ token }) {
   const [volunteerings, setVolunteerings] = useState(null);
@@ -9,10 +10,39 @@ export default function Volunteering({ token }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isDActive, setIsDActive] = useState(0);
   const [isRActive, setIsRActive] = useState(0);
+  const [pag, setPag] = useState(null);
+  const [current, setCurrent] = useState(1);
 
   const dateConvert = (date) => {
     const [year, month, day] = date.split('-');
     return `${month}/${day}/${year}`;
+  };
+
+  const handlePage = (page) => {
+    console.log(`Handle Page ${page} Called`);
+    setError('');
+    setCurrent(page);
+    axios
+      .get(
+        `https://charitable-tracker.herokuapp.com/api/Vrecords/?page=${page}`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        console.log('Get Volunteering Called');
+        console.log(res.data.results);
+        setVolunteerings(res.data.results);
+        setPag(res.data);
+      })
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message);
+      });
   };
 
   useEffect(() => {
@@ -26,6 +56,7 @@ export default function Volunteering({ token }) {
         console.log('Get Volunteering Called');
         console.log(res.data.results);
         setVolunteerings(res.data.results);
+        setPag(res.data);
       })
       .then(() => {
         setIsLoading(false);
@@ -185,6 +216,11 @@ export default function Volunteering({ token }) {
                     </>
                   );
                 })}
+                <Pagination
+                  pages={Math.ceil(pag.count / 5)}
+                  currentPage={current}
+                  onChange={(page) => handlePage(page)}
+                />
               </>
             )}
           </>
