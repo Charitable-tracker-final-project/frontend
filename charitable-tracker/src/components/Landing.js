@@ -5,7 +5,6 @@ import axios from 'axios';
 import Loading from './Loading/Loading';
 
 export default function Landing({ token, setToken, setAuth }) {
-  // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');

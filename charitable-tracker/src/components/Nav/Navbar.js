@@ -37,7 +37,6 @@ export default function Navbar({ handleLogOut }) {
             <span aria-hidden='true' />
           </a>
         </div>
-
         <div
           id='charitableNavbar'
           className={`navbar-menu ${isActive ? 'is-active' : ''}`}
