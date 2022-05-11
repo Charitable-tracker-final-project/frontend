@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 
@@ -13,7 +13,6 @@ export default function EditDonation({ token }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [image, setImage] = useState(null);
-  const [imgURL, setImgURL] = useState('');
   const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
   const [deleteImage, setDeleteImage] = useState(false);
@@ -25,19 +24,11 @@ export default function EditDonation({ token }) {
     },
   };
 
-  const today = () => {
-    let newDate = new Date();
-    let day = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-
-    return `${year}-${month < 10 ? `0${month}` : `${month}`}-${day}`;
-  };
-
   const handleSubmit = (event) => {
     console.log('Handle Edit Called');
     event.preventDefault();
     setDonoSpinner(true);
+    setError('');
 
     image &&
       axios
@@ -51,7 +42,6 @@ export default function EditDonation({ token }) {
         .then((res) => {
           console.log('Successfully submitted Image!');
           console.log(res.data.upload);
-          setImgURL(res.data.upload);
         })
         .catch((e) => {
           console.log(e);
@@ -212,7 +202,6 @@ export default function EditDonation({ token }) {
         setCause(res.data.cause);
         setDono(res.data.amountdonated);
         setIsLoading(false);
-        setImgURL(res.data.imgreciept);
         res.data.imgreciept
           ? setFilename(res.data.imgreciept)
           : setFilename(null);
@@ -227,6 +216,11 @@ export default function EditDonation({ token }) {
       <div className='column'>
         <br></br>
         <main>
+          {error && (
+            <div className='box has-background-danger has-text-white'>
+              <h3>{error}</h3>
+            </div>
+          )}
           <div className='columns is-centered' style={styles.regPage}>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>Edit your donation!</h1>

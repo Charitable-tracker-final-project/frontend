@@ -36,22 +36,6 @@ export default function Landing({ token, setToken, setAuth }) {
     }
   };
 
-  const handleOAuth = (event) => {
-    console.log('Handle OAuth Called');
-    event.preventDefault();
-    setError('');
-    //   axios
-    //     .post('https://questionbox-rocket.herokuapp.com/auth/token/login/', {
-    //       username: username,
-    //       password: password,
-    //     })
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       setAuth(username, res.data.auth_token);
-    //     })
-    //     .catch((e) => setError(e.message));
-  };
-
   return (
     <>
       <br></br> <br></br> <br></br>

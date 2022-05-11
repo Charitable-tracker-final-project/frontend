@@ -11,10 +11,8 @@ export default function LogDonation({ token }) {
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
   const [image, setImage] = useState(null);
-  const [imgURL, setImgURL] = useState('');
   const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
-  const [uploadDone, setUploadDone] = useState(false);
 
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
@@ -34,8 +32,6 @@ export default function LogDonation({ token }) {
         .then((res) => {
           console.log('Successfully submitted Image!');
           console.log(res.data.upload);
-          setImgURL(res.data.upload);
-          setUploadDone(true);
         })
         .catch((e) => {
           console.log(e);

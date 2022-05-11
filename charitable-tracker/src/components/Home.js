@@ -1,15 +1,10 @@
-import Navbar from './Nav/Navbar';
 import Progress from './Home/Progress';
 import TimelineCT from './Home/Timeline';
-import { useNavigate } from 'react-router-dom';
 import Profile from './Nav/Profile';
-import Reports from './Reports';
 import Volunteering from './Details/Volunteering';
 import Donations from './Details/Donations';
 import Graphs2Cause from './Reports/Graphs2Cause';
 import Graphs2Org from './Reports/Graphs2Org';
-import Graphs4 from './Reports/Graphs4';
-import Graphs6 from './Reports/Graphs6';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
@@ -24,7 +19,6 @@ export default function Home(props) {
   const [graphs6, setGraphs6] = useState(false);
   const [vol, setVol] = useState(false);
   const [dono, setDono] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState('');
   const [isIncome, setIsIncome] = useState([]);
   const [incomeInput, setIncomeInput] = useState('');
@@ -132,7 +126,6 @@ export default function Home(props) {
       .catch((e) => {
         console.log(e);
         setVGoalError(e.message);
-        setIsLoading(true);
       });
   };
 
@@ -300,12 +293,10 @@ export default function Home(props) {
           }).pk
         );
       })
-      .then(() => {
-        setIsLoading(false);
-      })
       .catch((e) => {
         setDGoalError(e.message);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.token, oldIncome, dGoalLoad, vGoalLoad]);
 
   return (

@@ -188,7 +188,7 @@ export default function Donations(props) {
                                       alt={`receipt from ${dateConvert(
                                         d.created_at
                                       )} donation`}
-                                      maxWidth='100%'
+                                      maxwidth='100%'
                                       className='is-clickable'
                                       onClick={() => [
                                         setIsImg(true),
@@ -229,7 +229,7 @@ export default function Donations(props) {
                 <img
                   src={img}
                   alt={`receipt from ${imgDate} donation`}
-                  maxWidth={'600vw'}
+                  maxwidth={'600vw'}
                 />
               </div>
             </div>
