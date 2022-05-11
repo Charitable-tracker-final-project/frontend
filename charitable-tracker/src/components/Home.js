@@ -405,6 +405,9 @@ export default function Home(props) {
             )}
           </div>
         </main>
+        <br />
+        <br />
+        <br />
       </div>
     </>
   );
