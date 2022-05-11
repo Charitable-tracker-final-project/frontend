@@ -12,21 +12,10 @@ import Landing from './components/Landing';
 import Home from './components/Home';
 import Register from './components/Register';
 import { useState } from 'react';
-import GoalSet from './components/GoalSet';
-import CreateVolunteer from './components/Goals/CreateVolunteer';
-import CreateDonation from './components/Goals/CreateDonation';
-import Volunteering from './components/Details/Volunteering';
-import Donations from './components/Details/Donations';
 import LogDonation from './components/Log/LogDonation';
 import LogVolunteering from './components/Log/LogVolunteering';
 import EditVolunteering from './components/Edit/EditVolunteering';
 import EditDonation from './components/Edit/EditDonation';
-import DonationGoals from './components/Details/DonationGoals';
-import VolunteerGoals from './components/Details/VolunteerGoals';
-import EditVolunteerGoal from './components/Edit/EditVolunteerGoal';
-import EditDonationGoal from './components/Edit/EditDonationGoal';
-import SingleDonationGoal from './components/Details/SingleDonationGoal';
-import SingleVolunteerGoal from './components/Details/SingleVolunteerGoal';
 
 function App() {
   const [newUser, setNewUser] = useState(false);
@@ -113,54 +102,13 @@ function App() {
                   path='/new/volunteer-hours'
                   element={<LogVolunteering token={token} />}
                 />
-                <Route path='/new/goal' element={<GoalSet />} />
-                <Route
-                  path='/new/goal/volunteering'
-                  element={<CreateVolunteer token={token} />}
-                />
-                <Route
-                  path='/new/goal/donation'
-                  element={<CreateDonation token={token} />}
-                />
-                <Route
-                  path='/volunteering'
-                  element={<Volunteering token={token} />}
-                />
                 <Route
                   path='/volunteering/edit/:V_id'
                   element={<EditVolunteering token={token} />}
                 />
                 <Route
-                  path='/donations'
-                  element={<Donations token={token} />}
-                />
-                <Route
                   path='/donations/edit/:D_id'
                   element={<EditDonation token={token} />}
-                />
-                <Route
-                  path='/goals/donation'
-                  element={<DonationGoals token={token} />}
-                />
-                <Route
-                  path='/goals/donation/:G_id'
-                  element={<SingleDonationGoal token={token} />}
-                />
-                <Route
-                  path='/goals/donation/edit/:G_id'
-                  element={<EditDonationGoal token={token} />}
-                />
-                <Route
-                  path='/goals/volunteer'
-                  element={<VolunteerGoals token={token} />}
-                />
-                <Route
-                  path='/goals/volunteer/:G_id'
-                  element={<SingleVolunteerGoal token={token} />}
-                />
-                <Route
-                  path='/goals/volunteer/edit/:G_id'
-                  element={<EditVolunteerGoal token={token} />}
                 />
               </Routes>
             </div>
