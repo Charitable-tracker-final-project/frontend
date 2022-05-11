@@ -88,22 +88,16 @@ export default function Donations(props) {
             )}
             {!donations.length > 0 ? (
               <>
-                <div className='p-5 mb-5'>
-                  <div className='columns is-centered'>
-                    <div className='column is-10 has-text-centered'>
-                      <h1 className='is-size-3 has-text-black'>
-                        You haven't entered any donations yet...
-                      </h1>
-                      <div className='field is-grouped is-grouped-centered mt-5'>
-                        <div className='control'>
-                          <Link to={`/new/donation`}>
-                            <div className='button is-large is-primary'>
-                              Enter New Donation
-                            </div>
-                          </Link>
-                        </div>
+                <h1 className='is-size-4 has-text-black'>
+                  You haven't entered any donations yet...
+                </h1>
+                <div className='field is-grouped is-grouped-centered mt-5'>
+                  <div className='control'>
+                    <Link to={`/new/donation`}>
+                      <div className='button is-large-widescreen is-primary'>
+                        Enter New Donation
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </>
