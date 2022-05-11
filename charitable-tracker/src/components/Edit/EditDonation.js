@@ -41,7 +41,6 @@ export default function EditDonation({ token }) {
         })
         .then((res) => {
           console.log('Successfully submitted Image!');
-          console.log(res.data.upload);
         })
         .catch((e) => {
           console.log(e);
@@ -134,7 +133,6 @@ export default function EditDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Org!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -154,7 +152,6 @@ export default function EditDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Cause!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -365,8 +362,6 @@ export default function EditDonation({ token }) {
                                     name='receipt'
                                     accept='image/*'
                                     onChange={(event) => {
-                                      console.log(event.target.files[0]);
-                                      console.log(event.target.files[0].name);
                                       setImage(event.target.files[0]);
                                       setFilename(event.target.files[0].name);
                                       setDeleteImage(false);

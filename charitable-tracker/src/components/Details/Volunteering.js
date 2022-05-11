@@ -22,7 +22,6 @@ export default function Volunteering(props) {
   };
 
   const handlePage = (page) => {
-    console.log(`Handle Page ${page} Called`);
     setError('');
     setCurrent(page);
     axios
@@ -35,8 +34,6 @@ export default function Volunteering(props) {
         }
       )
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results);
         setVolunteerings(res.data.results);
         setPag(res.data);
       })
@@ -56,8 +53,6 @@ export default function Volunteering(props) {
         },
       })
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results);
         setVolunteerings(res.data.results);
         setPag(res.data);
       })

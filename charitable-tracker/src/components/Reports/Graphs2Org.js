@@ -27,8 +27,6 @@ export default function Graphs2Org({ token }) {
         }
       )
       .then((res) => {
-        console.log('Get Pie Chart Called');
-        console.log(res.data[0].alldonated.amountdonated__sum);
         setTotalDonos(res.data[0].alldonated.amountdonated__sum);
         setPieDataDonos2(
           res.data.filter(
@@ -48,8 +46,6 @@ export default function Graphs2Org({ token }) {
             }
           )
           .then((res) => {
-            console.log('Get Pie Chart Called');
-            console.log(res.data[0].allhours.hoursdonated__sum);
             setTotalHours(res.data[0].allhours.hoursdonated__sum);
             setPieDataVol2(
               res.data.filter(

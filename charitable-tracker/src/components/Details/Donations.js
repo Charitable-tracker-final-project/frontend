@@ -21,7 +21,6 @@ export default function Donations(props) {
   };
 
   const handlePage = (page) => {
-    console.log(`Handle Page ${page} Called`);
     setError('');
     setCurrent(page);
     axios
@@ -34,8 +33,6 @@ export default function Donations(props) {
         }
       )
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results);
         setDonations(res.data.results);
         setPag(res.data);
       })
@@ -55,7 +52,6 @@ export default function Donations(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donations Called');
         setDonations(res.data.results);
         setPag(res.data);
       })

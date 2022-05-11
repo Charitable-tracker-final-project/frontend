@@ -24,8 +24,6 @@ export default function Graphs2Cause({ token }) {
         },
       })
       .then((res) => {
-        console.log('Get Pie Chart Called');
-        console.log(res.data);
         setTotalDonos(res.data[0].alldonated.amountdonated__sum);
         setPieDataDonos(
           res.data.filter(
@@ -42,8 +40,6 @@ export default function Graphs2Cause({ token }) {
             },
           })
           .then((res) => {
-            console.log('Get Pie Chart Called');
-            console.log(res.data);
             setTotalHours(res.data[0].allhours.hoursdonated__sum);
             setPieDataVol(
               res.data.filter(

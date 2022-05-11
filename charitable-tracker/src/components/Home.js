@@ -227,7 +227,6 @@ export default function Home(props) {
         },
       })
       .then((res) => {
-        console.log('Get Income Called');
         setIsIncome(res.data);
         setIncomeInput(
           res.data.find((e) => {
@@ -256,7 +255,6 @@ export default function Home(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donation Goals Called');
         setDonoGoal(res.data);
         setDGoalAmount(
           res.data.find((e) => {
@@ -280,7 +278,6 @@ export default function Home(props) {
         },
       })
       .then((res) => {
-        console.log('Get Volunteer Goals Called');
         setVolGoal(res.data);
         setVGoalAmount(
           res.data.find((e) => {

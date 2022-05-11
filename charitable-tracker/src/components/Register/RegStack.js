@@ -88,7 +88,6 @@ export const EnterPassword = ({
     setNoMatch(null);
     setError('');
     setPWSpinner(true);
-    console.log(username, password, repassword);
     if (password === repassword) {
       axios
         .post(`https://charitable-tracker.herokuapp.com/auth/registration/`, {

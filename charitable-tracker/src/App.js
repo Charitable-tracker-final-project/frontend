@@ -1,12 +1,6 @@
 import './App.scss';
 import useLocalStorageState from 'use-local-storage-state';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  // Link,
-} from 'react-router-dom';
-// import axios from 'axios'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/Nav/Navbar';
 import Landing from './components/Landing';
 import Home from './components/Home';
@@ -24,7 +18,6 @@ function App() {
     'CharitableTrackerUsername',
     ''
   );
-  // const [status, setStatus] = useState(null);
 
   const setAuth = (username, token) => {
     setStoreUsername(username);
@@ -34,28 +27,7 @@ function App() {
   const handleLogOut = (event) => {
     console.log('Handle Log Out Called');
     event.preventDefault();
-    // setStatus(null);
     setAuth(null, null);
-    // axios
-    //   .post(
-    //     'https://questionbox-rocket.herokuapp.com/auth/token/logout/',
-    //     {},
-    //     {
-    //       headers: { Authorization: `Token ${token}` },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     setStatus(res.status);
-    //     setAuth(null, null);
-    //     navigate('/');
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //     setStatus(e.status);
-    //     setAuth(null, null);
-    //     navigate('/');
-    //   });
   };
 
   return (
@@ -80,13 +52,6 @@ function App() {
           <>
             {!newUser && <Navbar handleLogOut={handleLogOut} token={token} />}
             <div className='columns is-mobile'>
-              {/* {!newUser && (
-                <>
-                  <div className='column is-narrow'>
-                    <Profile storeuUsername={storeUsername} token={token} />
-                  </div>
-                </>
-              )} */}
               <Routes>
                 <Route
                   path='/'

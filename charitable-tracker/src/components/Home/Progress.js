@@ -61,8 +61,6 @@ export default function Progress(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donations Called');
-        console.log(res.data.results[0].alldonated.alldonated);
         setDonosToDate(res.data.results[0].alldonated.alldonated);
         setIsLoading(false);
       })
@@ -78,8 +76,6 @@ export default function Progress(props) {
         },
       })
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results[0].allhours.allhours);
         setVolToDate(res.data.results[0].allhours.allhours);
       })
       .then(() => {

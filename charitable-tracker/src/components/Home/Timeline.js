@@ -31,8 +31,6 @@ export default function TimelineCT(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donations Called');
-        console.log(res.data);
         setRecords(res.data.results);
         setIsLoading(false);
       })
@@ -60,7 +58,6 @@ export default function TimelineCT(props) {
     },
   });
 
-  console.log(records);
   return (
     <>
       <div className='column is-11 is-5-widescreen box m-3 p-5'>
