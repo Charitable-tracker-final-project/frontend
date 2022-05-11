@@ -259,7 +259,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <input
                                 type='date'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='vol-date'
                                 required
                                 placeholder='When did you donate?'
@@ -282,7 +282,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <input
                                 type='text'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='vol-org'
                                 required
                                 placeholder='Organization Name'
@@ -304,7 +304,7 @@ export default function EditVolunteering({ token }) {
                               <div className='is-inline-flex is-size-4'>
                                 <input
                                   type='number'
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='vol-hours'
                                   required
                                   placeholder='$'
@@ -329,7 +329,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <div className='select'>
                                 <select
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='vol-cause'
                                   required
                                   value={cause}

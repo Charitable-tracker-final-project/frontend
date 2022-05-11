@@ -253,7 +253,7 @@ export default function EditDonation({ token }) {
                               </label>
                               <input
                                 type='date'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='dono-date'
                                 required
                                 placeholder='When did you donate?'
@@ -276,7 +276,7 @@ export default function EditDonation({ token }) {
                               </label>
                               <input
                                 type='text'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='dono-org'
                                 required
                                 placeholder='Organization Name'
@@ -299,7 +299,7 @@ export default function EditDonation({ token }) {
                                 $
                                 <input
                                   type='number'
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='dono-money'
                                   required
                                   placeholder='$'
@@ -323,7 +323,7 @@ export default function EditDonation({ token }) {
                               </label>
                               <div className='select'>
                                 <select
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='dono-cause'
                                   required
                                   value={cause}
