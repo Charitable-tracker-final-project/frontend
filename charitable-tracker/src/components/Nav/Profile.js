@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Menu,
   MenuItem,
@@ -9,14 +9,11 @@ import {
 } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../Nav/custom.scss';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Switch from 'react-switch';
 
 export default function Profile(props) {
   const [isActive, setIsActive] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
   const [username] = useState(props.storeUsername);
 
   const styles = {

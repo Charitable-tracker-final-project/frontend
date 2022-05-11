@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import NotLoggedIn from './Register/NotLoggedIn';
 import LoggedIn from './Register/LoggedIn';
 
@@ -10,7 +9,6 @@ export default function Register({
   setNewUser,
   setAuth,
 }) {
-  const [step, setStep] = useState(1);
   const [skipable, setSkipable] = useState(false);
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
