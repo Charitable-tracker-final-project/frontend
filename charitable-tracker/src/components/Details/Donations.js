@@ -88,7 +88,7 @@ export default function Donations(props) {
             )}
             {!donations.length > 0 ? (
               <>
-                <div className='box p-5 mb-5'>
+                <div className='p-5 mb-5'>
                   <div className='columns is-centered'>
                     <div className='column is-10 has-text-centered'>
                       <h1 className='is-size-3 has-text-black'>

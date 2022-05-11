@@ -68,7 +68,7 @@ export default function Graphs2Cause({ token }) {
                   <h3>{error}</h3>
                 </div>
               )}
-              {`<--- Enter some records to see your impact with the causes you believe
+              {`Enter some records to see your impact with the causes you believe
               in!`}
               <div className='columns is-centered'>
                 <div className='column is-6'>

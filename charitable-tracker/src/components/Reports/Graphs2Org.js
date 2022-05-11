@@ -75,7 +75,7 @@ export default function Graphs2Org({ token }) {
                   <h3>{error}</h3>
                 </div>
               )}
-              {`<--- Enter some records to see your impact with the organizations you support!`}
+              {`Enter some records to see your impact with the organizations you support!`}
               <div className='columns is-centered'>
                 <div className='column is-6'>
                   <VictoryPie
