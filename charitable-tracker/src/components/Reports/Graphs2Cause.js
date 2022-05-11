@@ -2,14 +2,9 @@ import { useEffect, useState } from 'react';
 import {
   VictoryContainer,
   VictoryPie,
-  VictoryBar,
-  VictoryChart,
-  VictoryAxis,
   VictoryLabel,
-  VictoryLine,
   VictoryLegend,
 } from 'victory';
-import Loading from '../Loading/Loading';
 import axios from 'axios';
 
 export default function Graphs2Cause({ token }) {
@@ -17,15 +12,9 @@ export default function Graphs2Cause({ token }) {
   const [totalHours, setTotalHours] = useState('');
   const [pieDataDonos, setPieDataDonos] = useState([{ x: 'loading', y: 0 }]);
   const [pieDataVol, setPieDataVol] = useState([{ x: 'loading', y: 0 }]);
-  const [barDataDonos, setBarDataDonos] = useState([{ x: 'loading', y: 0 }]);
-  const [barDataVol, setBarDataVol] = useState([{ x: 'loading', y: 0 }]);
-  const [pieSpinner, setPieSpinner] = useState(false);
-  const [barSpinner, setBarSpinner] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [toggle, setToggle] = useState('Donations');
-
-  // setPieData([{ x: 'She Should Run', y: 25, percentage: '10%' }]);
 
   useEffect(() => {
     axios
@@ -35,8 +24,6 @@ export default function Graphs2Cause({ token }) {
         },
       })
       .then((res) => {
-        console.log('Get Pie Chart Called');
-        console.log(res.data);
         setTotalDonos(res.data[0].alldonated.amountdonated__sum);
         setPieDataDonos(
           res.data.filter(
@@ -53,8 +40,6 @@ export default function Graphs2Cause({ token }) {
             },
           })
           .then((res) => {
-            console.log('Get Pie Chart Called');
-            console.log(res.data);
             setTotalHours(res.data[0].allhours.hoursdonated__sum);
             setPieDataVol(
               res.data.filter(
@@ -72,59 +57,6 @@ export default function Graphs2Cause({ token }) {
       });
   }, [token]);
 
-  // useEffect(() => {
-  //   setBarData([
-  //     {
-  //       x: 'January',
-  //       y: 1,
-  //     },
-  //     {
-  //       x: 'February',
-  //       y: 2,
-  //     },
-  //     {
-  //       x: 'March',
-  //       y: 4,
-  //     },
-  //     {
-  //       x: 'April',
-  //       y: 8,
-  //     },
-  //     {
-  //       x: 'May',
-  //       y: 16,
-  //     },
-  //     {
-  //       x: 'June',
-  //       y: 20,
-  //     },
-  //     {
-  //       x: 'July',
-  //       y: 22,
-  //     },
-  //     {
-  //       x: 'August',
-  //       y: 24,
-  //     },
-  //     {
-  //       x: 'September',
-  //       y: 25,
-  //     },
-  //     {
-  //       x: 'October',
-  //       y: 50,
-  //     },
-  //     {
-  //       x: 'November',
-  //       y: 75,
-  //     },
-  //     {
-  //       x: 'December',
-  //       y: 100,
-  //     },
-  //   ]);
-  // }, []);
-
   return (
     <>
       <div className='column is-11 is-6-widescreen'>
@@ -136,7 +68,7 @@ export default function Graphs2Cause({ token }) {
                   <h3>{error}</h3>
                 </div>
               )}
-              {`<--- Enter some records to see your impact with the causes you believe
+              {`Enter some records to see your impact with the causes you believe
               in!`}
               <div className='columns is-centered'>
                 <div className='column is-6'>
@@ -205,7 +137,6 @@ export default function Graphs2Cause({ token }) {
                   : `You Volunteered ${totalHours} hours at these causes`}
               </h1>
               <div className='columns is-centered'>
-                {pieSpinner && <Loading />}
                 <div className='column is-5'>
                   <VictoryLegend
                     standalone={true}
@@ -303,48 +234,6 @@ export default function Graphs2Cause({ token }) {
                   />
                 </div>
               </div>
-              {/* <h1 className='has-text-centered title is-size-6-mobile'>{`Your contributions over time`}</h1>
-          <div className='columns is-centered'>
-            <div className='column pt-2'>
-              {barSpinner && <Loading />}
-              <VictoryChart domainPadding='40' width={800}>
-                <VictoryAxis
-                  style={{
-                    tickLabels: {
-                      fontSize: 20,
-                      angle: -20,
-                    },
-                  }}
-                />
-                <VictoryAxis
-                  dependentAxis
-                  orientation='left'
-                  style={{
-                    axisLabel: { padding: 30 },
-                    tickLabels: { fontSize: 15 },
-                  }}
-                  label='Hours'
-                />
-                <VictoryBar
-                  barWidth={50}
-                  data={barData}
-                  animate={{ duration: 500, easing: 'exp' }}
-                  style={{
-                    data: { fill: '#b5d13f' },
-                    labels: { fontSize: 20},
-                  }}
-                  labels={({ datum }) => [`${datum.y}`]}
-                  cornerRadius='4'
-                />
-                <VictoryLine
-                  data={barData}
-                  interpolation='monotoneX'
-                  animate={{ duration: 1300, easing: 'exp' }}
-                  style={{ data: { stroke: '#f973bf' } }}
-                />
-              </VictoryChart>
-            </div>
-          // </div> */}
             </>
           )}
         </div>

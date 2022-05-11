@@ -11,14 +11,11 @@ export default function LogDonation({ token }) {
   const [cause, setCause] = useState('');
   const [error, setError] = useState('');
   const [image, setImage] = useState(null);
-  const [imgURL, setImgURL] = useState('');
   const [filename, setFilename] = useState('No file uploaded...');
   const [donoSpinner, setDonoSpinner] = useState(false);
-  const [uploadDone, setUploadDone] = useState(false);
 
   const handleSubmit = (event) => {
     console.log('Handle Donation Called');
-    console.log(image);
     event.preventDefault();
     setDonoSpinner(true);
 
@@ -33,9 +30,6 @@ export default function LogDonation({ token }) {
         })
         .then((res) => {
           console.log('Successfully submitted Image!');
-          console.log(res.data.upload);
-          setImgURL(res.data.upload);
-          setUploadDone(true);
         })
         .catch((e) => {
           console.log(e);
@@ -111,7 +105,6 @@ export default function LogDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Org!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -131,7 +124,6 @@ export default function LogDonation({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Cause!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -306,8 +298,6 @@ export default function LogDonation({ token }) {
                                 name='receipt'
                                 accept='image/*'
                                 onChange={(event) => {
-                                  console.log(event.target.files[0]);
-                                  console.log(event.target.files[0].name);
                                   setImage(event.target.files[0]);
                                   setFilename(event.target.files[0].name);
                                 }}

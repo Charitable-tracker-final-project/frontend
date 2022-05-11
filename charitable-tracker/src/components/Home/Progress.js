@@ -20,16 +20,14 @@ export default function Progress(props) {
       ? `You haven't made any donations yet...`
       : !income && donosToDate
       ? `You haven't set your income yet...`
-      : percentage >= 100
-      ? `Congradulations! You've completed your goal!`
       : `You haven't set your income or made any donations yet...`;
   };
 
   const dGoalMath = (donos, dGoal) => {
     let percentage = (donos / dGoal) * 100;
     percentage = Math.round(percentage);
-    return donos >= dGoal
-      ? `Congradulations! You're donations of $${donos} have surpassed your goal of $${dGoal}! Time to set a new goal.`
+    return dGoal && donosToDate && donos >= dGoal
+      ? `Congratulations! You're donations of $${donos} have surpassed your goal of $${dGoal}! Time to set a new goal.`
       : dGoal && donosToDate
       ? `You've donated $${donos}, which is ${percentage}% of your goal of $${dGoal}`
       : !donosToDate && dGoal
@@ -42,8 +40,8 @@ export default function Progress(props) {
   const vGoalMath = (vol, vGoal) => {
     let percentage = (vol / vGoal) * 100;
     percentage = Math.round(percentage);
-    return percentage >= 100
-      ? `Congradulations! You've volunteered ${volToDate} hours, which has suprpassed your goal of ${vGoal} hours! Time to set a new goal.`
+    return vGoal && volToDate && percentage >= 100
+      ? `Congratulations! You've volunteered ${volToDate} hours, which has suprpassed your goal of ${vGoal} hours! Time to set a new goal.`
       : vGoal && volToDate
       ? `You've volunteered ${vol} hours, which is ${percentage}% of your goal of ${vGoal} hours`
       : !volToDate && vGoal
@@ -63,8 +61,6 @@ export default function Progress(props) {
         },
       })
       .then((res) => {
-        console.log('Get Donations Called');
-        console.log(res.data.results[0].alldonated.alldonated);
         setDonosToDate(res.data.results[0].alldonated.alldonated);
         setIsLoading(false);
       })
@@ -80,8 +76,6 @@ export default function Progress(props) {
         },
       })
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results[0].allhours.allhours);
         setVolToDate(res.data.results[0].allhours.allhours);
       })
       .then(() => {

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Loading from '../Loading/Loading';
 
 export const EnterUsername = ({
@@ -72,7 +72,6 @@ export const EnterPassword = ({
   setSkipable,
   setStep,
 }) => {
-  const navigate = useNavigate();
   const [repassword, setRepassword] = useState('');
   const [error, setError] = useState('');
   const [noMatch, setNoMatch] = useState(null);
@@ -88,7 +87,6 @@ export const EnterPassword = ({
     setNoMatch(null);
     setError('');
     setPWSpinner(true);
-    console.log(username, password, repassword);
     if (password === repassword) {
       axios
         .post(`https://charitable-tracker.herokuapp.com/auth/registration/`, {

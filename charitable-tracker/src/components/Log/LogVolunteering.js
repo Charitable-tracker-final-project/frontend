@@ -13,9 +13,7 @@ export default function LogVolunteering({ token }) {
   const [error, setError] = useState('');
   const [volSpinner, setVolSpinner] = useState(false);
   const [image, setImage] = useState(null);
-  const [imgURL, setImgURL] = useState('');
   const [filename, setFilename] = useState('No file uploaded...');
-  const [uploadDone, setUploadDone] = useState(false);
 
   const today = () => {
     let newDate = new Date();
@@ -44,9 +42,6 @@ export default function LogVolunteering({ token }) {
         })
         .then((res) => {
           console.log('Successfully submitted Edit!');
-          console.log(res.data.upload);
-          setImgURL(res.data.upload);
-          setUploadDone(true);
         })
         .catch((e) => {
           console.log(e);
@@ -122,7 +117,6 @@ export default function LogVolunteering({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Org!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -142,7 +136,6 @@ export default function LogVolunteering({ token }) {
       )
       .then((res) => {
         console.log('Successfully submitted Cause!');
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -169,6 +162,11 @@ export default function LogVolunteering({ token }) {
       <div className='column'>
         <br></br>
         <main>
+          {error && (
+            <div className='box has-background-danger has-text-white'>
+              <h3>{error}</h3>
+            </div>
+          )}
           <div className='columns is-centered'>
             <div className='column mt-4 pt-4 is-11'>
               <h1 className='title has-text-centered'>
@@ -325,8 +323,6 @@ export default function LogVolunteering({ token }) {
                                 name='receipt'
                                 accept='image/*'
                                 onChange={(event) => {
-                                  console.log(event.target.files[0]);
-                                  console.log(event.target.files[0].name);
                                   setImage(event.target.files[0]);
                                   setFilename(event.target.files[0].name);
                                 }}

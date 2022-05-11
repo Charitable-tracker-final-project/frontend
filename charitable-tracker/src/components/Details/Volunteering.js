@@ -22,7 +22,6 @@ export default function Volunteering(props) {
   };
 
   const handlePage = (page) => {
-    console.log(`Handle Page ${page} Called`);
     setError('');
     setCurrent(page);
     axios
@@ -35,8 +34,6 @@ export default function Volunteering(props) {
         }
       )
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results);
         setVolunteerings(res.data.results);
         setPag(res.data);
       })
@@ -56,8 +53,6 @@ export default function Volunteering(props) {
         },
       })
       .then((res) => {
-        console.log('Get Volunteering Called');
-        console.log(res.data.results);
         setVolunteerings(res.data.results);
         setPag(res.data);
       })
@@ -94,22 +89,16 @@ export default function Volunteering(props) {
             )}
             {!volunteerings.length > 0 ? (
               <>
-                <div className='box p-5 mb-5'>
-                  <div className='columns is-centered'>
-                    <div className='column is-10 has-text-centered'>
-                      <h1 className='is-size-3 has-text-black'>
-                        You haven't entered any volunteer hours yet...
-                      </h1>
-                      <div className='field is-grouped is-grouped-centered mt-5'>
-                        <div className='control'>
-                          <Link to={`/new/volunteer-hours`}>
-                            <div className='button is-large is-info'>
-                              Enter New Volunteer Hours
-                            </div>
-                          </Link>
-                        </div>
+                <h1 className='is-size-4 has-text-black'>
+                  You haven't entered any volunteer hours yet...
+                </h1>
+                <div className='field is-grouped is-grouped-centered mt-5'>
+                  <div className='control'>
+                    <Link to={`/new/volunteer-hours`}>
+                      <div className='button is-info'>
+                        Enter New Volunteer Hours
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </>

@@ -5,7 +5,6 @@ import axios from 'axios';
 import Loading from './Loading/Loading';
 
 export default function Landing({ token, setToken, setAuth }) {
-  // const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,22 +33,6 @@ export default function Landing({ token, setToken, setAuth }) {
     } else {
       setError('Something went wrong... Please try again later');
     }
-  };
-
-  const handleOAuth = (event) => {
-    console.log('Handle OAuth Called');
-    event.preventDefault();
-    setError('');
-    //   axios
-    //     .post('https://questionbox-rocket.herokuapp.com/auth/token/login/', {
-    //       username: username,
-    //       password: password,
-    //     })
-    //     .then((res) => {
-    //       console.log(res.data);
-    //       setAuth(username, res.data.auth_token);
-    //     })
-    //     .catch((e) => setError(e.message));
   };
 
   return (

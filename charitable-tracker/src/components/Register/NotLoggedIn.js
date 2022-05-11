@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { EnterUsername, EnterEmail, EnterPassword } from './RegStack';
+import { EnterUsername, EnterPassword } from './RegStack';
 import { Link } from 'react-router-dom';
 
 export default function NotLoggedIn({
