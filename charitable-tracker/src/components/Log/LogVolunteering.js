@@ -161,6 +161,7 @@ export default function LogVolunteering({ token }) {
 
   useEffect(() => {
     setDate(today());
+    window.scrollTo(0, 0);
   }, []);
 
   return (
@@ -330,7 +331,7 @@ export default function LogVolunteering({ token }) {
                                   setFilename(event.target.files[0].name);
                                 }}
                               />
-                              <div className='button is-info is-large is-rounded'>
+                              <div className='button is-info is-large'>
                                 Choose a file…
                               </div>
                               <span className='file-name'>{filename}</span>
@@ -339,14 +340,18 @@ export default function LogVolunteering({ token }) {
                           {image && (
                             <div>
                               <div className='columns is-centered mt-4'>
-                                <div
-                                  className='button is-danger'
-                                  onClick={() => {
-                                    setImage(null);
-                                    setFilename('No file uploaded...');
-                                  }}
-                                >
-                                  Remove
+                                <div className='field is-grouped is-grouped-centered'>
+                                  <div className='control'>
+                                    <div
+                                      className='button is-danger mb-1'
+                                      onClick={() => {
+                                        setImage(null);
+                                        setFilename('No file uploaded...');
+                                      }}
+                                    >
+                                      Remove
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                               <div className='columns is-centered'>
@@ -362,7 +367,7 @@ export default function LogVolunteering({ token }) {
                       </div>
                       <div className='field is-grouped is-grouped-centered'>
                         <div className='control'>
-                          <button className='button is-info is-size-3 is-large pl-6 pr-6 mt-4 mb-4'>
+                          <button className='button is-large is-success pl-6 pr-6 mt-4 mb-4'>
                             Submit
                           </button>
                         </div>

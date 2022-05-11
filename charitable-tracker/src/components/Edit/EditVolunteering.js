@@ -200,6 +200,7 @@ export default function EditVolunteering({ token }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios
       .get(
         `https://charitable-tracker.herokuapp.com/api/Vrecord/${params.V_id}/`,
@@ -258,7 +259,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <input
                                 type='date'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='vol-date'
                                 required
                                 placeholder='When did you donate?'
@@ -281,7 +282,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <input
                                 type='text'
-                                className='input is-rounded has-text-centered'
+                                className='input is-rounded'
                                 id='vol-org'
                                 required
                                 placeholder='Organization Name'
@@ -303,7 +304,7 @@ export default function EditVolunteering({ token }) {
                               <div className='is-inline-flex is-size-4'>
                                 <input
                                   type='number'
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='vol-hours'
                                   required
                                   placeholder='$'
@@ -328,7 +329,7 @@ export default function EditVolunteering({ token }) {
                               </label>
                               <div className='select'>
                                 <select
-                                  className='input is-rounded has-text-centered'
+                                  className='input is-rounded'
                                   id='vol-cause'
                                   required
                                   value={cause}
@@ -406,7 +407,7 @@ export default function EditVolunteering({ token }) {
                                       setDeleteImage(false);
                                     }}
                                   />
-                                  <div className='button is-info is-large is-rounded'>
+                                  <div className='button is-info is-large'>
                                     Choose a file…
                                   </div>
                                   <span className='file-name'>{filename}</span>
@@ -415,15 +416,19 @@ export default function EditVolunteering({ token }) {
                               {image ? (
                                 <div>
                                   <div className='columns is-centered mt-4'>
-                                    <div
-                                      className='button is-danger'
-                                      onClick={() => {
-                                        setImage(null);
-                                        setFilename('No file uploaded...');
-                                        setDeleteImage(true);
-                                      }}
-                                    >
-                                      Remove
+                                    <div className='field is-grouped is-grouped-centered'>
+                                      <div className='control'>
+                                        <div
+                                          className='button is-danger mb-1'
+                                          onClick={() => {
+                                            setImage(null);
+                                            setFilename('No file uploaded...');
+                                            setDeleteImage(true);
+                                          }}
+                                        >
+                                          Remove
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className='columns is-centered'>
@@ -439,15 +444,19 @@ export default function EditVolunteering({ token }) {
                                   {filename && (
                                     <>
                                       <div className='columns is-centered mt-4'>
-                                        <div
-                                          className='button is-danger'
-                                          onClick={() => {
-                                            setImage(null);
-                                            setFilename('');
-                                            setDeleteImage(true);
-                                          }}
-                                        >
-                                          Remove
+                                        <div className='field is-grouped is-grouped-centered'>
+                                          <div className='control'>
+                                            <div
+                                              className='button is-danger mb-1'
+                                              onClick={() => {
+                                                setImage(null);
+                                                setFilename('');
+                                                setDeleteImage(true);
+                                              }}
+                                            >
+                                              Remove
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                       <div className='columns is-centered'>
@@ -488,7 +497,7 @@ export default function EditVolunteering({ token }) {
                         </form>
                         <div className='field is-grouped is-grouped-centered'>
                           <div className='control'>
-                            <Link to='/volunteering'>
+                            <Link to='/'>
                               <div className='button is-warning pl-6 pr-6 mt-2 mb-4'>
                                 Back
                               </div>

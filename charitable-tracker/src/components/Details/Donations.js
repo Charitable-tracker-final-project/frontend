@@ -69,8 +69,11 @@ export default function Donations(props) {
 
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
-        <h1 className='title'>My Donations:</h1>
+      <div className='column is-11 is-5-widescreen box m-3 p-5'>
+        <h1 className='is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile mb-0 pb-0'>
+          My Donations:
+        </h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -116,7 +119,7 @@ export default function Donations(props) {
                     <>
                       {d.amountdonated && (
                         <>
-                          <div className='box p-5 mb-5' key={key}>
+                          <div className='p-5 mb-5' key={key}>
                             <div className='columns'>
                               <div className='column is-9'>
                                 <p className='is-size-7 has-text-grey'>{`${dateConvert(
@@ -136,18 +139,18 @@ export default function Donations(props) {
                                 <div className='field is-grouped is-grouped-centered'>
                                   <div className='control'>
                                     <Link to={`/donations/edit/${D_id}`}>
-                                      <div className='button is-link'>
+                                      <div className='button is-small is-warning'>
                                         Edit Donation
                                       </div>
                                     </Link>
                                   </div>
                                 </div>
-                                {d.imgreciept && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {d.imgreciept ? (
                                         <div
-                                          className='button is-info'
+                                          className='button is-small is-info'
                                           onClick={
                                             isActive === D_id
                                               ? () => setIsActive(null)
@@ -156,10 +159,17 @@ export default function Donations(props) {
                                         >
                                           View Receipt
                                         </div>
-                                      </div>
+                                      ) : (
+                                        <div
+                                          className='button is-small is-info'
+                                          disabled
+                                        >
+                                          View Receipt
+                                        </div>
+                                      )}
                                     </div>
-                                  </>
-                                )}
+                                  </div>
+                                </>
                               </div>
                             </div>
                             {isActive === D_id && (
@@ -194,6 +204,7 @@ export default function Donations(props) {
                           </div>
                         </>
                       )}
+                      <hr />
                     </>
                   );
                 })}
@@ -201,6 +212,9 @@ export default function Donations(props) {
                   pages={Math.ceil(pag.count / 5)}
                   currentPage={current}
                   onChange={(page) => handlePage(page)}
+                  className='is-small'
+                  prevClassName={pag.count <= 5 && 'is-hidden'}
+                  nextClassName={pag.count <= 5 && 'is-hidden'}
                 />
               </>
             )}
@@ -210,12 +224,14 @@ export default function Donations(props) {
       <div className={`modal ${isImg ? 'is-active' : ''}`}>
         <div className='modal-background'>
           <div className='modal-content'>
-            <div className='box'>
-              <img
-                src={img}
-                alt={`receipt from ${imgDate} donation`}
-                maxWidth='100%'
-              />
+            <div className='column is-10-mobile'>
+              <div className='box'>
+                <img
+                  src={img}
+                  alt={`receipt from ${imgDate} donation`}
+                  maxWidth={'600vw'}
+                />
+              </div>
             </div>
           </div>
         </div>

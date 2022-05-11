@@ -71,8 +71,11 @@ export default function Volunteering(props) {
 
   return (
     <>
-      <div className='column is-11 is-6-widescreen'>
-        <h1 className='title'>My Volunteering:</h1>
+      <div className='column is-11 is-5-widescreen box m-3 p-5'>
+        <h1 className='is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile mb-0 pb-0'>
+          My Volunteering:
+        </h1>
+        <hr />
         {isLoading ? (
           <>
             <Loading />
@@ -118,7 +121,7 @@ export default function Volunteering(props) {
                     <>
                       {v.hoursdonated && (
                         <>
-                          <div className='box p-5 mb-5' key={key}>
+                          <div className='p-5 mb-5' key={key}>
                             <div className='columns'>
                               <div className='column is-9'>
                                 <p className='is-size-7 has-text-grey'>{`${dateConvert(
@@ -138,18 +141,18 @@ export default function Volunteering(props) {
                                 <div className='field is-grouped is-grouped-centered'>
                                   <div className='control'>
                                     <Link to={`/volunteering/edit/${V_id}`}>
-                                      <div className='button is-link p-1'>
+                                      <div className='button is-small is-warning p-1'>
                                         Edit Volunteering
                                       </div>
                                     </Link>
                                   </div>
                                 </div>
-                                {v.description && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {v.description ? (
                                         <div
-                                          className='button is-info pl-5 pr-5'
+                                          className='button is-small has-background-primary-dark has-text-white pl-4 pr-4'
                                           onClick={
                                             isDActive === V_id
                                               ? () => setIsDActive(null)
@@ -158,16 +161,23 @@ export default function Volunteering(props) {
                                         >
                                           View Notes
                                         </div>
-                                      </div>
-                                    </div>
-                                  </>
-                                )}
-                                {v.imgreciept && (
-                                  <>
-                                    <div className='field is-grouped is-grouped-centered'>
-                                      <div className='control'>
+                                      ) : (
                                         <div
-                                          className='button is-info p-4'
+                                          className='button is-small has-background-primary-dark has-text-white pl-4 pr-4'
+                                          disabled
+                                        >
+                                          View Notes
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </>
+                                <>
+                                  <div className='field is-grouped is-grouped-centered'>
+                                    <div className='control'>
+                                      {v.imgreciept ? (
+                                        <div
+                                          className='button is-small is-info p-2'
                                           onClick={
                                             isRActive === V_id
                                               ? () => setIsRActive(null)
@@ -176,18 +186,28 @@ export default function Volunteering(props) {
                                         >
                                           View Receipt
                                         </div>
-                                      </div>
+                                      ) : (
+                                        <div
+                                          className='button is-small is-info p-2'
+                                          disabled
+                                        >
+                                          View Receipt
+                                        </div>
+                                      )}
                                     </div>
-                                  </>
-                                )}
+                                  </div>
+                                </>
                               </div>
                             </div>
                             {isDActive === V_id && (
                               <>
-                                <hr></hr>
-                                <div className='columns is-centered'>
+                                <div className='columns is-centered box is-rounded has-background-white-ter'>
                                   <div className='column'>
-                                    <p>{v.description}</p>
+                                    <p>
+                                      <i className='has-text-black'>
+                                        {v.description}
+                                      </i>
+                                    </p>
                                   </div>
                                 </div>
                               </>
@@ -223,6 +243,7 @@ export default function Volunteering(props) {
                           </div>
                         </>
                       )}
+                      <hr />
                     </>
                   );
                 })}
@@ -230,6 +251,9 @@ export default function Volunteering(props) {
                   pages={Math.ceil(pag.count / 5)}
                   currentPage={current}
                   onChange={(page) => handlePage(page)}
+                  className='is-small'
+                  prevClassName={pag.next && 'is-hidden'}
+                  nextClassName={pag.previous && 'is-hidden'}
                 />
               </>
             )}
@@ -239,12 +263,14 @@ export default function Volunteering(props) {
       <div className={`modal ${isImg ? 'is-active' : ''}`}>
         <div className='modal-background'>
           <div className='modal-content'>
-            <div className='box'>
-              <img
-                src={img}
-                alt={`receipt from ${imgDate} donation`}
-                maxWidth='100%'
-              />
+            <div className='column is-10-mobile'>
+              <div className='box'>
+                <img
+                  src={img}
+                  alt={`receipt from ${imgDate} donation`}
+                  width={'600vw'}
+                />
+              </div>
             </div>
           </div>
         </div>

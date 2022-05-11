@@ -174,14 +174,13 @@ export default function Graphs2Cause({ token }) {
             </>
           ) : (
             <>
-              Test
               {error && (
                 <div className='box has-background-danger has-text-white'>
                   <h3>{error}</h3>
                 </div>
               )}
               <div className='columns'>
-                <h1 className='column is-9 has-text-black has-text-info is-size-4 has-text-weight-bold is-size-5-mobile'>
+                <h1 className='column is-9 has-text-link is-size-4 has-text-weight-bold is-size-5-mobile'>
                   Impact of your{' '}
                   {toggle === 'Donations' ? `Donations` : `Volunteer Time`} to
                   your Causes:
@@ -199,7 +198,8 @@ export default function Graphs2Cause({ token }) {
                   </select>
                 </div>
               </div>
-              <h1 className='has-text-centered is-size-4 has-text-weight-semibold is-size-5-mobile'>
+              <hr />
+              <h1 className='has-text-centered is-size-4 has-text-weight-semibold is-size-5-mobile pb-5'>
                 {toggle === 'Donations'
                   ? `You donated $${totalDonos} to these causes`
                   : `You Volunteered ${totalHours} hours at these causes`}

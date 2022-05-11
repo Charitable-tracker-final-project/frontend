@@ -49,7 +49,23 @@ export default function Profile(props) {
           >
             <div style={styles.menuIcon} onClick={onClickMenuIcon}>
               <div className='columns mt-0 mb-0 pt-0 pb-0'>
-                <div className='column mt-0 mb-0 pt-0 pb-0'>
+                <div className='column mt-0 mb-0 pt-0 pb-0 has-text-right has-text-weight-bold is-clickable'>
+                  <a
+                    role='button'
+                    className={`has-text-white SidebarHeadText ${
+                      isActive ? 'is-active' : 'is-active'
+                    }`}
+                    aria-label='menu'
+                    // eslint-disable-next-line jsx-a11y/aria-proptypes
+                    aria-expanded={`${isActive ? 'true' : 'false'}`}
+                    data-target='charitableNavbar'
+                  >
+                    {`${isActive ? `←` : `→`}`}
+                  </a>
+                </div>
+              </div>{' '}
+              <div className='columns mt-0 mb-0 pt-0 pb-0'>
+                <div className='column mt-0 mb-0 pt-0 pb-0 has-text-right is-clickable'>
                   <a
                     role='button'
                     className={`has-text-white SidebarHeadText ${
@@ -60,12 +76,12 @@ export default function Profile(props) {
                     aria-expanded={`${isActive ? 'true' : 'false'}`}
                     data-target='charitableNavbar'
                   >
-                    {`${isActive ? `${username}'s Dashboard` : `Settings`}`}
+                    {`${isActive ? `${username}'s Dashboard` : ``}`}
                   </a>
                 </div>
               </div>{' '}
               <div className='columns mt-0 mb-0 pt-0 pb-0'>
-                <div className='column mt-0 mb-1 pt-0 pb-0'>
+                <div className='column mt-0 mb-1 pt-0 pb-0 has-text-right is-clickable'>
                   <a
                     role='button'
                     className={`has-text-white SidebarHeadText ${

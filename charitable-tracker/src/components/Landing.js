@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../images/logo512.png';
-import google from '../images/btn_google_signin_light_pressed_web@2x.png';
 import axios from 'axios';
 import Loading from './Loading/Loading';
 
@@ -55,11 +54,18 @@ export default function Landing({ token, setToken, setAuth }) {
 
   return (
     <>
+      <br></br> <br></br> <br></br>
       <div className='columns is-mobile is-centered'>
-        <figure className='image is-inline-block pl-3'>
-          <img src={logo} alt='Charitable Tracker Logo' />
+        <figure className='is-inline-block pl-2'>
+          <img
+            src={logo}
+            alt='Charitable Tracker Logo'
+            width={'400rem'}
+            height={'auto'}
+          />
         </figure>
       </div>
+      <br></br>
       <div className='columns is-centered'>
         <div className='column is-one-third'>
           {loginSpinner && <Loading />}
@@ -111,15 +117,6 @@ export default function Landing({ token, setToken, setAuth }) {
             </div>
           </form>
         </div>
-      </div>
-      <div className='field is-grouped is-grouped-centered'>
-        <img
-          className='is-clickable'
-          src={google}
-          alt='Google sign in button'
-          onClick={handleOAuth}
-          width='195'
-        />
       </div>
     </>
   );
