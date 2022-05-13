@@ -75,7 +75,7 @@ In the project directory, you can run:
 Installs all dependancies for the project.\
 `--force` needed due to Victory Charts.
 
-**Dependancies:**
+**Dependencies:**
 
 - [react-timeline](https://github.com/steven-mercatante/react-timeline)
 - [axios](https://axios-http.com/)
